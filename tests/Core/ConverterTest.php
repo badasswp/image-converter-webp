@@ -8,7 +8,11 @@ use ImageConverterWebP\Core\Converter;
 use ImageConverterWebP\Services\Main;
 
 /**
+ * @covers \ImageConverterWebP\Abstracts\Service::__construct
  * @covers \ImageConverterWebP\Core\Converter::__construct
+ * @covers \ImageConverterWebP\Core\Converter::get_options
+ * @covers \ImageConverterWebP\Core\Converter::set_image_source
+ * @covers \ImageConverterWebP\Core\Converter::set_image_destination
  */
 class ConverterTest extends TestCase {
 	public $converter;
