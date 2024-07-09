@@ -16,7 +16,7 @@ class ConverterTest extends TestCase {
     public function setUp(): void {
         \WP_Mock::setUp();
 
-        $this->converter = new Converter();
+        $this->converter = new Converter( new Main() );
     }
 
     public function tearDown(): void {
@@ -192,10 +192,14 @@ class ConverterTest extends TestCase {
     }
 
     public function test_set_image_source() {
+		$service = Mockery::mock( Main::class )->makePartial();
+        $service->shouldAllowMockingProtectedMethods();
+
         $converter = Mockery::mock( Converter::class )->makePartial();
         $converter->shouldAllowMockingProtectedMethods();
+		$converter->service = $service;
 
-        Plugin::$source = [
+        $converter->service->source = [
             'id'  => 1,
             'url' => 'https://example.com/wp-content/uploads/2024/01/sample.jpeg',
         ];
@@ -219,10 +223,14 @@ class ConverterTest extends TestCase {
     }
 
     public function test_set_image_destination() {
+		$service = Mockery::mock( Main::class )->makePartial();
+        $service->shouldAllowMockingProtectedMethods();
+
         $converter = Mockery::mock( Converter::class )->makePartial();
         $converter->shouldAllowMockingProtectedMethods();
+		$converter->service = $service;
 
-        Plugin::$source = [
+        $converter->service->source = [
             'id'  => 1,
             'url' => 'https://example.com/wp-content/uploads/2024/01/sample.jpeg',
         ];
@@ -260,7 +268,7 @@ class ConverterTest extends TestCase {
             ->with( 'Error: %s does not exist.', 'image-converter-webp' )
             ->andReturn( 'Error: does not exist.' );
 
-        $mock = Mockery::mock( WP_Error::class );
+        $mock = Mockery::mock( \WP_Error::class );
 
         $webp = $converter->convert();
 
@@ -299,7 +307,7 @@ class ConverterTest extends TestCase {
             ->with( 'Error: %s is not an image.', 'image-converter-webp' )
             ->andReturn( 'Error: is not an image.' );
 
-        $mock = Mockery::mock( WP_Error::class );
+        $mock = Mockery::mock( \WP_Error::class );
 
         $webp = $converter->convert();
 
@@ -348,10 +356,14 @@ class ConverterTest extends TestCase {
     }
 
     public function test_convert_returns_webp() {
+		$service = Mockery::mock( Main::class )->makePartial();
+        $service->shouldAllowMockingProtectedMethods();
+
         $converter = Mockery::mock( Converter::class )->makePartial();
         $converter->shouldAllowMockingProtectedMethods();
+		$converter->service = $service;
 
-        Plugin::$source = [
+        $converter->service->source = [
             'id'  => 1,
             'url' => 'https://example.com/wp-content/uploads/2024/01/sample.jpeg',
         ];
