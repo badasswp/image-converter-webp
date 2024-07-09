@@ -10,7 +10,7 @@
 
 namespace ImageConverterWebP\Abstracts;
 
-use WebPImageConverter\WebPImageConverter;
+use ImageConverterWebP\Core\Converter;
 
 abstract class Service {
 	/**
@@ -26,6 +26,7 @@ abstract class Service {
 	 * Converter Instance.
 	 *
 	 * @since 1.0.0
+	 * @since 1.1.0 Refactored to Service abstraction.
 	 *
 	 * @var WebPImageConverter
 	 */
@@ -35,10 +36,20 @@ abstract class Service {
 	 * Source Props.
 	 *
 	 * @since 1.0.0
+	 * @since 1.1.0 Refactored to Service abstraction.
 	 *
 	 * @var mixed[]
 	 */
 	public static $source;
+
+	/**
+	 * Set up Converter.
+	 *
+	 * @since 1.1.0
+	 */
+	public function __construct() {
+		$this->converter = new Converter();
+	}
 
 	/**
 	 * Register Singleton.
@@ -60,5 +71,14 @@ abstract class Service {
 		return static::$services[ $class ];
 	}
 
+	/**
+	 * Register to WP.
+	 *
+	 * Bind concrete logic to WP here.
+	 *
+	 * @since 1.1.0
+	 *
+	 * @return void
+	 */
 	abstract public function register();
 }
