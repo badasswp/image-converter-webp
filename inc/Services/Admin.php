@@ -24,6 +24,7 @@ class Admin extends Service {
 		add_action( 'init', [ $this, 'add_webp_translation' ] );
 		add_action( 'admin_init', [ $this, 'add_webp_settings' ] );
 		add_action( 'admin_menu', [ $this, 'add_webp_image_menu' ] );
+		add_action( 'admin_enqueue_scripts', [ $this, 'add_webp_styles' ] );
 	}
 
 	/**
@@ -115,6 +116,16 @@ class Admin extends Service {
 			'image-converter-webp',
 			false,
 			dirname( plugin_basename( __FILE__ ) ) . '/../../languages'
+		);
+	}
+
+	public function add_webp_styles(): void {
+		wp_enqueue_style(
+			'image-converter-webp',
+			plugins_url( 'image-converter-webp/inc/Views/styles.css' ),
+			[],
+			true,
+			'all'
 		);
 	}
 }
