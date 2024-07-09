@@ -92,10 +92,8 @@ class Plugin {
 		add_filter( 'wp_get_attachment_image', [ $this, 'filter_wp_get_attachment_image' ], 10, 5 );
 		add_filter( 'post_thumbnail_html', [ $this, 'filter_post_thumbnail_html' ], 10, 5 );
 		add_action( 'delete_attachment', [ $this, 'delete_webp_images' ], 10, 1 );
-		add_action( 'admin_menu', [ $this, 'add_webp_image_menu' ] );
 		add_action( 'webp_img_convert', [ $this, 'add_webp_meta_to_attachment' ], 10, 2 );
 		add_filter( 'attachment_fields_to_edit', [ $this, 'add_webp_attachment_fields' ], 10, 2 );
-		add_action( 'admin_init', [ $this, 'add_webp_settings' ] );
 	}
 
 	/**
@@ -400,80 +398,6 @@ class Plugin {
 				}
 			}
 		}
-	}
-
-	/**
-	 * Menu Service.
-	 *
-	 * This controls the menu display for the plugin.
-	 *
-	 * @since 1.0.2
-	 *
-	 * @return void
-	 */
-	public function add_webp_image_menu(): void {
-		add_submenu_page(
-			'upload.php',
-			__( 'Image Converter for WebP', 'image-converter-webp' ),
-			__( 'Image Converter for WebP', 'image-converter-webp' ),
-			'manage_options',
-			'image-converter-webp',
-			[ $this, 'webp_image_menu_page' ]
-		);
-	}
-
-	/**
-	 * Menu Callback.
-	 *
-	 * This controls the display of the menu page.
-	 *
-	 * @since 1.0.2
-	 *
-	 * @return void
-	 */
-	public function webp_image_menu_page(): void {
-		$settings = (string) plugin_dir_path( __FILE__ ) . '/Views/settings.php';
-
-		if ( file_exists( $settings ) ) {
-			require_once $settings;
-		}
-	}
-
-	/**
-	 * Save Plugin settings.
-	 *
-	 * This method handles all save actions for the fields
-	 * on the Plugin's settings page.
-	 *
-	 * @since 1.0.2
-	 *
-	 * @return void
-	 */
-	public function add_webp_settings(): void {
-		if ( ! isset( $_POST['webp_save_settings'] ) || ! isset( $_POST['webp_settings_nonce'] ) ) {
-			return;
-		}
-
-		if ( ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['webp_settings_nonce'] ) ), 'webp_settings_action' ) ) {
-			return;
-		}
-
-		$fields = [ 'quality', 'converter' ];
-
-		update_option(
-			'webp_img_converter',
-			array_combine(
-				$fields,
-				array_map(
-					function ( $field ) {
-						if ( wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['webp_settings_nonce'] ) ), 'webp_settings_action' ) ) {
-							return sanitize_text_field( $_POST[ $field ] ?? '' );
-						}
-					},
-					$fields
-				)
-			)
-		);
 	}
 
 	/**
