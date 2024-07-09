@@ -33,9 +33,9 @@ class Container {
 	public function __construct() {
 		static::$services = [
 			Admin::class,
-			/*Logger::class,
+			Logger::class,
 			Main::class,
-			PageLoad::class,*/
+			PageLoad::class,
 		];
 	}
 
