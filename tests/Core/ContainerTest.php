@@ -11,7 +11,7 @@ use ImageConverterWebP\Services\Main;
 use ImageConverterWebP\Services\Logger;
 
 /**
- * @covers \ImageConverterWebP\Core\Container::__construct
+ * @covers Container
  */
 class ContainerTest extends TestCase {
 	public function setUp(): void {
