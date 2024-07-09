@@ -14,7 +14,7 @@ abstract class Service {
 	/**
 	 * Service classes.
 	 *
-	 * @since 1.0.0
+	 * @since 1.1.0
 	 *
 	 * @var mixed[]
 	 */
@@ -26,7 +26,7 @@ abstract class Service {
 	 * This defines the generic method used by
 	 * Service classes.
 	 *
-	 * @since 1.0.0
+	 * @since 1.1.0
 	 *
 	 * @return static
 	 */
