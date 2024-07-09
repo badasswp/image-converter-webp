@@ -103,6 +103,13 @@ class Admin extends Service {
 		);
 	}
 
+	/**
+	 * Add Plugin's Text Domain.
+	 *
+	 * @since 1.1.0
+	 *
+	 * @return void
+	 */
 	public function add_webp_translation(): void {
 		load_plugin_textdomain(
 			'image-converter-webp',
