@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Image Converter for WebP\n"
 "POT-Creation-Date: 2024-07-09 21:46+0100\n"
-"PO-Revision-Date: 2024-07-09 22:14+0100\n"
+"PO-Revision-Date: 2024-07-09 22:16+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de_DE\n"
@@ -58,7 +58,7 @@ msgstr "Qualität der Konvertierung"
 
 #: inc/Views/settings.php:181
 msgid "e.g. 75"
-msgstr "75"
+msgstr "e.g. 75"
 
 #: inc/Views/settings.php:186
 msgid "WebP Engine"
@@ -66,7 +66,7 @@ msgstr "WebP Motor"
 
 #: inc/Views/settings.php:212
 msgid "e.g. Imagick"
-msgstr "Imagick"
+msgstr "e.g. Imagick"
 
 #: inc/Views/settings.php:220
 msgid "Image Options"
