@@ -15,8 +15,13 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 ?>
 <section class="wrap">
-	<h1><?php echo esc_html__( 'Image Converter for WebP', 'image-converter-webp' ); ?></h1>
-	<p>Convert your WordPress JPG/PNG images to WebP formats during runtime.</p>
+	<h1>
+		<span><?php echo esc_html__( 'Image Converter for WebP', 'image-converter-webp' ); ?></span>
+	</h1>
+
+	<p>
+		<?php echo esc_html__( 'Convert your WordPress JPG/PNG images to WebP formats during runtime.', 'image-converter-webp' ); ?>
+	</p>
 
 	<style type="text/css">
 		.badasswp-form {
@@ -150,16 +155,20 @@ if ( ! defined( 'ABSPATH' ) ) {
 		<!-- Form Notice -->
 		<?php if ( isset( $_POST['webp_save_settings'] ) ) : ?>
 		<div class="badasswp-form-notice">
-			<span>Settings saved.</span>
+			<span><?php echo esc_html__( 'Settings saved.', 'image-converter-webp' ); ?></span>
 		</div>
 		<?php endif ?>
 
 		<div class="badasswp-form-main">
 			<!-- Form Group -->
 			<div class="badasswp-form-group">
-				<p class="badasswp-form-group-block">Conversion Options</p>
+				<p class="badasswp-form-group-block">
+					<?php echo esc_html__( 'Conversion Options', 'image-converter-webp' ); ?>
+				</p>
 				<p class="badasswp-form-group-block size-50">
-					<label>Conversion Quality (%)</label>
+					<label>
+						<?php echo esc_html__( 'Conversion Quality', 'image-converter-webp' ); ?> (%)
+					</label>
 					<input
 						type="text"
 						name="quality"
@@ -168,10 +177,14 @@ if ( ! defined( 'ABSPATH' ) ) {
 						placeholder="20"
 						value="<?php echo esc_attr( get_option( 'webp_img_converter', [] )['quality'] ?? '' ); ?>"
 					/>
-					<em>e.g. 75</em>
+					<em>
+						<?php echo esc_html__( 'e.g. 75', 'image-converter-webp' ); ?>
+					</em>
 				</p>
 				<p class="badasswp-form-group-block size-50">
-					<label>WebP Engine</label>
+					<label>
+						<?php echo esc_html__( 'WebP Engine', 'image-converter-webp' ); ?>
+					</label>
 					<select name="converter">
 					<?php
 					$engines = [
@@ -195,30 +208,42 @@ if ( ! defined( 'ABSPATH' ) ) {
 					}
 					?>
 					</select>
-					<em>e.g. Imagick</em>
+					<em>
+						<?php echo esc_html__( 'e.g. Imagick', 'image-converter-webp' ); ?>
+					</em>
 				</p>
 			</div>
 
 			<!-- Form Group -->
 			<div class="badasswp-form-group">
-				<p class="badasswp-form-group-block">Image Options</p>
-				<p class="badasswp-form-group-block size-50">
-					<label>Convert Images on Upload</label>
-					<input
-						name="delete"
-						<?php esc_attr_e( ! empty( get_option( 'webp_img_converter', [] )['quality'] ?? '' ) ? 'checked' : '' ); ?>
-						type="checkbox"
-					/>
-					<em>This is useful for new images.</em>
+				<p class="badasswp-form-group-block">
+					<?php echo esc_html__( 'Image Options', 'image-converter-webp' ); ?>
 				</p>
 				<p class="badasswp-form-group-block size-50">
-					<label>Convert Images on Page Load</label>
+					<label>
+						<?php echo esc_html__( 'Convert Images on Upload', 'image-converter-webp' ); ?>
+					</label>
 					<input
 						name="delete"
 						<?php esc_attr_e( ! empty( get_option( 'webp_img_converter', [] )['quality'] ?? '' ) ? 'checked' : '' ); ?>
 						type="checkbox"
 					/>
-					<em>This is useful for existing images.</em>
+					<em>
+						<?php echo esc_html__( 'This is useful for new images.', 'image-converter-webp' ); ?>
+					</em>
+				</p>
+				<p class="badasswp-form-group-block size-50">
+					<label>
+						<?php echo esc_html__( 'Convert Images on Page Load', 'image-converter-webp' ); ?>
+					</label>
+					<input
+						name="delete"
+						<?php esc_attr_e( ! empty( get_option( 'webp_img_converter', [] )['quality'] ?? '' ) ? 'checked' : '' ); ?>
+						type="checkbox"
+					/>
+					<em>
+						<?php echo esc_html__( 'This is useful for existing images.', 'image-converter-webp' ); ?>
+					</em>
 				</p>
 			</div>
 		</div>
@@ -227,11 +252,15 @@ if ( ! defined( 'ABSPATH' ) ) {
 			<!-- Form Group -->
 			<div class="badasswp-form-group">
 				<p class="badasswp-form-group-block">
-					<label>Actions</label>
+					<label>
+						<?php echo esc_html__( 'Actions', 'image-converter-webp' ); ?>
+					</label>
 				</p>
 				<p class="badasswp-form-group-block">
 					<button name="webp_save_settings" type="submit" class="button button-primary">
-						<span>Save Changes</span>
+						<span>
+							<?php echo esc_html__( 'Save Changes', 'image-converter-webp' ); ?>
+						</span>
 					</button>
 				</p>
 				<?php wp_nonce_field( 'webp_settings_action', 'webp_settings_nonce' ); ?>
