@@ -10,8 +10,7 @@
 
 namespace WebPImageConverter;
 
-use DOMDocument;
-use WebPImageConverter\WebPImageConverter;
+use ImageConverterWebP\Core\Container;
 
 class Plugin {
 	/**
@@ -22,24 +21,6 @@ class Plugin {
 	 * @var Plugin
 	 */
 	protected static $instance;
-
-	/**
-	 * Converter Instance.
-	 *
-	 * @since 1.0.0
-	 *
-	 * @var WebPImageConverter
-	 */
-	public WebPImageConverter $converter;
-
-	/**
-	 * Source Props.
-	 *
-	 * @since 1.0.0
-	 *
-	 * @var mixed[]
-	 */
-	public static $source;
 
 	/**
 	 * Plugin File.
@@ -86,57 +67,6 @@ class Plugin {
 	 * @return void
 	 */
 	public function run(): void {
-		add_filter( 'attachment_fields_to_edit', [ $this, 'add_webp_attachment_fields' ], 10, 2 );
-	}
-
-	/**
-	 * Get all Images and associated WebPs.
-	 *
-	 * This function grabs all Image attachments and
-	 * associated WebP versions, if any.
-	 *
-	 * @since 1.0.2
-	 * @since 1.0.5 Optimise query using meta_query.
-	 *
-	 * @return mixed[]
-	 */
-	protected function get_webp_images(): array {
-		$posts = get_posts(
-			[
-				'post_type'      => 'attachment',
-				'posts_per_page' => -1,
-				'orderby'        => 'title',
-				'meta_query'     => [
-					[
-						'key'     => 'webp_img',
-						'compare' => 'EXISTS',
-					],
-				],
-			]
-		);
-
-		if ( ! $posts ) {
-			return [];
-		}
-
-		$images = array_filter(
-			array_map(
-				function ( $post ) {
-					if ( $post instanceof \WP_Post && wp_attachment_is_image( $post ) ) {
-						return [
-							'guid' => $post->guid,
-							'webp' => (string) ( get_post_meta( (int) $post->ID, 'webp_img', true ) ?? '' ),
-						];
-					}
-					return null;
-				},
-				$posts
-			),
-			function ( $item ) {
-				return ! is_null( $item );
-			}
-		);
-
-		return array_values( $images );
+		( new Container() )->register();
 	}
 }

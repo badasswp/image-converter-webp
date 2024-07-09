@@ -10,6 +10,8 @@
 
 namespace ImageConverterWebP\Abstracts;
 
+use WebPImageConverter\WebPImageConverter;
+
 abstract class Service {
 	/**
 	 * Service classes.
@@ -19,6 +21,24 @@ abstract class Service {
 	 * @var mixed[]
 	 */
 	private static array $services;
+
+	/**
+	 * Converter Instance.
+	 *
+	 * @since 1.0.0
+	 *
+	 * @var WebPImageConverter
+	 */
+	public WebPImageConverter $converter;
+
+	/**
+	 * Source Props.
+	 *
+	 * @since 1.0.0
+	 *
+	 * @var mixed[]
+	 */
+	public static $source;
 
 	/**
 	 * Register Singleton.

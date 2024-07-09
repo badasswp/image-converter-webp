@@ -12,7 +12,6 @@ namespace ImageConverterWebP\Services;
 
 use DOMDocument;
 use ImageConverterWebP\Abstracts\Service;
-use WebPImageConverter\WebPImageConverter;
 
 class PageLoad extends Service {
 	/**
