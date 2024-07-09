@@ -20,7 +20,7 @@ abstract class Service {
 	 *
 	 * @var mixed[]
 	 */
-	private static array $services;
+	protected static array $services;
 
 	/**
 	 * Converter Instance.
@@ -65,7 +65,7 @@ abstract class Service {
 		$class = get_called_class();
 
 		if ( ! isset( static::$services[ $class ] ) ) {
-			static::$services[ $class ] = new static();
+			static::$services[ $class ] = new self();
 		}
 
 		return static::$services[ $class ];

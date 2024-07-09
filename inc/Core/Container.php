@@ -21,9 +21,9 @@ class Container {
 	 *
 	 * @since 1.1.0
 	 *
-	 * @var array
+	 * @var mixed[]
 	 */
-	private static array $services;
+	protected static array $services = [];
 
 	/**
 	 * Prepare Singletons.
