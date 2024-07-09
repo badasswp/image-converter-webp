@@ -12,6 +12,7 @@ namespace ImageConverterWebP\Core;
 
 use Exception;
 use WebPConvert\WebPConvert;
+use ImageConverterWebP\Abstracts\Service;
 
 class Converter {
 	/**
@@ -43,6 +44,20 @@ class Converter {
 	 * @var string
 	 */
 	public string $rel_dest = '';
+
+	/**
+	 * Get Service.
+	 *
+	 * Pass in Service class as constructor params
+	 * to enable us retrieve ID|URL.
+	 *
+	 * @since 1.1.0
+	 *
+	 * @param Service $service
+	 */
+	public function __construct( Service $service ) {
+		$this->plugin = $service;
+	}
 
 	/**
 	 * Convert to WebP image.
