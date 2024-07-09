@@ -46,8 +46,10 @@ class Main extends Service {
 			'url' => (string) wp_get_attachment_url( $attachment_id ),
 		];
 
-		// Convert to WebP image.
-		$webp = $this->converter->convert();
+		// Ensure this is allowed.
+		if ( get_option( 'webp_img_converter', [] )['upload'] ?? '' ) {
+			$webp = $this->converter->convert();
+		}
 	}
 
 	/**
@@ -79,7 +81,10 @@ class Main extends Service {
 				'url' => trailingslashit( $img_url_prefix ) . $img['file'],
 			];
 
-			$this->converter->convert();
+			// Ensure this is allowed.
+			if ( get_option( 'webp_img_converter', [] )['upload'] ?? '' ) {
+				$this->converter->convert();
+			}
 		}
 
 		return $metadata;
