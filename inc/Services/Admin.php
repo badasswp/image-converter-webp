@@ -119,10 +119,17 @@ class Admin extends Service {
 		);
 	}
 
+	/**
+	 * Add Styles to Admin page.
+	 *
+	 * @since 1.1.0
+	 *
+	 * @return void
+	 */
 	public function add_webp_styles(): void {
 		wp_enqueue_style(
 			'image-converter-webp',
-			plugins_url( 'image-converter-webp/inc/Views/styles.css' ),
+			plugins_url( 'image-converter-webp/inc/Views/css/styles.css' ),
 			[],
 			true,
 			'all'
