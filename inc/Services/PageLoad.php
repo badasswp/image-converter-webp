@@ -196,7 +196,7 @@ class PageLoad extends Service {
 		];
 
 		// Ensure this is allowed.
-		if ( ! get_option( 'webp_img_converter', [] )['page_load'] ?? '' ) {
+		if ( ! get_option( 'webp_img_converter', [] )['page_load'] ) {
 			return $img_html;
 		}
 
