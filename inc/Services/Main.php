@@ -34,7 +34,7 @@ class Main extends Service {
 	 * to the WP media.
 	 *
 	 * @since 1.0.0
-	 * @since 1.1.0 Refactored to Main class.
+	 * @since 1.1.0 Moved to Main class.
 	 *
 	 * @param  int $attachment_id Image ID.
 	 * @return void
@@ -57,7 +57,7 @@ class Main extends Service {
 	 * when the user adds a new image to the WP media.
 	 *
 	 * @since 1.0.0
-	 * @since 1.1.0 Refactored to Main class.
+	 * @since 1.1.0 Moved to Main class.
 	 *
 	 * @param mixed[] $metadata      An array of attachment meta data.
 	 * @param int     $attachment_id Attachment ID.
@@ -92,7 +92,7 @@ class Main extends Service {
 	 * WebP image versions when the main image is deleted.
 	 *
 	 * @since 1.0.0
-	 * @since 1.1.0 Refactored to Main class.
+	 * @since 1.1.0 Moved to Main class.
 	 *
 	 * @param int $attachment_id Attachment ID.
 	 * @return void
@@ -169,7 +169,7 @@ class Main extends Service {
 	 * generated WebP version.
 	 *
 	 * @since 1.0.2
-	 * @since 1.1.0 Refactored to Main class.
+	 * @since 1.1.0 Moved to Main class.
 	 *
 	 * @param mixed[]  $fields Fields Array.
 	 * @param \WP_Post $post   WP Post.

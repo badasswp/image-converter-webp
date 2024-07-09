@@ -31,7 +31,7 @@ class Admin extends Service {
 	 * This controls the menu display for the plugin.
 	 *
 	 * @since 1.0.2
-	 * @since 1.1.0 Refactored to Admin class.
+	 * @since 1.1.0 Moved to Admin class.
 	 *
 	 * @return void
 	 */
@@ -52,7 +52,7 @@ class Admin extends Service {
 	 * This controls the display of the menu page.
 	 *
 	 * @since 1.0.2
-	 * @since 1.1.0 Refactored to Admin class.
+	 * @since 1.1.0 Moved to Admin class.
 	 *
 	 * @return void
 	 */
@@ -71,7 +71,7 @@ class Admin extends Service {
 	 * on the Plugin's settings page.
 	 *
 	 * @since 1.0.2
-	 * @since 1.1.0 Refactored to Admin class.
+	 * @since 1.1.0 Moved to Admin class.
 	 *
 	 * @return void
 	 */

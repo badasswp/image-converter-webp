@@ -26,7 +26,7 @@ abstract class Service {
 	 * Converter Instance.
 	 *
 	 * @since 1.0.0
-	 * @since 1.1.0 Refactored to Service abstraction.
+	 * @since 1.1.0 Moved to Service abstraction.
 	 *
 	 * @var Converter
 	 */
@@ -36,7 +36,7 @@ abstract class Service {
 	 * Source Props.
 	 *
 	 * @since 1.0.0
-	 * @since 1.1.0 Refactored to Service abstraction.
+	 * @since 1.1.0 Moved to Service abstraction.
 	 *
 	 * @var mixed[]
 	 */

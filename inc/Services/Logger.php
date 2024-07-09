@@ -31,7 +31,7 @@ class Logger extends Service {
 	 * depending on the conversion result ($webp).
 	 *
 	 * @since 1.0.2
-	 * @since 1.1.0 Refactored to Logger class.
+	 * @since 1.1.0 Moved to Logger class.
 	 *
 	 * @param string|\WP_Error $webp          WebP's relative path.
 	 * @param int              $attachment_id Image ID.
