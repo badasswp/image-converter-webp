@@ -8,9 +8,9 @@ use ImageConverterWebP\Services\Admin;
 
 /**
  * @covers \ImageConverterWebP\Core\Converter::__construct
- * @covers \ImageConverterWebP\Service\Admin::__construct
- * @covers \ImageConverterWebP\Service\Admin::add_webp_image_menu
- * @covers \ImageConverterWebP\Service\Admin::add_webp_settings
+ * @covers \ImageConverterWebP\Services\Admin::__construct
+ * @covers \ImageConverterWebP\Services\Admin::add_webp_image_menu
+ * @covers \ImageConverterWebP\Services\Admin::add_webp_settings
  */
 class AdminTest extends TestCase {
 	public function setUp(): void {
