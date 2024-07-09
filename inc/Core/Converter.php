@@ -18,6 +18,7 @@ class Converter {
 	 * Image source (absolute path).
 	 *
 	 * @since 1.0.0
+	 * @since 1.1.0 Moved to Converter.
 	 *
 	 * @var string
 	 */
@@ -27,6 +28,7 @@ class Converter {
 	 * Image destination (absolute path).
 	 *
 	 * @since 1.0.0
+	 * @since 1.1.0 Moved to Converter.
 	 *
 	 * @var string
 	 */
@@ -36,6 +38,7 @@ class Converter {
 	 * Image destination (relative path).
 	 *
 	 * @since 1.0.0
+	 * @since 1.1.0 Moved to Converter.
 	 *
 	 * @var string
 	 */
@@ -48,6 +51,7 @@ class Converter {
 	 * and converting it to the WebP equivalent.
 	 *
 	 * @since 1.0.0
+	 * @since 1.1.0 Moved to Converter.
 	 *
 	 * @return string|\WP_Error
 	 */
@@ -104,6 +108,7 @@ class Converter {
 		 * Fires after Image is converted.
 		 *
 		 * @since 1.0.1
+		 * @since 1.1.0 Moved to Converter.
 		 *
 		 * @param string|\WP_Error $webp          WebP Image URL or WP Error.
 		 * @param int              $attachment_id Image ID.
@@ -122,6 +127,7 @@ class Converter {
 	 * absolute path.
 	 *
 	 * @since 1.0.0
+	 * @since 1.1.0 Moved to Converter.
 	 *
 	 * @return void
 	 */
@@ -137,6 +143,7 @@ class Converter {
 	 * paths for images.
 	 *
 	 * @since 1.0.0
+	 * @since 1.1.0 Moved to Converter.
 	 *
 	 * @return void
 	 */
@@ -155,6 +162,7 @@ class Converter {
 	 *
 	 * @since 1.0.0
 	 * @since 1.0.2 Add plugin settings to options.
+	 * @since 1.1.0 Moved to Converter.
 	 *
 	 * @return mixed[]
 	 */
@@ -177,6 +185,7 @@ class Converter {
 		 * Get Conversion options.
 		 *
 		 * @since 1.0.0
+		 * @since 1.1.0 Moved to Converter.
 		 *
 		 * @param mixed[] $options Conversion options.
 		 * @return mixed[]
