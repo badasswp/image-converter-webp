@@ -12,6 +12,7 @@ use ImageConverterWebP\Core\Converter;
  * @covers \ImageConverterWebP\Services\Main::__construct
  * @covers \ImageConverterWebP\Services\Main::generate_webp_image
  * @covers \ImageConverterWebP\Services\Main::generate_webp_srcset_images
+ * @covers \ImageConverterWebP\Services\Main::delete_webp_images
  */
 class MainTest extends TestCase {
 	public function setUp(): void {
