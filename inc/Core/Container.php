@@ -23,7 +23,7 @@ class Container {
 	 *
 	 * @var mixed[]
 	 */
-	protected static array $services = [];
+	public static array $services = [];
 
 	/**
 	 * Prepare Singletons.
