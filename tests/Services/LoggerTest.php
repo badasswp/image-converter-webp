@@ -9,8 +9,7 @@ use ImageConverterWebP\Services\Logger;
 /**
  * @covers \ImageConverterWebP\Core\Converter::__construct
  * @covers \ImageConverterWebP\Services\Logger::__construct
- * @covers \ImageConverterWebP\Services\Logger::add_webp_image_menu
- * @covers \ImageConverterWebP\Services\Logger::add_webp_settings
+ * @covers \ImageConverterWebP\Services\Logger::add_webp_meta_to_attachment
  */
 class LoggerTest extends TestCase {
 	public function setUp(): void {
