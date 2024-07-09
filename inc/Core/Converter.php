@@ -8,16 +8,18 @@
  * @package ImageConverterWebP
  */
 
-namespace WebPImageConverter;
+namespace ImageConverterWebP\Core;
 
 use Exception;
 use WebPConvert\WebPConvert;
+use ImageConverterWebP\Abstracts\Service;
 
-class WebPImageConverter {
+class Converter {
 	/**
 	 * Image source (absolute path).
 	 *
 	 * @since 1.0.0
+	 * @since 1.1.0 Moved to Converter.
 	 *
 	 * @var string
 	 */
@@ -27,6 +29,7 @@ class WebPImageConverter {
 	 * Image destination (absolute path).
 	 *
 	 * @since 1.0.0
+	 * @since 1.1.0 Moved to Converter.
 	 *
 	 * @var string
 	 */
@@ -36,10 +39,34 @@ class WebPImageConverter {
 	 * Image destination (relative path).
 	 *
 	 * @since 1.0.0
+	 * @since 1.1.0 Moved to Converter.
 	 *
 	 * @var string
 	 */
 	public string $rel_dest = '';
+
+	/**
+	 * Service.
+	 *
+	 * @since 1.1.0
+	 *
+	 * @var Service
+	 */
+	public Service $service;
+
+	/**
+	 * Get Service.
+	 *
+	 * Pass in Service class as constructor params
+	 * to enable us retrieve ID|URL.
+	 *
+	 * @since 1.1.0
+	 *
+	 * @param Service $service
+	 */
+	public function __construct( Service $service ) {
+		$this->service = $service;
+	}
 
 	/**
 	 * Convert to WebP image.
@@ -48,6 +75,7 @@ class WebPImageConverter {
 	 * and converting it to the WebP equivalent.
 	 *
 	 * @since 1.0.0
+	 * @since 1.1.0 Moved to Converter.
 	 *
 	 * @return string|\WP_Error
 	 */
@@ -104,13 +132,14 @@ class WebPImageConverter {
 		 * Fires after Image is converted.
 		 *
 		 * @since 1.0.1
+		 * @since 1.1.0 Moved to Converter.
 		 *
 		 * @param string|\WP_Error $webp          WebP Image URL or WP Error.
 		 * @param int              $attachment_id Image ID.
 		 *
 		 * @return void
 		 */
-		do_action( 'webp_img_convert', $webp = $this->rel_dest, $attachment_id = Plugin::$source['id'] );
+		do_action( 'webp_img_convert', $webp = $this->rel_dest, $attachment_id = $this->service->source['id'] );
 
 		return $this->rel_dest;
 	}
@@ -122,12 +151,13 @@ class WebPImageConverter {
 	 * absolute path.
 	 *
 	 * @since 1.0.0
+	 * @since 1.1.0 Moved to Converter.
 	 *
 	 * @return void
 	 */
 	protected function set_image_source(): void {
 		$img_uploads_dir  = wp_upload_dir();
-		$this->abs_source = str_replace( $img_uploads_dir['baseurl'], $img_uploads_dir['basedir'], Plugin::$source['url'] );
+		$this->abs_source = str_replace( $img_uploads_dir['baseurl'], $img_uploads_dir['basedir'], $this->service->source['url'] );
 	}
 
 	/**
@@ -137,14 +167,15 @@ class WebPImageConverter {
 	 * paths for images.
 	 *
 	 * @since 1.0.0
+	 * @since 1.1.0 Moved to Converter.
 	 *
 	 * @return void
 	 */
 	protected function set_image_destination(): void {
-		$image_extension = '.' . pathinfo( Plugin::$source['url'], PATHINFO_EXTENSION );
+		$image_extension = '.' . pathinfo( $this->service->source['url'], PATHINFO_EXTENSION );
 
 		$this->abs_dest = str_replace( $image_extension, '.webp', $this->abs_source );
-		$this->rel_dest = str_replace( $image_extension, '.webp', Plugin::$source['url'] );
+		$this->rel_dest = str_replace( $image_extension, '.webp', $this->service->source['url'] );
 	}
 
 	/**
@@ -155,6 +186,7 @@ class WebPImageConverter {
 	 *
 	 * @since 1.0.0
 	 * @since 1.0.2 Add plugin settings to options.
+	 * @since 1.1.0 Moved to Converter.
 	 *
 	 * @return mixed[]
 	 */
@@ -177,6 +209,7 @@ class WebPImageConverter {
 		 * Get Conversion options.
 		 *
 		 * @since 1.0.0
+		 * @since 1.1.0 Moved to Converter.
 		 *
 		 * @param mixed[] $options Conversion options.
 		 * @return mixed[]

@@ -1,0 +1,121 @@
+# Copyright (C) badasswp
+# This file is distributed under the GPL v2 or later.
+msgid ""
+msgstr ""
+"Project-Id-Version: Image Converter for WebP\n"
+"POT-Creation-Date: 2024-07-09 21:46+0100\n"
+"PO-Revision-Date: 2024-07-09 22:28+0100\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: fr_FR\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 3.4.1\n"
+"X-Poedit-Basepath: ..\n"
+"X-Poedit-Flags-xgettext: --add-comments=translators:\n"
+"X-Poedit-WPHeader: image-converter-webp.php\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-KeywordsList: __;_e;_n:1,2;_x:1,2c;_ex:1,2c;_nx:4c,1,2;esc_attr__;esc_attr_e;esc_attr_x:1,2c;esc_html__;esc_html_e;esc_html_x:1,2c;_n_noop:1,2;_nx_noop:3c,1,2;__ngettext_noop:1,2\n"
+"X-Poedit-SearchPath-0: .\n"
+"X-Poedit-SearchPathExcluded-0: *.min.js\n"
+"X-Poedit-SearchPathExcluded-1: vendor\n"
+
+#. Plugin Name of the plugin/theme
+#: inc/Services/Admin.php:41 inc/Services/Admin.php:42
+#: inc/Views/settings.php:19
+msgid "Image Converter for WebP"
+msgstr "Convertisseur d’Images pour WebP"
+
+#. Plugin URI of the plugin/theme
+msgid "https://github.com/badasswp/image-converter-webp"
+msgstr "https://github.com/badasswp/image-converter-webp"
+
+#. Author of the plugin/theme
+msgid "badasswp"
+msgstr "badasswp"
+
+#. Author URI of the plugin/theme
+msgid "https://github.com/badasswp"
+msgstr "https://github.com/badasswp"
+
+#. Description of the plugin/theme
+#: inc/Views/settings.php:23
+msgid "Convert your WordPress JPG/PNG images to WebP formats during runtime."
+msgstr "Convertissez vos images WordPress JPG/PNG aux formats WebP pendant l’exécution."
+
+#: inc/Views/settings.php:158
+msgid "Settings Saved."
+msgstr "Paramètres Sauvegardés."
+
+#: inc/Views/settings.php:166
+msgid "Conversion Options"
+msgstr "Conversion Options"
+
+#: inc/Views/settings.php:170
+msgid "Conversion Quality"
+msgstr "Qualité de Conversion"
+
+#: inc/Views/settings.php:181
+msgid "e.g. 75"
+msgstr "par exemple 75"
+
+#: inc/Views/settings.php:186
+msgid "WebP Engine"
+msgstr "Moteur WebP"
+
+#: inc/Views/settings.php:212
+msgid "e.g. Imagick"
+msgstr "par exemple Imagick"
+
+#: inc/Views/settings.php:220
+msgid "Image Options"
+msgstr "Options des Images"
+
+#: inc/Views/settings.php:224
+msgid "Convert Images on Upload"
+msgstr "Convertir des images lors du téléchargement"
+
+#: inc/Views/settings.php:232
+msgid "This is useful for new images."
+msgstr "Ceci est utile pour les nouvelles images."
+
+#: inc/Views/settings.php:237
+msgid "Convert Images on Page Load"
+msgstr "Convertir des images lors du chargement de la page"
+
+#: inc/Views/settings.php:245
+msgid "This is useful for existing images."
+msgstr "Ceci est utile pour les images existantes."
+
+#: inc/Views/settings.php:256
+msgid "Actions"
+msgstr "Actions"
+
+#: inc/Views/settings.php:262
+msgid "Save Changes"
+msgstr "Sauvegarder les Changements"
+
+#. translators: Autoload file path.
+#: image-converter-webp.php:30
+#, php-format
+msgid "Fatal Error: %s file does not exist, please check if Composer is installed!"
+msgstr "Erreur fatale : %s fichier n’existe pas, veuillez vérifier si Composer est installé !"
+
+#. translators: Absolute path to Source Image.
+#: inc/Core/Converter.php:93
+#, php-format
+msgid "Error: %s does not exist."
+msgstr "Erreur : %s n’existe pas."
+
+#. translators: Absolute path to Source Image.
+#: inc/Core/Converter.php:106
+#, php-format
+msgid "Error: %s is not an image."
+msgstr "Erreur : %s n’est pas une image."
+
+#. translators: Exception error msg.
+#: inc/Core/Converter.php:123
+#, php-format
+msgid "Fatal Error: %s"
+msgstr "Erreur fatale : %s"
