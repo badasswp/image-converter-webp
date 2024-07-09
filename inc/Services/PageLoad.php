@@ -195,6 +195,11 @@ class PageLoad extends Service {
 			'url' => $img_url,
 		];
 
+		// Ensure this is allowed.
+		if ( ! get_option( 'webp_img_converter', [] )['page_load'] ?? '' ) {
+			return $img_html;
+		}
+
 		// Convert image to WebP.
 		$webp = $this->converter->convert();
 
