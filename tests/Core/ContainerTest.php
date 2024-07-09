@@ -25,9 +25,9 @@ class ContainerTest extends TestCase {
 	public function test_container_contains_required_services() {
 		$this->container = new Container();
 
-		$this->assertTrue( in_array( Admin::class, Container::$services, TRUE ) );
-		$this->assertTrue( in_array( Logger::class, Container::$services, TRUE ) );
-		$this->assertTrue( in_array( Main::class, Container::$services, TRUE ) );
-		$this->assertTrue( in_array( PageLoad::class, Container::$services, TRUE ) );
+		$this->assertTrue( in_array( Admin::class, Container::$services, true ) );
+		$this->assertTrue( in_array( Logger::class, Container::$services, true ) );
+		$this->assertTrue( in_array( Main::class, Container::$services, true ) );
+		$this->assertTrue( in_array( PageLoad::class, Container::$services, true ) );
 	}
 }
