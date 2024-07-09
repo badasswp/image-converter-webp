@@ -50,7 +50,7 @@ class Container {
 	 * @return void
 	 */
 	public function register(): void {
-		foreach( static::$services as $service ) {
+		foreach ( static::$services as $service ) {
 			( $service::get_instance() )->register();
 		}
 	}

@@ -148,7 +148,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 	<form class="badasswp-form" method="POST" action="<?php echo esc_url( sanitize_text_field( $_SERVER['REQUEST_URI'] ) ); ?>">
 		<!-- Form Notice -->
-		<?php if ( isset( $_POST['webp_save_settings'] ) ): ?>
+		<?php if ( isset( $_POST['webp_save_settings'] ) ) : ?>
 		<div class="badasswp-form-notice">
 			<span>Settings saved.</span>
 		</div>
