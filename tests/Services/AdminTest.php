@@ -91,20 +91,22 @@ class AdminTest extends TestCase {
 			'webp_settings_nonce' => 'a8vbq3cg3sa',
 			'quality'             => 75,
 			'converter'           => 'gd',
+			'upload'              => 1,
+			'page_load'           => 1,
 		];
 
 		\WP_Mock::userFunction( 'wp_unslash' )
-			->times( 3 )
+			->times( 5 )
 			->with( 'a8vbq3cg3sa' )
 			->andReturn( 'a8vbq3cg3sa' );
 
 		\WP_Mock::userFunction( 'sanitize_text_field' )
-			->times( 3 )
+			->times( 5 )
 			->with( 'a8vbq3cg3sa' )
 			->andReturn( 'a8vbq3cg3sa' );
 
 		\WP_Mock::userFunction( 'wp_verify_nonce' )
-			->times( 3 )
+			->times( 5 )
 			->with( 'a8vbq3cg3sa', 'webp_settings_action' )
 			->andReturn( true );
 
@@ -115,6 +117,8 @@ class AdminTest extends TestCase {
 				[
 					'quality'   => 75,
 					'converter' => 'gd',
+					'upload'    => 1,
+					'page_load' => 1,
 				]
 			)
 			->andReturn( null );
@@ -122,7 +126,7 @@ class AdminTest extends TestCase {
 		\WP_Mock::userFunction(
 			'sanitize_text_field',
 			[
-				'times'  => 2,
+				'times'  => 4,
 				'return' => function ( $text ) {
 					return $text;
 				},
