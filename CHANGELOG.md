@@ -1,5 +1,12 @@
 # Changelog
 
+## 1.1.0
+* Major code base refactor.
+* Add more **Settings** options to **Settings** page.
+* Update language translations.
+* Fix bugs & linting issues.
+* Update README notes.
+
 ## 1.0.5
 * Add language translation.
 * Add error logging capabilities to **Settings** page.
