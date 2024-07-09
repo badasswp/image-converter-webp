@@ -21,6 +21,7 @@ class Admin extends Service {
 	 * @return void
 	 */
 	public function register(): void {
+		add_action( 'init', [ $this, 'add_webp_translation' ] );
 		add_action( 'admin_init', [ $this, 'add_webp_settings' ] );
 		add_action( 'admin_menu', [ $this, 'add_webp_image_menu' ] );
 	}
@@ -99,6 +100,14 @@ class Admin extends Service {
 					$fields
 				)
 			)
+		);
+	}
+
+	public function add_webp_translation(): void {
+		load_plugin_textdomain(
+			'image-converter-webp',
+			false,
+			dirname( plugin_basename( __FILE__ ) ) . '/../../languages'
 		);
 	}
 }
