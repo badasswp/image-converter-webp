@@ -8,7 +8,7 @@
  * @package ImageConverterWebP
  */
 
-namespace WebPImageConverter;
+namespace ImageConverterWebP;
 
 use ImageConverterWebP\Core\Container;
 

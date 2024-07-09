@@ -5,8 +5,8 @@
   "license": "GPL-2.0-or-later",
   "autoload": {
     "psr-4": {
-      "WebPImageConverter\\": "inc/",
-      "WebPImageConverter\\Tests\\": "tests/"
+      "ImageConverterWebP\\": "inc/",
+      "ImageConverterWebP\\Tests\\": "tests/"
     }
   },
   "authors": [
