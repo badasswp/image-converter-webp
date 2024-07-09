@@ -7,7 +7,7 @@ use WP_Mock\Tools\TestCase;
 use ImageConverterWebP\Abstracts\Service;
 
 /**
- * @covers \ImageConverterWebP\Abstracts\Service::get_instance
+ * @covers Service
  */
 class ServiceTest extends TestCase {
 	public function setUp(): void {
