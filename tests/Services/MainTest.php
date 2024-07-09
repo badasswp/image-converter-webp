@@ -48,6 +48,15 @@ class MainTest extends TestCase {
 			->once()
 			->andReturn( 'https://example.com/wp-content/uploads/2024/01/sample.webp' );
 
+		\WP_Mock::userFunction( 'get_option' )
+			->once()
+			->with( 'webp_img_converter', [] )
+			->andReturn(
+				[
+					'upload' => true,
+				]
+			);
+
 		$main->generate_webp_image( 1 );
 
 		$this->assertConditionsMet();
@@ -86,6 +95,15 @@ class MainTest extends TestCase {
 
 		$main->converter->shouldReceive( 'convert' )
 			->times( 3 );
+
+		\WP_Mock::userFunction( 'get_option' )
+			->times( 3 )
+			->with( 'webp_img_converter', [] )
+			->andReturn(
+				[
+					'upload' => true,
+				]
+			);
 
 		$srcset = $main->generate_webp_srcset_images( $data, 1, 'create' );
 
