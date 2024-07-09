@@ -32,17 +32,6 @@ class Plugin {
 	public static $file = __FILE__;
 
 	/**
-	 * Set up.
-	 *
-	 * @since 1.0.0
-	 *
-	 * @return void
-	 */
-	public function __construct() {
-		$this->converter = new WebPImageConverter();
-	}
-
-	/**
 	 * Get Instance.
 	 *
 	 * Return singeleton instance for Plugin.

@@ -40,7 +40,7 @@ abstract class Service {
 	 *
 	 * @var mixed[]
 	 */
-	public static $source;
+	public array $source;
 
 	/**
 	 * Set up Converter.
@@ -48,7 +48,7 @@ abstract class Service {
 	 * @since 1.1.0
 	 */
 	public function __construct() {
-		$this->converter = new Converter();
+		$this->converter = new Converter( $this );
 	}
 
 	/**

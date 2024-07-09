@@ -190,7 +190,7 @@ class PageLoad extends Service {
 	 */
 	protected function _get_webp_html( $img_url, $img_html, $img_id ): string {
 		// Set Source.
-		static::$source = [
+		$this->source = [
 			'id'  => $img_id,
 			'url' => $img_url,
 		];
@@ -200,7 +200,7 @@ class PageLoad extends Service {
 
 		// Replace image with WebP.
 		if ( ! is_wp_error( $webp ) && file_exists( $this->converter->abs_dest ) ) {
-			return str_replace( static::$source['url'], $webp, $img_html );
+			return str_replace( $this->source['url'], $webp, $img_html );
 		}
 
 		return $img_html;

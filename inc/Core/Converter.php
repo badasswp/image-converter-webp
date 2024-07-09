@@ -46,6 +46,15 @@ class Converter {
 	public string $rel_dest = '';
 
 	/**
+	 * Service.
+	 *
+	 * @since 1.1.0
+	 *
+	 * @var Service
+	 */
+	public Service $service;
+
+	/**
 	 * Get Service.
 	 *
 	 * Pass in Service class as constructor params
@@ -56,7 +65,7 @@ class Converter {
 	 * @param Service $service
 	 */
 	public function __construct( Service $service ) {
-		$this->plugin = $service;
+		$this->service = $service;
 	}
 
 	/**
@@ -130,7 +139,7 @@ class Converter {
 		 *
 		 * @return void
 		 */
-		do_action( 'webp_img_convert', $webp = $this->rel_dest, $attachment_id = Plugin::$source['id'] );
+		do_action( 'webp_img_convert', $webp = $this->rel_dest, $attachment_id = $this->service->$source['id'] );
 
 		return $this->rel_dest;
 	}
@@ -148,7 +157,7 @@ class Converter {
 	 */
 	protected function set_image_source(): void {
 		$img_uploads_dir  = wp_upload_dir();
-		$this->abs_source = str_replace( $img_uploads_dir['baseurl'], $img_uploads_dir['basedir'], Plugin::$source['url'] );
+		$this->abs_source = str_replace( $img_uploads_dir['baseurl'], $img_uploads_dir['basedir'], $this->service->$source['url'] );
 	}
 
 	/**
@@ -163,10 +172,10 @@ class Converter {
 	 * @return void
 	 */
 	protected function set_image_destination(): void {
-		$image_extension = '.' . pathinfo( Plugin::$source['url'], PATHINFO_EXTENSION );
+		$image_extension = '.' . pathinfo( $this->service->$source['url'], PATHINFO_EXTENSION );
 
 		$this->abs_dest = str_replace( $image_extension, '.webp', $this->abs_source );
-		$this->rel_dest = str_replace( $image_extension, '.webp', Plugin::$source['url'] );
+		$this->rel_dest = str_replace( $image_extension, '.webp', $this->service->$source['url'] );
 	}
 
 	/**

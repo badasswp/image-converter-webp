@@ -41,7 +41,7 @@ class Main extends Service {
 	 */
 	public function generate_webp_image( $attachment_id ): void {
 		// Get source props.
-		static::$source = [
+		$this->source = [
 			'id'  => (int) $attachment_id,
 			'url' => (string) wp_get_attachment_url( $attachment_id ),
 		];
@@ -74,7 +74,7 @@ class Main extends Service {
 
 		// Convert srcset images.
 		foreach ( $metadata['sizes'] as $img ) {
-			static::$source = [
+			$this->source = [
 				'id'  => (int) $attachment_id,
 				'url' => trailingslashit( $img_url_prefix ) . $img['file'],
 			];
