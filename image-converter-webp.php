@@ -40,4 +40,4 @@ if ( ! file_exists( WEBP_AUTOLOAD ) ) {
 require_once WEBP_AUTOLOAD;
 
 // Get instance and Run plugin.
-( \WebPImageConverter\Plugin::get_instance() )->run();
+( \ImageConverterWebP\Plugin::get_instance() )->run();

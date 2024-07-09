@@ -1,23 +1,23 @@
 <?php
 
-namespace WebPImageConverter\Tests;
+namespace ImageConverterWebP\Tests;
 
 use Mockery;
 use WP_Error;
 use WP_Mock\Tools\TestCase;
-use WebPImageConverter\Plugin;
-use WebPImageConverter\WebPImageConverter;
+use ImageConverterWebP\Plugin;
+use ImageConverterWebP\Converter;
 
 /**
- * @covers \WebPImageConverter\WebPImageConverter
+ * @covers \ImageConverterWebP\Converter
  */
-class WebPImageConverterTest extends TestCase {
+class ConverterTest extends TestCase {
 	public $converter;
 
 	public function setUp(): void {
 		\WP_Mock::setUp();
 
-		$this->converter = new WebPImageConverter();
+		$this->converter = new Converter();
 	}
 
 	public function tearDown(): void {
@@ -25,7 +25,7 @@ class WebPImageConverterTest extends TestCase {
 	}
 
 	public function test_get_options_returns_default_settings() {
-		$converter = Mockery::mock( WebPImageConverter::class )->makePartial();
+		$converter = Mockery::mock( Converter::class )->makePartial();
 		$converter->shouldAllowMockingProtectedMethods();
 
 		\WP_Mock::expectFilter(
@@ -74,7 +74,7 @@ class WebPImageConverterTest extends TestCase {
 	}
 
 	public function test_get_options_returns_filter_settings() {
-		$converter = Mockery::mock( WebPImageConverter::class )->makePartial();
+		$converter = Mockery::mock( Converter::class )->makePartial();
 		$converter->shouldAllowMockingProtectedMethods();
 
 		\WP_Mock::onFilter( 'webp_img_options' )
@@ -136,7 +136,7 @@ class WebPImageConverterTest extends TestCase {
 	}
 
 	public function test_get_options_returns_plugin_settings() {
-		$converter = Mockery::mock( WebPImageConverter::class )->makePartial();
+		$converter = Mockery::mock( Converter::class )->makePartial();
 		$converter->shouldAllowMockingProtectedMethods();
 
 		\WP_Mock::expectFilter(
@@ -193,7 +193,7 @@ class WebPImageConverterTest extends TestCase {
 	}
 
 	public function test_set_image_source() {
-		$converter = Mockery::mock( WebPImageConverter::class )->makePartial();
+		$converter = Mockery::mock( Converter::class )->makePartial();
 		$converter->shouldAllowMockingProtectedMethods();
 
 		Plugin::$source = [
@@ -220,7 +220,7 @@ class WebPImageConverterTest extends TestCase {
 	}
 
 	public function test_set_image_destination() {
-		$converter = Mockery::mock( WebPImageConverter::class )->makePartial();
+		$converter = Mockery::mock( Converter::class )->makePartial();
 		$converter->shouldAllowMockingProtectedMethods();
 
 		Plugin::$source = [
@@ -245,7 +245,7 @@ class WebPImageConverterTest extends TestCase {
 	}
 
 	public function test_convert_fails_if_source_is_empty_and_returns_WP_error() {
-		$converter = Mockery::mock( WebPImageConverter::class )->makePartial();
+		$converter = Mockery::mock( Converter::class )->makePartial();
 		$converter->shouldAllowMockingProtectedMethods();
 
 		$converter->abs_source = '';
@@ -270,7 +270,7 @@ class WebPImageConverterTest extends TestCase {
 	}
 
 	public function test_convert_fails_if_source_is_not_an_image_and_returns_WP_error() {
-		$converter = Mockery::mock( WebPImageConverter::class )->makePartial();
+		$converter = Mockery::mock( Converter::class )->makePartial();
 		$converter->shouldAllowMockingProtectedMethods();
 
 		$converter->abs_source = __DIR__ . '/sample.txt';
@@ -312,7 +312,7 @@ class WebPImageConverterTest extends TestCase {
 	}
 
 	public function test_convert_returns_same_if_destination_image_exists() {
-		$converter = Mockery::mock( WebPImageConverter::class )->makePartial();
+		$converter = Mockery::mock( Converter::class )->makePartial();
 		$converter->shouldAllowMockingProtectedMethods();
 
 		$converter->abs_source = __DIR__ . '/sample.jpeg';
@@ -349,7 +349,7 @@ class WebPImageConverterTest extends TestCase {
 	}
 
 	public function test_convert_returns_webp() {
-		$converter = Mockery::mock( WebPImageConverter::class )->makePartial();
+		$converter = Mockery::mock( Converter::class )->makePartial();
 		$converter->shouldAllowMockingProtectedMethods();
 
 		Plugin::$source = [
@@ -408,7 +408,7 @@ class WebPImageConverterTest extends TestCase {
 	}
 
 	public function test_convert_fails_on_empty_options_and_returns_WP_error() {
-		$converter = Mockery::mock( WebPImageConverter::class )->makePartial();
+		$converter = Mockery::mock( Converter::class )->makePartial();
 		$converter->shouldAllowMockingProtectedMethods();
 
 		$converter->abs_source = __DIR__ . '/sample.jpeg';

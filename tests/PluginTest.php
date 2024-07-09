@@ -1,14 +1,14 @@
 <?php
 
-namespace WebPImageConverter\Tests;
+namespace ImageConverterWebP\Tests;
 
 use Mockery;
 use WP_Mock\Tools\TestCase;
-use WebPImageConverter\Plugin;
-use WebPImageConverter\WebPImageConverter;
+use ImageConverterWebP\Plugin;
+use ImageConverterWebP\Converter;
 
 /**
- * @covers \WebPImageConverter\Plugin
+ * @covers \ImageConverterWebP\Plugin
  */
 class PluginTest extends TestCase {
 	public $instance;
@@ -55,7 +55,7 @@ class PluginTest extends TestCase {
 	}
 
 	public function test_generate_webp_image_satisfies_conditions() {
-		$this->instance->converter = Mockery::mock( WebPImageConverter::class )->makePartial();
+		$this->instance->converter = Mockery::mock( Converter::class )->makePartial();
 		$this->instance->converter->shouldAllowMockingProtectedMethods();
 
 		Plugin::$source = [
@@ -81,7 +81,7 @@ class PluginTest extends TestCase {
 		$instance = Mockery::mock( Plugin::class )->makePartial();
 		$instance->shouldAllowMockingProtectedMethods();
 
-		$instance->converter = Mockery::mock( WebPImageConverter::class )->makePartial();
+		$instance->converter = Mockery::mock( Converter::class )->makePartial();
 		$instance->converter->shouldAllowMockingProtectedMethods();
 
 		$data = [
@@ -237,7 +237,7 @@ class PluginTest extends TestCase {
 		$instance = Mockery::mock( Plugin::class )->makePartial();
 		$instance->shouldAllowMockingProtectedMethods();
 
-		$instance->converter = Mockery::mock( WebPImageConverter::class )->makePartial();
+		$instance->converter = Mockery::mock( Converter::class )->makePartial();
 		$instance->converter->shouldAllowMockingProtectedMethods();
 
 		$error = Mockery::mock( \WP_Error::class )->makePartial();
@@ -261,7 +261,7 @@ class PluginTest extends TestCase {
 		$instance = Mockery::mock( Plugin::class )->makePartial();
 		$instance->shouldAllowMockingProtectedMethods();
 
-		$instance->converter = Mockery::mock( WebPImageConverter::class )->makePartial();
+		$instance->converter = Mockery::mock( Converter::class )->makePartial();
 		$instance->converter->shouldAllowMockingProtectedMethods();
 
 		$this->create_mock_image( __DIR__ . '/sample.webp' );
