@@ -57,7 +57,7 @@ class Admin extends Service {
 	 * @return void
 	 */
 	public function webp_image_menu_page(): void {
-		$settings = (string) plugin_dir_path( __FILE__ ) . '/Views/settings.php';
+		$settings = (string) plugin_dir_path( __FILE__ ) . '../Views/settings.php';
 
 		if ( file_exists( $settings ) ) {
 			require_once $settings;

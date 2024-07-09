@@ -65,7 +65,7 @@ abstract class Service {
 		$class = get_called_class();
 
 		if ( ! isset( static::$services[ $class ] ) ) {
-			static::$services[ $class ] = new self();
+			static::$services[ $class ] = new static();
 		}
 
 		return static::$services[ $class ];
@@ -80,5 +80,5 @@ abstract class Service {
 	 *
 	 * @return void
 	 */
-	abstract public function register();
+	abstract public function register(): void;
 }

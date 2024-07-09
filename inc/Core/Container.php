@@ -33,9 +33,9 @@ class Container {
 	public function __construct() {
 		static::$services = [
 			Admin::class,
-			Logger::class,
+			/*Logger::class,
 			Main::class,
-			PageLoad::class,
+			PageLoad::class,*/
 		];
 	}
 
@@ -45,7 +45,7 @@ class Container {
 	 * Establish singleton version for each Service
 	 * concrete class.
 	 *
-	 * @sicne 1.0.0
+	 * @since 1.0.0
 	 *
 	 * @return void
 	 */
