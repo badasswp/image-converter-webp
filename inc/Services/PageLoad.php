@@ -33,6 +33,7 @@ class PageLoad extends Service {
 	 * WebP versions.
 	 *
 	 * @since 1.0.0
+	 * @since 1.1.0 Refactored to PageLoad class.
 	 *
 	 * @param string  $html  Image HTML.
 	 * @param mixed[] $block Block array.
@@ -55,6 +56,7 @@ class PageLoad extends Service {
 	 * posts, pages and so on.
 	 *
 	 * @since 1.0.0
+	 * @since 1.1.0 Refactored to PageLoad class.
 	 *
 	 * @param string       $html          HTML img element or empty string on failure.
 	 * @param int          $attachment_id Image attachment ID.
@@ -75,6 +77,7 @@ class PageLoad extends Service {
 		 * Filter WebP Image HTML.
 		 *
 		 * @since 1.0.0
+		 * @since 1.1.0 Refactored to PageLoad class.
 		 *
 		 * @param string $html          WebP Image HTML.
 		 * @param int    $attachment_id Image ID.
@@ -91,6 +94,7 @@ class PageLoad extends Service {
 	 * replacing with generated WebP images.
 	 *
 	 * @since 1.0.0
+	 * @since 1.1.0 Refactored to PageLoad class.
 	 *
 	 * @param string         $html         The post thumbnail HTML.
 	 * @param int            $post_id      The post ID.
@@ -128,6 +132,7 @@ class PageLoad extends Service {
 	 * of the plugin on a WP Instance.
 	 *
 	 * @since 1.0.0
+	 * @since 1.1.0 Refactored to PageLoad class.
 	 *
 	 * @param string $html Image HTML.
 	 * @param int    $id   Image Attachment ID.
@@ -174,6 +179,7 @@ class PageLoad extends Service {
 	 * Reusable method for obtaining new Image HTML string.
 	 *
 	 * @since 1.0.0
+	 * @since 1.1.0 Refactored to PageLoad class.
 	 *
 	 * @param string $img_url  Relative path to Image - 'https://example.com/wp-content/uploads/2024/01/sample.png'.
 	 * @param string $img_html The Image HTML - '<img src="sample.png"/>'.
