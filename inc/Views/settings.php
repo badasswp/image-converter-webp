@@ -206,7 +206,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 					<label>Convert Images on Upload</label>
 					<input
 						name="delete"
-						<?php esc_attr_e( ! empty( 'gege' ) ? 'checked' : '' ); ?>
+						<?php esc_attr_e( ! empty( get_option( 'webp_img_converter', [] )['quality'] ?? '' ) ? 'checked' : '' ); ?>
 						type="checkbox"
 					/>
 					<em>This is useful for new images.</em>
@@ -215,7 +215,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 					<label>Convert Images on Page Load</label>
 					<input
 						name="delete"
-						<?php esc_attr_e( ! empty( 'gege' ) ? 'checked' : '' ); ?>
+						<?php esc_attr_e( ! empty( get_option( 'webp_img_converter', [] )['quality'] ?? '' ) ? 'checked' : '' ); ?>
 						type="checkbox"
 					/>
 					<em>This is useful for existing images.</em>
