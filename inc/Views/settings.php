@@ -155,7 +155,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 		<!-- Form Notice -->
 		<?php if ( isset( $_POST['webp_save_settings'] ) ) : ?>
 		<div class="badasswp-form-notice">
-			<span><?php echo esc_html__( 'Settings saved.', 'image-converter-webp' ); ?></span>
+			<span><?php echo esc_html__( 'Settings Saved.', 'image-converter-webp' ); ?></span>
 		</div>
 		<?php endif ?>
 

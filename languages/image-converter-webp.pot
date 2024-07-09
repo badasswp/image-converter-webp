@@ -23,35 +23,22 @@ msgstr ""
 "X-Poedit-SearchPathExcluded-0: *.min.js\n"
 "X-Poedit-SearchPathExcluded-1: vendor\n"
 
-#. translators: Autoload file path.
-#: image-converter-webp.php:30
-#, php-format
-msgid ""
-"Fatal Error: %s file does not exist, please check if Composer is installed!"
-msgstr ""
-
-#. translators: Absolute path to Source Image.
-#: inc/Core/Converter.php:93
-#, php-format
-msgid "Error: %s does not exist."
-msgstr ""
-
-#. translators: Absolute path to Source Image.
-#: inc/Core/Converter.php:106
-#, php-format
-msgid "Error: %s is not an image."
-msgstr ""
-
-#. translators: Exception error msg.
-#: inc/Core/Converter.php:123
-#, php-format
-msgid "Fatal Error: %s"
-msgstr ""
-
 #. Plugin Name of the plugin/theme
 #: inc/Services/Admin.php:41 inc/Services/Admin.php:42
 #: inc/Views/settings.php:19
 msgid "Image Converter for WebP"
+msgstr ""
+
+#. Plugin URI of the plugin/theme
+msgid "https://github.com/badasswp/image-converter-webp"
+msgstr ""
+
+#. Author of the plugin/theme
+msgid "badasswp"
+msgstr ""
+
+#. Author URI of the plugin/theme
+msgid "https://github.com/badasswp"
 msgstr ""
 
 #. Description of the plugin/theme
@@ -60,7 +47,7 @@ msgid "Convert your WordPress JPG/PNG images to WebP formats during runtime."
 msgstr ""
 
 #: inc/Views/settings.php:158
-msgid "Settings saved."
+msgid "Settings Saved."
 msgstr ""
 
 #: inc/Views/settings.php:166
@@ -91,10 +78,6 @@ msgstr ""
 msgid "Convert Images on Upload"
 msgstr ""
 
-#: inc/Views/settings.php:228 inc/Views/settings.php:241
-msgid "checked"
-msgstr ""
-
 #: inc/Views/settings.php:232
 msgid "This is useful for new images."
 msgstr ""
@@ -115,14 +98,27 @@ msgstr ""
 msgid "Save Changes"
 msgstr ""
 
-#. Plugin URI of the plugin/theme
-msgid "https://github.com/badasswp/image-converter-webp"
+#. translators: Autoload file path.
+#: image-converter-webp.php:30
+#, php-format
+msgid ""
+"Fatal Error: %s file does not exist, please check if Composer is installed!"
 msgstr ""
 
-#. Author of the plugin/theme
-msgid "badasswp"
+#. translators: Absolute path to Source Image.
+#: inc/Core/Converter.php:93
+#, php-format
+msgid "Error: %s does not exist."
 msgstr ""
 
-#. Author URI of the plugin/theme
-msgid "https://github.com/badasswp"
+#. translators: Absolute path to Source Image.
+#: inc/Core/Converter.php:106
+#, php-format
+msgid "Error: %s is not an image."
+msgstr ""
+
+#. translators: Exception error msg.
+#: inc/Core/Converter.php:123
+#, php-format
+msgid "Fatal Error: %s"
 msgstr ""
