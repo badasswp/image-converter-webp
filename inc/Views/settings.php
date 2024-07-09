@@ -96,8 +96,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 						<?php echo esc_html__( 'Convert Images on Upload', 'image-converter-webp' ); ?>
 					</label>
 					<input
-						name="delete"
-						<?php esc_attr_e( ! empty( get_option( 'webp_img_converter', [] )['quality'] ?? '' ) ? 'checked' : '' ); ?>
+						name="upload"
+						<?php esc_attr_e( ! empty( get_option( 'webp_img_converter', [] )['upload'] ?? '' ) ? 'checked' : '' ); ?>
 						type="checkbox"
 					/>
 					<em>
@@ -109,8 +109,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 						<?php echo esc_html__( 'Convert Images on Page Load', 'image-converter-webp' ); ?>
 					</label>
 					<input
-						name="delete"
-						<?php esc_attr_e( ! empty( get_option( 'webp_img_converter', [] )['quality'] ?? '' ) ? 'checked' : '' ); ?>
+						name="page_load"
+						<?php esc_attr_e( ! empty( get_option( 'webp_img_converter', [] )['page_load'] ?? '' ) ? 'checked' : '' ); ?>
 						type="checkbox"
 					/>
 					<em>

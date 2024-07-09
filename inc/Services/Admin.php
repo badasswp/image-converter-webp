@@ -86,7 +86,7 @@ class Admin extends Service {
 			return;
 		}
 
-		$fields = [ 'quality', 'converter' ];
+		$fields = [ 'quality', 'converter', 'upload', 'page_load' ];
 
 		update_option(
 			'webp_img_converter',
