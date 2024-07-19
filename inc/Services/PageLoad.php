@@ -11,9 +11,10 @@
 namespace ImageConverterWebP\Services;
 
 use DOMDocument;
+use ImageConverterWebP\Interfaces\Kernel;
 use ImageConverterWebP\Abstracts\Service;
 
-class PageLoad extends Service {
+class PageLoad extends Service implements Kernel {
 	/**
 	 * Bind to WP.
 	 *

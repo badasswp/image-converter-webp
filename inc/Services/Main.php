@@ -11,8 +11,9 @@
 namespace ImageConverterWebP\Services;
 
 use ImageConverterWebP\Abstracts\Service;
+use ImageConverterWebP\Interfaces\Kernel;
 
-class Main extends Service {
+class Main extends Service implements Kernel {
 	/**
 	 * Bind to WP.
 	 *

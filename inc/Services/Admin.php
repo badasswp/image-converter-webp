@@ -11,8 +11,9 @@
 namespace ImageConverterWebP\Services;
 
 use ImageConverterWebP\Abstracts\Service;
+use ImageConverterWebP\Interfaces\Kernel;
 
-class Admin extends Service {
+class Admin extends Service implements Kernel {
 	/**
 	 * Bind to WP.
 	 *

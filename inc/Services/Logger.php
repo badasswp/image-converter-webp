@@ -11,8 +11,9 @@
 namespace ImageConverterWebP\Services;
 
 use ImageConverterWebP\Abstracts\Service;
+use ImageConverterWebP\Interfaces\Kernel;
 
-class Logger extends Service {
+class Logger extends Service implements Kernel {
 	/**
 	 * Bind to WP.
 	 *
