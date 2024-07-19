@@ -84,6 +84,9 @@ class Converter {
 		$this->set_image_source();
 		$this->set_image_destination();
 
+		// Set response.
+		$webp = $this->rel_dest;
+
 		// Bail out, if source is empty.
 		if ( ! file_exists( $this->abs_source ) ) {
 			return new \WP_Error(
@@ -111,7 +114,7 @@ class Converter {
 
 		// Bail out, if dest. image exists.
 		if ( file_exists( $this->abs_dest ) ) {
-			return $this->rel_dest;
+			return $webp;
 		}
 
 		// Convert to WebP image.
@@ -124,8 +127,7 @@ class Converter {
 				$e->getMessage()
 			);
 			error_log( $error_msg );
-
-			return new \WP_Error( 'webp-img-error', $error_msg );
+			$webp = new \WP_Error( 'webp-img-error', $error_msg );
 		}
 
 		/**
@@ -139,9 +141,9 @@ class Converter {
 		 *
 		 * @return void
 		 */
-		do_action( 'webp_img_convert', $webp = $this->rel_dest, $attachment_id = $this->service->source['id'] );
+		do_action( 'webp_img_convert', $webp, $attachment_id = $this->service->source['id'] );
 
-		return $this->rel_dest;
+		return $webp;
 	}
 
 	/**
