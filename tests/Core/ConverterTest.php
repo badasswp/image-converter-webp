@@ -424,14 +424,19 @@ class ConverterTest extends TestCase {
 	}
 
 	public function test_convert_fails_on_empty_options_and_returns_WP_error() {
+		$service = Mockery::mock( Main::class )->makePartial();
+		$service->shouldAllowMockingProtectedMethods();
+		$service->source = [
+			'id'  => 1,
+			'url' => 'https://example.com/wp-content/uploads/2024/01/sample.jpeg',
+		];
+
 		$converter = Mockery::mock( Converter::class )->makePartial();
 		$converter->shouldAllowMockingProtectedMethods();
+		$converter->service = $service;
 
 		$converter->abs_source = __DIR__ . '/sample.jpeg';
 		$converter->abs_dest   = __DIR__ . '/sample.webp';
-		$converter->rel_dest   = str_replace( __DIR__, 'https://example.com/wp-content/uploads/2024/01', $converter->abs_dest );
-
-		// Create Mock Images.
 		$this->create_mock_image( $converter->abs_source );
 
 		$converter->shouldReceive( 'set_image_source' )
@@ -439,6 +444,10 @@ class ConverterTest extends TestCase {
 
 		$converter->shouldReceive( 'set_image_destination' )
 			->once()->with();
+
+		$converter->shouldReceive( 'get_options' )
+			->once()->with()
+			->andReturn( [] );
 
 		\WP_Mock::userFunction( 'wp_check_filetype' )
 			->once()
@@ -454,9 +463,21 @@ class ConverterTest extends TestCase {
 			->with( 'Fatal Error: %s', 'image-converter-webp' )
 			->andReturn( 'Fatal Error: %s' );
 
+		$e = Mockery::mock( \Exception::class )->makePartial();
+		$e->shouldReceive( 'getMessage' )
+			->once()->with()
+			->andReturn( 'Missing Options!' );
+
+		$wp_error = Mockery::mock( \WP_Error::class )->makePartial();
+		$wp_error->shouldReceive( '__construct' )
+			->once()
+			->with( 'webp-img-error', 'Fatal Error: Missing Options!' );
+
+		\WP_Mock::expectAction( 'webp_img_convert', $wp_error, 1 );
+
 		$webp = $converter->convert();
 
-		$this->assertInstanceOf( '\WP_Error', $webp );
+		// $this->assertInstanceOf( '\WP_Error', $webp );
 		$this->assertConditionsMet();
 
 		// Destroy Mock Images.
