@@ -15,7 +15,9 @@ use ImageConverterWebP\Services\PageLoad;
 use ImageConverterWebP\Services\Main;
 use ImageConverterWebP\Services\Logger;
 
-class Container {
+use ImageConverterWebP\Interfaces\Kernel;
+
+class Container implements Kernel {
 	/**
 	 * Services.
 	 *
