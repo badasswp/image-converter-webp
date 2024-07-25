@@ -48,10 +48,14 @@ class MainTest extends TestCase {
 			->once()
 			->andReturn( 'https://example.com/wp-content/uploads/2024/01/sample.webp' );
 
-		\WP_Mock::userFunction( 'icfw_get_settings' )
+		\WP_Mock::userFunction( 'get_option' )
 			->once()
-			->with( 'upload' )
-			->andReturn( true );
+			->with( 'icfw', [] )
+			->andReturn(
+				[
+					'upload' => true,
+				]
+			);
 
 		$main->register_webp_img_creation( 1 );
 
@@ -92,10 +96,14 @@ class MainTest extends TestCase {
 		$main->converter->shouldReceive( 'convert' )
 			->times( 3 );
 
-		\WP_Mock::userFunction( 'icfw_get_settings' )
+		\WP_Mock::userFunction( 'get_option' )
 			->times( 3 )
-			->with( 'upload' )
-			->andReturn( true );
+			->with( 'icfw', [] )
+			->andReturn(
+				[
+					'upload' => true,
+				]
+			);
 
 		$srcset = $main->register_webp_img_srcset_creation( $data, 1, 'create' );
 
