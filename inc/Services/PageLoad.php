@@ -199,7 +199,7 @@ class PageLoad extends Service implements Kernel {
 		];
 
 		// Ensure this is allowed.
-		if ( ! get_option( 'icfw', [] )['page_load'] ) {
+		if ( ! icfw_get_settings( 'page_load' ) ) {
 			return $img_html;
 		}
 

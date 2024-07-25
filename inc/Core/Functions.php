@@ -9,6 +9,20 @@
  */
 
 /**
+ * Get Plugin Options.
+ *
+ * @since 1.1.1
+ *
+ * @param string $option  Plugin option to be retrieved.
+ * @param string $default Default return value.
+ *
+ * @return void
+ */
+function icfw_get_settings( $option, $default = '' ) {
+	return get_option( 'icfw', [] )[ $option ] ?? $default;
+}
+
+/**
  * Get all WebP Images.
  *
  * This function grabs all WebP images and associated

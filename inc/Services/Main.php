@@ -48,7 +48,7 @@ class Main extends Service implements Kernel {
 		];
 
 		// Ensure this is allowed.
-		if ( get_option( 'icfw', [] )['upload'] ?? '' ) {
+		if ( icfw_get_settings( 'upload' ) ) {
 			$webp = $this->converter->convert();
 		}
 	}
@@ -83,7 +83,7 @@ class Main extends Service implements Kernel {
 			];
 
 			// Ensure this is allowed.
-			if ( get_option( 'icfw', [] )['upload'] ?? '' ) {
+			if ( icfw_get_settings( 'upload' ) ) {
 				$this->converter->convert();
 			}
 		}
