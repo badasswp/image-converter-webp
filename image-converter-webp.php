@@ -18,17 +18,17 @@ if ( ! defined( 'WPINC' ) ) {
 	die;
 }
 
-define( 'WEBP_AUTOLOAD', __DIR__ . '/vendor/autoload.php' );
+define( 'ICFW_AUTOLOAD', __DIR__ . '/vendor/autoload.php' );
 
 // Bail out, if Composer is NOT installed.
-if ( ! file_exists( WEBP_AUTOLOAD ) ) {
+if ( ! file_exists( ICFW_AUTOLOAD ) ) {
 	add_action(
 		'admin_notices',
 		function () {
 			printf(
 				/* translators: Autoload file path. */
 				esc_html__( 'Fatal Error: %s file does not exist, please check if Composer is installed!', 'image-converter-webp' ),
-				esc_html( WEBP_AUTOLOAD )
+				esc_html( ICFW_AUTOLOAD )
 			);
 		}
 	);
@@ -37,7 +37,7 @@ if ( ! file_exists( WEBP_AUTOLOAD ) ) {
 }
 
 // Autoload classes.
-require_once WEBP_AUTOLOAD;
+require_once ICFW_AUTOLOAD;
 
 // Get instance and Run plugin.
 ( \ImageConverterWebP\Plugin::get_instance() )->run();
