@@ -52,6 +52,7 @@ function icfw_can_autoload(): bool {
  */
 function icfw_autoload_notice(): void {
 	printf(
+		/* translators: plugin autoload file path. */
 		esc_html__( 'Fatal Error: %s file does not exist, please check if Composer is installed!', 'image-converter-webp' ),
 		esc_html( ICFW_AUTOLOAD )
 	);
