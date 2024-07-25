@@ -14,6 +14,7 @@ use ImageConverterWebP\Core\Converter;
  * @covers \ImageConverterWebP\Services\Main::register_webp_img_srcset_creation
  * @covers \ImageConverterWebP\Services\Main::register_webp_img_deletion
  * @covers \ImageConverterWebP\Services\Main::register_webp_attachment_fields
+ * @covers icfw_get_settings
  */
 class MainTest extends TestCase {
 	public function setUp(): void {
