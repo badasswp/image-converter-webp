@@ -24,6 +24,13 @@ You may not realize it, but imagery is a large part of it. This plugin helps tak
 
 == Changelog ==
 
+= 1.1.1 =
+* Ensure WP_Error is passed and returned to Hook.
+* Rename hooks across codebase to use `icfw` prefix.
+* Implement Kernel interface.
+* Fix bugs & failing tests.
+* Update README notes.
+
 = 1.1.0 =
 * Major code base refactor.
 * Add more **Settings** options to **Settings** page.
