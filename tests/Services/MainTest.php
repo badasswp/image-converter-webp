@@ -243,14 +243,14 @@ class MainTest extends TestCase {
 
 		\WP_Mock::userFunction( 'get_post_meta' )
 			->once()
-			->with( 1, 'webp_img', true )
+			->with( 1, 'icfw_img', true )
 			->andReturn( [] );
 
 		$expected = $this->main->add_webp_attachment_fields( [], $post );
 
 		$this->assertSame(
 			[
-				'webp_img' => [
+				'icfw_img' => [
 					'label' => 'WebP Image',
 					'input' => 'text',
 					'value' => '',
@@ -270,14 +270,14 @@ class MainTest extends TestCase {
 
 		\WP_Mock::userFunction( 'get_post_meta' )
 			->once()
-			->with( 1, 'webp_img', true )
+			->with( 1, 'icfw_img', true )
 			->andReturn( $webp );
 
 		$expected = $this->main->add_webp_attachment_fields( [], $post );
 
 		$this->assertSame(
 			[
-				'webp_img' => [
+				'icfw_img' => [
 					'label' => 'WebP Image',
 					'input' => 'text',
 					'value' => 'https://example.com/wp-content/uploads/2024/01/sample.webp',

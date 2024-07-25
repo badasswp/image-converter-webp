@@ -61,12 +61,12 @@ class LoggerTest extends TestCase {
 
 		\WP_Mock::userFunction( 'get_post_meta' )
 			->once()
-			->with( 1, 'webp_img', true )
+			->with( 1, 'icfw_img', true )
 			->andReturn( '' );
 
 		\WP_Mock::userFunction( 'update_post_meta' )
 			->once()
-			->with( 1, 'webp_img', 'https://example.com/wp-content/uploads/2024/01/sample.webp' )
+			->with( 1, 'icfw_img', 'https://example.com/wp-content/uploads/2024/01/sample.webp' )
 			->andReturn( null );
 
 		$this->logger->add_webp_meta_to_attachment( $webp, 1 );

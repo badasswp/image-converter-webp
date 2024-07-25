@@ -40,8 +40,8 @@ class Logger extends Service implements Kernel {
 	 * @return void
 	 */
 	public function add_webp_meta_to_attachment( $webp, $attachment_id ): void {
-		if ( ! is_wp_error( $webp ) && ! get_post_meta( $attachment_id, 'webp_img', true ) ) {
-			update_post_meta( $attachment_id, 'webp_img', $webp );
+		if ( ! is_wp_error( $webp ) && ! get_post_meta( $attachment_id, 'icfw_img', true ) ) {
+			update_post_meta( $attachment_id, 'icfw_img', $webp );
 		}
 
 		if ( is_wp_error( $webp ) ) {

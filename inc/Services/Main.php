@@ -185,9 +185,9 @@ class Main extends Service implements Kernel {
 	 * @return mixed[]
 	 */
 	public function add_webp_attachment_fields( $fields, $post ): array {
-		$webp_img = get_post_meta( $post->ID, 'webp_img', true ) ?? '';
+		$webp_img = get_post_meta( $post->ID, 'icfw_img', true ) ?? '';
 
-		$fields['webp_img'] = [
+		$fields['icfw_img'] = [
 			'label' => 'WebP Image',
 			'input' => 'text',
 			'value' => (string) ( is_array( $webp_img ) ? '' : $webp_img ),
