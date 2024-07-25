@@ -50,7 +50,7 @@ class MainTest extends TestCase {
 
 		\WP_Mock::userFunction( 'get_option' )
 			->once()
-			->with( 'webp_img_converter', [] )
+			->with( 'icfw', [] )
 			->andReturn(
 				[
 					'upload' => true,
@@ -98,7 +98,7 @@ class MainTest extends TestCase {
 
 		\WP_Mock::userFunction( 'get_option' )
 			->times( 3 )
-			->with( 'webp_img_converter', [] )
+			->with( 'icfw', [] )
 			->andReturn(
 				[
 					'upload' => true,
@@ -162,7 +162,7 @@ class MainTest extends TestCase {
 			->with( 1 )
 			->andReturn( __DIR__ . '/sample.jpeg' );
 
-		\WP_Mock::expectAction( 'webp_img_delete', __DIR__ . '/sample.webp', 1 );
+		\WP_Mock::expectAction( 'icfw_delete', __DIR__ . '/sample.webp', 1 );
 
 		\WP_Mock::userFunction( 'wp_get_attachment_metadata' )
 			->once()
@@ -191,7 +191,7 @@ class MainTest extends TestCase {
 			->with( 1 )
 			->andReturn( __DIR__ . '/sample.jpeg' );
 
-		\WP_Mock::expectAction( 'webp_img_delete', __DIR__ . '/sample.webp', 1 );
+		\WP_Mock::expectAction( 'icfw_delete', __DIR__ . '/sample.webp', 1 );
 
 		\WP_Mock::userFunction(
 			'trailingslashit',
@@ -222,9 +222,9 @@ class MainTest extends TestCase {
 				]
 			);
 
-		\WP_Mock::expectAction( 'webp_img_metadata_delete', __DIR__ . '/sample1.webp', 1 );
-		\WP_Mock::expectAction( 'webp_img_metadata_delete', __DIR__ . '/sample2.webp', 1 );
-		\WP_Mock::expectAction( 'webp_img_metadata_delete', __DIR__ . '/sample3.webp', 1 );
+		\WP_Mock::expectAction( 'icfw_metadata_delete', __DIR__ . '/sample1.webp', 1 );
+		\WP_Mock::expectAction( 'icfw_metadata_delete', __DIR__ . '/sample2.webp', 1 );
+		\WP_Mock::expectAction( 'icfw_metadata_delete', __DIR__ . '/sample3.webp', 1 );
 
 		// Create Mock Images.
 		$this->create_mock_image( __DIR__ . '/sample.webp' );

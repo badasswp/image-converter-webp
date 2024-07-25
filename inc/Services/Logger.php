@@ -22,7 +22,7 @@ class Logger extends Service implements Kernel {
 	 * @return void
 	 */
 	public function register(): void {
-		add_action( 'webp_img_convert', [ $this, 'add_webp_meta_to_attachment' ], 10, 2 );
+		add_action( 'icfw_convert', [ $this, 'add_webp_meta_to_attachment' ], 10, 2 );
 	}
 
 	/**

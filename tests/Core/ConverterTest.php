@@ -33,7 +33,7 @@ class ConverterTest extends TestCase {
 		$converter->shouldAllowMockingProtectedMethods();
 
 		\WP_Mock::expectFilter(
-			'webp_img_options',
+			'icfw_options',
 			[
 				'quality'     => 20,
 				'max-quality' => 100,
@@ -61,7 +61,7 @@ class ConverterTest extends TestCase {
 
 		\WP_Mock::userFunction( 'get_option' )
 			->once()
-			->with( 'webp_img_converter', [] )
+			->with( 'icfw', [] )
 			->andReturn( [ 'quality' => 0 ] );
 
 		$options = $converter->get_options();
@@ -81,7 +81,7 @@ class ConverterTest extends TestCase {
 		$converter = Mockery::mock( Converter::class )->makePartial();
 		$converter->shouldAllowMockingProtectedMethods();
 
-		\WP_Mock::onFilter( 'webp_img_options' )
+		\WP_Mock::onFilter( 'icfw_options' )
 			->with(
 				[
 					'quality'     => 75,
@@ -119,7 +119,7 @@ class ConverterTest extends TestCase {
 
 		\WP_Mock::userFunction( 'get_option' )
 			->once()
-			->with( 'webp_img_converter', [] )
+			->with( 'icfw', [] )
 			->andReturn(
 				[
 					'quality'   => 75,
@@ -144,7 +144,7 @@ class ConverterTest extends TestCase {
 		$converter->shouldAllowMockingProtectedMethods();
 
 		\WP_Mock::expectFilter(
-			'webp_img_options',
+			'icfw_options',
 			[
 				'quality'     => 66,
 				'max-quality' => 100,
@@ -175,7 +175,7 @@ class ConverterTest extends TestCase {
 
 		\WP_Mock::userFunction( 'get_option' )
 			->once()
-			->with( 'webp_img_converter', [] )
+			->with( 'icfw', [] )
 			->andReturn(
 				[
 					'quality'   => 66,
@@ -407,7 +407,7 @@ class ConverterTest extends TestCase {
 			);
 
 		\WP_Mock::expectAction(
-			'webp_img_convert',
+			'icfw_convert',
 			'https://example.com/wp-content/uploads/2024/01/sample.webp',
 			1
 		);
@@ -473,7 +473,7 @@ class ConverterTest extends TestCase {
 			->once()
 			->with( 'webp-img-error', 'Fatal Error: Missing Options!' );
 
-		\WP_Mock::expectAction( 'webp_img_convert', $wp_error, 1 );
+		\WP_Mock::expectAction( 'icfw_convert', $wp_error, 1 );
 
 		$webp = $converter->convert();
 

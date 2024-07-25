@@ -135,13 +135,14 @@ class Converter {
 		 *
 		 * @since 1.0.1
 		 * @since 1.1.0 Moved to Converter.
+		 * @since 1.1.1 Rename hook to use `icfw` prefix.
 		 *
 		 * @param string|\WP_Error $webp          WebP Image URL or WP Error.
 		 * @param int              $attachment_id Image ID.
 		 *
 		 * @return void
 		 */
-		do_action( 'webp_img_convert', $webp, $attachment_id = $this->service->source['id'] );
+		do_action( 'icfw_convert', $webp, $attachment_id = $this->service->source['id'] );
 
 		return $webp;
 	}
@@ -193,7 +194,7 @@ class Converter {
 	 * @return mixed[]
 	 */
 	protected function get_options(): array {
-		$settings = get_option( 'webp_img_converter', [] );
+		$settings = get_option( 'icfw', [] );
 
 		// Make sure this array key is integer.
 		$settings['quality'] = (int) ( $settings['quality'] ?? 0 );
@@ -212,10 +213,11 @@ class Converter {
 		 *
 		 * @since 1.0.0
 		 * @since 1.1.0 Moved to Converter.
+		 * @since 1.1.1 Rename hook to use `icfw` prefix.
 		 *
 		 * @param mixed[] $options Conversion options.
 		 * @return mixed[]
 		 */
-		return (array) apply_filters( 'webp_img_options', $options );
+		return (array) apply_filters( 'icfw_options', $options );
 	}
 }

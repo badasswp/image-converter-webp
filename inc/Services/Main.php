@@ -48,7 +48,7 @@ class Main extends Service implements Kernel {
 		];
 
 		// Ensure this is allowed.
-		if ( get_option( 'webp_img_converter', [] )['upload'] ?? '' ) {
+		if ( get_option( 'icfw', [] )['upload'] ?? '' ) {
 			$webp = $this->converter->convert();
 		}
 	}
@@ -83,7 +83,7 @@ class Main extends Service implements Kernel {
 			];
 
 			// Ensure this is allowed.
-			if ( get_option( 'webp_img_converter', [] )['upload'] ?? '' ) {
+			if ( get_option( 'icfw', [] )['upload'] ?? '' ) {
 				$this->converter->convert();
 			}
 		}
@@ -123,13 +123,14 @@ class Main extends Service implements Kernel {
 				 * Fires after WebP Image has been deleted.
 				 *
 				 * @since 1.0.2
+				 * @since 1.1.1 Rename hook to use `icfw` prefix.
 				 *
 				 * @param string $webp_image    Absolute path to WebP image.
 				 * @param int    $attachment_id Image ID.
 				 *
 				 * @return void
 				 */
-				do_action( 'webp_img_delete', $webp_image, $attachment_id );
+				do_action( 'icfw_delete', $webp_image, $attachment_id );
 			}
 		}
 
@@ -155,13 +156,14 @@ class Main extends Service implements Kernel {
 					 * Fires after WebP Metadata Image has been deleted.
 					 *
 					 * @since 1.0.2
+					 * @since 1.1.1 Rename hook to use `icfw` prefix.
 					 *
 					 * @param string $webp_metadata_image Absolute path to WebP image.
 					 * @param int    $attachment_id       Image ID.
 					 *
 					 * @return void
 					 */
-					do_action( 'webp_img_metadata_delete', $webp_metadata_image, $attachment_id );
+					do_action( 'icfw_metadata_delete', $webp_metadata_image, $attachment_id );
 				}
 			}
 		}

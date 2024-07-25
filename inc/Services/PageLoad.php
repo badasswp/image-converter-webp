@@ -80,13 +80,14 @@ class PageLoad extends Service implements Kernel {
 		 *
 		 * @since 1.0.0
 		 * @since 1.1.0 Moved to PageLoad class.
+		 * @since 1.1.1 Rename hook to use `icfw` prefix.
 		 *
 		 * @param string $html          WebP Image HTML.
 		 * @param int    $attachment_id Image ID.
 		 *
 		 * @return string
 		 */
-		return (string) apply_filters( 'webp_img_attachment_html', $html, $attachment_id );
+		return (string) apply_filters( 'icfw_attachment_html', $html, $attachment_id );
 	}
 
 	/**
@@ -117,13 +118,14 @@ class PageLoad extends Service implements Kernel {
 		 * Filter WebP Image Thumbnail HTML.
 		 *
 		 * @since 1.0.0
+		 * @since 1.1.1 Rename hook to use `icfw` prefix.
 		 *
 		 * @param string $html         WebP Image HTML.
 		 * @param int    $thumbnail_id The post thumbnail ID, or 0 if there isn't one.
 		 *
 		 * @return string
 		 */
-		return (string) apply_filters( 'webp_img_thumbnail_html', $html, $thumbnail_id );
+		return (string) apply_filters( 'icfw_thumbnail_html', $html, $thumbnail_id );
 	}
 
 	/**
@@ -197,7 +199,7 @@ class PageLoad extends Service implements Kernel {
 		];
 
 		// Ensure this is allowed.
-		if ( ! get_option( 'webp_img_converter', [] )['page_load'] ) {
+		if ( ! get_option( 'icfw', [] )['page_load'] ) {
 			return $img_html;
 		}
 

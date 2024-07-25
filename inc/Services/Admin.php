@@ -90,7 +90,7 @@ class Admin extends Service implements Kernel {
 		$fields = [ 'quality', 'converter', 'upload', 'page_load' ];
 
 		update_option(
-			'webp_img_converter',
+			'icfw',
 			array_combine(
 				$fields,
 				array_map(

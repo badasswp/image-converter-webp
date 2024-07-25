@@ -113,7 +113,7 @@ class AdminTest extends TestCase {
 		\WP_Mock::userFunction( 'update_option' )
 			->once()
 			->with(
-				'webp_img_converter',
+				'icfw',
 				[
 					'quality'   => 75,
 					'converter' => 'gd',

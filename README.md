@@ -20,12 +20,12 @@ You may not realize it, but __imagery is a large part of it__. This plugin helps
 
 ### Hooks
 
-#### `webp_img_options`
+#### `icfw_options`
 
 This custom hook (filter) provides the ability to add custom options for your image conversions to WebP. For e.g. to perform a 50% quality, image conversion using the Imagick extension, you could do:
 
 ```php
-add_filter( 'webp_img_options', [ $this, 'custom_options' ] );
+add_filter( 'icfw_options', [ $this, 'custom_options' ] );
 
 public function custom_options( $options ): array {
     $options = wp_parse_args(
@@ -45,12 +45,12 @@ public function custom_options( $options ): array {
 - options _`{array}`_ By default this will be an associative array containing key, value options of each image conversion.
 <br/>
 
-#### `webp_img_convert`
+#### `icfw_convert`
 
 This custom hook (action) fires immediately after the image is converted to WebP. For e.g. you can capture errors to a custom post type of yours like so:
 
 ```php
-add_action( 'webp_img_convert', [ $this, 'log_webp_errors' ], 10, 2 );
+add_action( 'icfw_convert', [ $this, 'log_webp_errors' ], 10, 2 );
 
 public function log_webp_errors( $webp, $attachment_id ): void {
     if ( is_wp_error( $webp ) ) {
@@ -71,12 +71,12 @@ public function log_webp_errors( $webp, $attachment_id ): void {
 - attachment_id _`{int}`_ By default this is the Image ID.
 <br/>
 
-#### `webp_img_attachment_html`
+#### `icfw_attachment_html`
 
 This custom hook (filter) provides the ability to modify the resulting WebP image HTML. For e.g. you can nest your image HTML into a figure element like so:
 
 ```php
-add_filter( 'webp_img_attachment_html', [ $this, 'custom_img_html' ], 10, 2 );
+add_filter( 'icfw_attachment_html', [ $this, 'custom_img_html' ], 10, 2 );
 
 public function custom_img_html( $html, $attachment_id ): string {
     return sprintf(
@@ -96,12 +96,12 @@ public function custom_img_html( $html, $attachment_id ): string {
 - attachment_id _`{int}`_ By default this is the Image ID.
 <br/>
 
-#### `webp_img_thumbnail_html`
+#### `icfw_thumbnail_html`
 
 This custom hook (filter) provides the ability to modify the resulting WebP image HTML. For e.g. you can nest your image HTML into a figure element like so:
 
 ```php
-add_filter( 'webp_img_thumbnail_html', [ $this, 'custom_img_html' ], 10, 2 );
+add_filter( 'icfw_thumbnail_html', [ $this, 'custom_img_html' ], 10, 2 );
 
 public function custom_img_html( $html, $thumbnail_id ): string {
     return sprintf(
@@ -121,12 +121,12 @@ public function custom_img_html( $html, $thumbnail_id ): string {
 - thumbnail_id _`{int}`_ By default this is the Image ID.
 <br/>
 
-#### `webp_img_delete`
+#### `icfw_delete`
 
 This custom hook (action) fires immediately after a WebP image is deleteed.
 
 ```php
-add_action( 'webp_img_delete', [ $this, 'delete_bmp_image' ], 10, 2 );
+add_action( 'icfw_delete', [ $this, 'delete_bmp_image' ], 10, 2 );
 
 public function delete_bmp_image( $webp, $attachment_id ): void {
     $bmp = str_replace( '.webp', '.bmp', $webp );
@@ -143,12 +143,12 @@ public function delete_bmp_image( $webp, $attachment_id ): void {
 - attachment_id _`{int}`_ By default this is the Image ID.
 <br/>
 
-#### `webp_img_metadata_delete`
+#### `icfw_metadata_delete`
 
 This custom hook (action) fires immediately after a WebP metadata image is deleteed.
 
 ```php
-add_action( 'webp_img_metadata_delete', [ $this, 'delete_bmp_image' ], 10, 2 );
+add_action( 'icfw_metadata_delete', [ $this, 'delete_bmp_image' ], 10, 2 );
 
 public function delete_bmp_image( $webp, $attachment_id ): void {
     $bmp = str_replace( '.webp', '.bmp', $webp );

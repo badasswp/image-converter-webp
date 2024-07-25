@@ -68,7 +68,7 @@ class PageLoadTest extends TestCase {
 			->with( '<img src="sample.jpeg"/>', 1 )
 			->andReturn( '<img src="sample.webp"/>' );
 
-		\WP_Mock::onFilter( 'webp_img_attachment_html' )
+		\WP_Mock::onFilter( 'icfw_attachment_html' )
 			->with(
 				'<img src="sample.webp"/>',
 				1
@@ -99,7 +99,7 @@ class PageLoadTest extends TestCase {
 			->with( '<img src="sample.jpeg"/>', 2 )
 			->andReturn( '<img src="sample.webp"/>' );
 
-		\WP_Mock::onFilter( 'webp_img_thumbnail_html' )
+		\WP_Mock::onFilter( 'icfw_thumbnail_html' )
 			->with(
 				'<img src="sample.webp"/>',
 				2
@@ -164,7 +164,7 @@ class PageLoadTest extends TestCase {
 
 		\WP_Mock::userFunction( 'get_option' )
 			->times( 1 )
-			->with( 'webp_img_converter', [] )
+			->with( 'icfw', [] )
 			->andReturn(
 				[
 					'page_load' => true,
@@ -202,7 +202,7 @@ class PageLoadTest extends TestCase {
 
 		\WP_Mock::userFunction( 'get_option' )
 			->times( 1 )
-			->with( 'webp_img_converter', [] )
+			->with( 'icfw', [] )
 			->andReturn(
 				[
 					'page_load' => true,
