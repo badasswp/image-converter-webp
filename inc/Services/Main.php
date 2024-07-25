@@ -24,8 +24,8 @@ class Main extends Service implements Kernel {
 	public function register(): void {
 		add_action( 'add_attachment', [ $this, 'generate_webp_image' ], 10, 1 );
 		add_filter( 'wp_generate_attachment_metadata', [ $this, 'generate_webp_srcset_images' ], 10, 3 );
-		add_action( 'delete_attachment', [ $this, 'delete_webp_images' ], 10, 1 );
-		add_filter( 'attachment_fields_to_edit', [ $this, 'add_webp_attachment_fields' ], 10, 2 );
+		add_action( 'delete_attachment', [ $this, 'register_webp_img_deletion' ], 10, 1 );
+		add_filter( 'attachment_fields_to_edit', [ $this, 'register_webp_attachment_fields' ], 10, 2 );
 	}
 
 	/**
@@ -103,7 +103,7 @@ class Main extends Service implements Kernel {
 	 * @param int $attachment_id Attachment ID.
 	 * @return void
 	 */
-	public function delete_webp_images( $attachment_id ): void {
+	public function register_webp_img_deletion( $attachment_id ): void {
 		if ( ! wp_attachment_is_image( $attachment_id ) ) {
 			return;
 		}
@@ -184,7 +184,7 @@ class Main extends Service implements Kernel {
 	 *
 	 * @return mixed[]
 	 */
-	public function add_webp_attachment_fields( $fields, $post ): array {
+	public function register_webp_attachment_fields( $fields, $post ): array {
 		$webp_img = get_post_meta( $post->ID, 'icfw_img', true ) ?? '';
 
 		$fields['icfw_img'] = [

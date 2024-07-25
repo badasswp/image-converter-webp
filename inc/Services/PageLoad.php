@@ -23,9 +23,9 @@ class PageLoad extends Service implements Kernel {
 	 * @return void
 	 */
 	public function register(): void {
-		add_filter( 'render_block', [ $this, 'filter_render_image_block' ], 20, 2 );
-		add_filter( 'wp_get_attachment_image', [ $this, 'filter_wp_get_attachment_image' ], 10, 5 );
-		add_filter( 'post_thumbnail_html', [ $this, 'filter_post_thumbnail_html' ], 10, 5 );
+		add_filter( 'render_block', [ $this, 'register_render_block' ], 20, 2 );
+		add_filter( 'wp_get_attachment_image', [ $this, 'register_wp_get_attachment_image' ], 10, 5 );
+		add_filter( 'post_thumbnail_html', [ $this, 'register_post_thumbnail_html' ], 10, 5 );
 	}
 
 	/**
@@ -42,7 +42,7 @@ class PageLoad extends Service implements Kernel {
 	 *
 	 * @return string
 	 */
-	public function filter_render_image_block( $html, $block ): string {
+	public function register_render_block( $html, $block ): string {
 		// Bail out, if empty or NOT image.
 		if ( empty( $html ) || ! preg_match( '/<img.*>/', $html, $image ) ) {
 			return $html;
@@ -68,7 +68,7 @@ class PageLoad extends Service implements Kernel {
 	 *
 	 * @return string
 	 */
-	public function filter_wp_get_attachment_image( $html, $attachment_id, $size, $icon, $attr ): string {
+	public function register_wp_get_attachment_image( $html, $attachment_id, $size, $icon, $attr ): string {
 		if ( empty( $html ) ) {
 			return $html;
 		}
@@ -107,7 +107,7 @@ class PageLoad extends Service implements Kernel {
 	 *
 	 * @return string
 	 */
-	public function filter_post_thumbnail_html( $html, $post_id, $thumbnail_id, $size, $attr ): string {
+	public function register_post_thumbnail_html( $html, $post_id, $thumbnail_id, $size, $attr ): string {
 		if ( empty( $html ) ) {
 			return $html;
 		}
