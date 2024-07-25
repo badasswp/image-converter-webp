@@ -10,8 +10,8 @@ use ImageConverterWebP\Core\Converter;
 /**
  * @covers \ImageConverterWebP\Core\Converter::__construct
  * @covers \ImageConverterWebP\Services\Main::__construct
- * @covers \ImageConverterWebP\Services\Main::generate_webp_image
- * @covers \ImageConverterWebP\Services\Main::generate_webp_srcset_images
+ * @covers \ImageConverterWebP\Services\Main::register_webp_img_creation
+ * @covers \ImageConverterWebP\Services\Main::register_webp_img_srcset_creation
  * @covers \ImageConverterWebP\Services\Main::register_webp_img_deletion
  * @covers \ImageConverterWebP\Services\Main::register_webp_attachment_fields
  */
@@ -26,7 +26,7 @@ class MainTest extends TestCase {
 		\WP_Mock::tearDown();
 	}
 
-	public function test_generate_webp_image_satisfies_conditions() {
+	public function test_register_webp_img_creation_satisfies_conditions() {
 		$converter = Mockery::mock( Converter::class )->makePartial();
 		$converter->shouldAllowMockingProtectedMethods();
 
@@ -57,12 +57,12 @@ class MainTest extends TestCase {
 				]
 			);
 
-		$main->generate_webp_image( 1 );
+		$main->register_webp_img_creation( 1 );
 
 		$this->assertConditionsMet();
 	}
 
-	public function test_generate_webp_srcset_images() {
+	public function test_register_webp_img_srcset_creation() {
 		$main = Mockery::mock( Main::class )->makePartial();
 		$main->shouldAllowMockingProtectedMethods();
 
@@ -105,7 +105,7 @@ class MainTest extends TestCase {
 				]
 			);
 
-		$srcset = $main->generate_webp_srcset_images( $data, 1, 'create' );
+		$srcset = $main->register_webp_img_srcset_creation( $data, 1, 'create' );
 
 		$this->assertConditionsMet();
 	}

@@ -22,8 +22,8 @@ class Main extends Service implements Kernel {
 	 * @return void
 	 */
 	public function register(): void {
-		add_action( 'add_attachment', [ $this, 'generate_webp_image' ], 10, 1 );
-		add_filter( 'wp_generate_attachment_metadata', [ $this, 'generate_webp_srcset_images' ], 10, 3 );
+		add_action( 'add_attachment', [ $this, 'register_webp_img_creation' ], 10, 1 );
+		add_filter( 'wp_generate_attachment_metadata', [ $this, 'register_webp_img_srcset_creation' ], 10, 3 );
 		add_action( 'delete_attachment', [ $this, 'register_webp_img_deletion' ], 10, 1 );
 		add_filter( 'attachment_fields_to_edit', [ $this, 'register_webp_attachment_fields' ], 10, 2 );
 	}
@@ -40,7 +40,7 @@ class Main extends Service implements Kernel {
 	 * @param  int $attachment_id Image ID.
 	 * @return void
 	 */
-	public function generate_webp_image( $attachment_id ): void {
+	public function register_webp_img_creation( $attachment_id ): void {
 		// Get source props.
 		$this->source = [
 			'id'  => (int) $attachment_id,
@@ -68,7 +68,7 @@ class Main extends Service implements Kernel {
 	 *
 	 * @return mixed[]
 	 */
-	public function generate_webp_srcset_images( $metadata, $attachment_id, $context ): array {
+	public function register_webp_img_srcset_creation( $metadata, $attachment_id, $context ): array {
 		// Get parent image URL.
 		$img_url = (string) wp_get_attachment_image_url( $attachment_id );
 
