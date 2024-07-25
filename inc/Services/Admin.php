@@ -22,14 +22,14 @@ class Admin extends Service implements Kernel {
 	 * @return void
 	 */
 	public function register(): void {
-		add_action( 'init', [ $this, 'add_webp_translation' ] );
-		add_action( 'admin_init', [ $this, 'add_webp_settings' ] );
-		add_action( 'admin_menu', [ $this, 'add_webp_image_menu' ] );
-		add_action( 'admin_enqueue_scripts', [ $this, 'add_webp_styles' ] );
+		add_action( 'init', [ $this, 'register_icfw_translation' ] );
+		add_action( 'admin_init', [ $this, 'register_icfw_settings' ] );
+		add_action( 'admin_menu', [ $this, 'register_icfw_options_menu' ] );
+		add_action( 'admin_enqueue_scripts', [ $this, 'register_icfw_styles' ] );
 	}
 
 	/**
-	 * Menu Service.
+	 * Register Options Menu.
 	 *
 	 * This controls the menu display for the plugin.
 	 *
@@ -38,19 +38,19 @@ class Admin extends Service implements Kernel {
 	 *
 	 * @return void
 	 */
-	public function add_webp_image_menu(): void {
+	public function register_icfw_options_menu(): void {
 		add_submenu_page(
 			'upload.php',
 			__( 'Image Converter for WebP', 'image-converter-webp' ),
 			__( 'Image Converter for WebP', 'image-converter-webp' ),
 			'manage_options',
 			'image-converter-webp',
-			[ $this, 'webp_image_menu_page' ]
+			[ $this, 'register_icfw_options_page' ]
 		);
 	}
 
 	/**
-	 * Menu Callback.
+	 * Register Options Page.
 	 *
 	 * This controls the display of the menu page.
 	 *
@@ -59,7 +59,7 @@ class Admin extends Service implements Kernel {
 	 *
 	 * @return void
 	 */
-	public function webp_image_menu_page(): void {
+	public function register_icfw_options_page(): void {
 		$settings = (string) plugin_dir_path( __FILE__ ) . '../Views/settings.php';
 
 		if ( file_exists( $settings ) ) {
@@ -68,7 +68,7 @@ class Admin extends Service implements Kernel {
 	}
 
 	/**
-	 * Save Plugin settings.
+	 * Register Settings.
 	 *
 	 * This method handles all save actions for the fields
 	 * on the Plugin's settings page.
@@ -78,7 +78,7 @@ class Admin extends Service implements Kernel {
 	 *
 	 * @return void
 	 */
-	public function add_webp_settings(): void {
+	public function register_icfw_settings(): void {
 		if ( ! isset( $_POST['webp_save_settings'] ) || ! isset( $_POST['webp_settings_nonce'] ) ) {
 			return;
 		}
@@ -106,13 +106,13 @@ class Admin extends Service implements Kernel {
 	}
 
 	/**
-	 * Add Plugin's Text Domain.
+	 * Register Text Domain.
 	 *
 	 * @since 1.1.0
 	 *
 	 * @return void
 	 */
-	public function add_webp_translation(): void {
+	public function register_icfw_translation(): void {
 		load_plugin_textdomain(
 			'image-converter-webp',
 			false,
@@ -121,13 +121,13 @@ class Admin extends Service implements Kernel {
 	}
 
 	/**
-	 * Add Styles to Admin page.
+	 * Register Styles.
 	 *
 	 * @since 1.1.0
 	 *
 	 * @return void
 	 */
-	public function add_webp_styles(): void {
+	public function register_icfw_styles(): void {
 		wp_enqueue_style(
 			'image-converter-webp',
 			plugins_url( 'image-converter-webp/inc/Views/css/styles.css' ),
