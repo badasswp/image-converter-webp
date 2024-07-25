@@ -11,8 +11,9 @@
 namespace ImageConverterWebP\Services;
 
 use ImageConverterWebP\Abstracts\Service;
+use ImageConverterWebP\Interfaces\Kernel;
 
-class Main extends Service {
+class Main extends Service implements Kernel {
 	/**
 	 * Bind to WP.
 	 *
@@ -21,10 +22,10 @@ class Main extends Service {
 	 * @return void
 	 */
 	public function register(): void {
-		add_action( 'add_attachment', [ $this, 'generate_webp_image' ], 10, 1 );
-		add_filter( 'wp_generate_attachment_metadata', [ $this, 'generate_webp_srcset_images' ], 10, 3 );
-		add_action( 'delete_attachment', [ $this, 'delete_webp_images' ], 10, 1 );
-		add_filter( 'attachment_fields_to_edit', [ $this, 'add_webp_attachment_fields' ], 10, 2 );
+		add_action( 'add_attachment', [ $this, 'register_webp_img_creation' ], 10, 1 );
+		add_filter( 'wp_generate_attachment_metadata', [ $this, 'register_webp_img_srcset_creation' ], 10, 3 );
+		add_action( 'delete_attachment', [ $this, 'register_webp_img_deletion' ], 10, 1 );
+		add_filter( 'attachment_fields_to_edit', [ $this, 'register_webp_attachment_fields' ], 10, 2 );
 	}
 
 	/**
@@ -39,7 +40,7 @@ class Main extends Service {
 	 * @param  int $attachment_id Image ID.
 	 * @return void
 	 */
-	public function generate_webp_image( $attachment_id ): void {
+	public function register_webp_img_creation( $attachment_id ): void {
 		// Get source props.
 		$this->source = [
 			'id'  => (int) $attachment_id,
@@ -47,7 +48,7 @@ class Main extends Service {
 		];
 
 		// Ensure this is allowed.
-		if ( get_option( 'webp_img_converter', [] )['upload'] ?? '' ) {
+		if ( icfw_get_settings( 'upload' ) ) {
 			$webp = $this->converter->convert();
 		}
 	}
@@ -67,7 +68,7 @@ class Main extends Service {
 	 *
 	 * @return mixed[]
 	 */
-	public function generate_webp_srcset_images( $metadata, $attachment_id, $context ): array {
+	public function register_webp_img_srcset_creation( $metadata, $attachment_id, $context ): array {
 		// Get parent image URL.
 		$img_url = (string) wp_get_attachment_image_url( $attachment_id );
 
@@ -82,7 +83,7 @@ class Main extends Service {
 			];
 
 			// Ensure this is allowed.
-			if ( get_option( 'webp_img_converter', [] )['upload'] ?? '' ) {
+			if ( icfw_get_settings( 'upload' ) ) {
 				$this->converter->convert();
 			}
 		}
@@ -102,7 +103,7 @@ class Main extends Service {
 	 * @param int $attachment_id Attachment ID.
 	 * @return void
 	 */
-	public function delete_webp_images( $attachment_id ): void {
+	public function register_webp_img_deletion( $attachment_id ): void {
 		if ( ! wp_attachment_is_image( $attachment_id ) ) {
 			return;
 		}
@@ -122,13 +123,14 @@ class Main extends Service {
 				 * Fires after WebP Image has been deleted.
 				 *
 				 * @since 1.0.2
+				 * @since 1.1.1 Rename hook to use `icfw` prefix.
 				 *
 				 * @param string $webp_image    Absolute path to WebP image.
 				 * @param int    $attachment_id Image ID.
 				 *
 				 * @return void
 				 */
-				do_action( 'webp_img_delete', $webp_image, $attachment_id );
+				do_action( 'icfw_delete', $webp_image, $attachment_id );
 			}
 		}
 
@@ -154,13 +156,14 @@ class Main extends Service {
 					 * Fires after WebP Metadata Image has been deleted.
 					 *
 					 * @since 1.0.2
+					 * @since 1.1.1 Rename hook to use `icfw` prefix.
 					 *
 					 * @param string $webp_metadata_image Absolute path to WebP image.
 					 * @param int    $attachment_id       Image ID.
 					 *
 					 * @return void
 					 */
-					do_action( 'webp_img_metadata_delete', $webp_metadata_image, $attachment_id );
+					do_action( 'icfw_metadata_delete', $webp_metadata_image, $attachment_id );
 				}
 			}
 		}
@@ -181,10 +184,10 @@ class Main extends Service {
 	 *
 	 * @return mixed[]
 	 */
-	public function add_webp_attachment_fields( $fields, $post ): array {
-		$webp_img = get_post_meta( $post->ID, 'webp_img', true ) ?? '';
+	public function register_webp_attachment_fields( $fields, $post ): array {
+		$webp_img = get_post_meta( $post->ID, 'icfw_img', true ) ?? '';
 
-		$fields['webp_img'] = [
+		$fields['icfw_img'] = [
 			'label' => 'WebP Image',
 			'input' => 'text',
 			'value' => (string) ( is_array( $webp_img ) ? '' : $webp_img ),

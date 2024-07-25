@@ -1,6 +1,6 @@
 <?php
 
-namespace ImageConverterWebP\Tests\Core;
+namespace ImageConverterWebP\Tests\Services;
 
 use Mockery;
 use WP_Mock\Tools\TestCase;
@@ -10,11 +10,12 @@ use ImageConverterWebP\Services\PageLoad;
 /**
  * @covers \ImageConverterWebP\Core\Converter::__construct
  * @covers \ImageConverterWebP\Services\PageLoad::__construct
- * @covers \ImageConverterWebP\Services\PageLoad::filter_render_image_block
- * @covers \ImageConverterWebP\Services\PageLoad::filter_wp_get_attachment_image
- * @covers \ImageConverterWebP\Services\PageLoad::filter_post_thumbnail_html
+ * @covers \ImageConverterWebP\Services\PageLoad::register_render_block
+ * @covers \ImageConverterWebP\Services\PageLoad::register_wp_get_attachment_image
+ * @covers \ImageConverterWebP\Services\PageLoad::register_post_thumbnail_html
  * @covers \ImageConverterWebP\Services\PageLoad::get_webp_image_html
  * @covers \ImageConverterWebP\Services\PageLoad::_get_webp_html
+ * @covers icfw_get_settings
  */
 class PageLoadTest extends TestCase {
 	public function setUp(): void {
@@ -27,17 +28,17 @@ class PageLoadTest extends TestCase {
 		\WP_Mock::tearDown();
 	}
 
-	public function test_filter_render_image_block_returns_empty_string() {
+	public function test_register_render_block_returns_empty_string() {
 		$page_load = Mockery::mock( PageLoad::class )->makePartial();
 		$page_load->shouldAllowMockingProtectedMethods();
 
-		$image = $page_load->filter_render_image_block( '', [] );
+		$image = $page_load->register_render_block( '', [] );
 
 		$this->assertSame( '', $image );
 		$this->assertConditionsMet();
 	}
 
-	public function test_filter_render_image_block_returns_img_html() {
+	public function test_register_render_block_returns_img_html() {
 		$page_load = Mockery::mock( PageLoad::class )->makePartial();
 		$page_load->shouldAllowMockingProtectedMethods();
 
@@ -46,20 +47,20 @@ class PageLoadTest extends TestCase {
 			->with( '<img src="sample.jpeg"/>' )
 			->andReturn( '<img src="sample.webp"/>' );
 
-		$image = $page_load->filter_render_image_block( '<img src="sample.jpeg"/>', [] );
+		$image = $page_load->register_render_block( '<img src="sample.jpeg"/>', [] );
 
 		$this->assertSame( '<img src="sample.webp"/>', $image );
 		$this->assertConditionsMet();
 	}
 
-	public function test_filter_wp_get_attachment_image_fails_and_returns_empty_string() {
-		$image = $this->page_load->filter_wp_get_attachment_image( '', 1, [], true, [] );
+	public function test_register_wp_get_attachment_image_fails_and_returns_empty_string() {
+		$image = $this->page_load->register_wp_get_attachment_image( '', 1, [], true, [] );
 
 		$this->assertSame( '', $image );
 		$this->assertConditionsMet();
 	}
 
-	public function test_filter_wp_get_attachment_image_returns_img_html() {
+	public function test_register_wp_get_attachment_image_returns_img_html() {
 		$page_load = Mockery::mock( PageLoad::class )->makePartial();
 		$page_load->shouldAllowMockingProtectedMethods();
 
@@ -68,7 +69,7 @@ class PageLoadTest extends TestCase {
 			->with( '<img src="sample.jpeg"/>', 1 )
 			->andReturn( '<img src="sample.webp"/>' );
 
-		\WP_Mock::onFilter( 'webp_img_attachment_html' )
+		\WP_Mock::onFilter( 'icfw_attachment_html' )
 			->with(
 				'<img src="sample.webp"/>',
 				1
@@ -77,20 +78,20 @@ class PageLoadTest extends TestCase {
 				'<img src="sample.webp"/>'
 			);
 
-		$image = $page_load->filter_wp_get_attachment_image( '<img src="sample.jpeg"/>', 1, [], true, [] );
+		$image = $page_load->register_wp_get_attachment_image( '<img src="sample.jpeg"/>', 1, [], true, [] );
 
 		$this->assertSame( '<img src="sample.webp"/>', $image );
 		$this->assertConditionsMet();
 	}
 
-	public function test_filter_post_thumbnail_html_fails_and_returns_empty_string() {
-		$image = $this->page_load->filter_post_thumbnail_html( '', 1, [], true, [] );
+	public function test_register_post_thumbnail_html_fails_and_returns_empty_string() {
+		$image = $this->page_load->register_post_thumbnail_html( '', 1, [], true, [] );
 
 		$this->assertSame( '', $image );
 		$this->assertConditionsMet();
 	}
 
-	public function test_filter_post_thumbnail_html_returns_img_html() {
+	public function test_register_post_thumbnail_html_returns_img_html() {
 		$page_load = Mockery::mock( PageLoad::class )->makePartial();
 		$page_load->shouldAllowMockingProtectedMethods();
 
@@ -99,7 +100,7 @@ class PageLoadTest extends TestCase {
 			->with( '<img src="sample.jpeg"/>', 2 )
 			->andReturn( '<img src="sample.webp"/>' );
 
-		\WP_Mock::onFilter( 'webp_img_thumbnail_html' )
+		\WP_Mock::onFilter( 'icfw_thumbnail_html' )
 			->with(
 				'<img src="sample.webp"/>',
 				2
@@ -108,7 +109,7 @@ class PageLoadTest extends TestCase {
 				'<img src="sample.webp"/>'
 			);
 
-		$image = $page_load->filter_post_thumbnail_html( '<img src="sample.jpeg"/>', 1, 2, [], [] );
+		$image = $page_load->register_post_thumbnail_html( '<img src="sample.jpeg"/>', 1, 2, [], [] );
 
 		$this->assertSame( '<img src="sample.webp"/>', $image );
 		$this->assertConditionsMet();
@@ -163,8 +164,8 @@ class PageLoadTest extends TestCase {
 			->andReturn( true );
 
 		\WP_Mock::userFunction( 'get_option' )
-			->times( 1 )
-			->with( 'webp_img_converter', [] )
+			->once()
+			->with( 'icfw', [] )
 			->andReturn(
 				[
 					'page_load' => true,
@@ -201,8 +202,8 @@ class PageLoadTest extends TestCase {
 			->andReturn( false );
 
 		\WP_Mock::userFunction( 'get_option' )
-			->times( 1 )
-			->with( 'webp_img_converter', [] )
+			->once()
+			->with( 'icfw', [] )
 			->andReturn(
 				[
 					'page_load' => true,

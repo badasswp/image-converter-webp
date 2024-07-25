@@ -3,7 +3,7 @@
  * Plugin Name: Image Converter for WebP
  * Plugin URI:  https://github.com/badasswp/image-converter-webp
  * Description: Convert your WordPress JPG/PNG images to WebP formats during runtime.
- * Version:     1.1.0
+ * Version:     1.1.1
  * Author:      badasswp
  * Author URI:  https://github.com/badasswp
  * License:     GPL v2 or later
@@ -18,26 +18,58 @@ if ( ! defined( 'WPINC' ) ) {
 	die;
 }
 
-define( 'WEBP_AUTOLOAD', __DIR__ . '/vendor/autoload.php' );
+define( 'ICFW_AUTOLOAD', __DIR__ . '/vendor/autoload.php' );
 
-// Bail out, if Composer is NOT installed.
-if ( ! file_exists( WEBP_AUTOLOAD ) ) {
-	add_action(
-		'admin_notices',
-		function () {
-			printf(
-				/* translators: Autoload file path. */
-				esc_html__( 'Fatal Error: %s file does not exist, please check if Composer is installed!', 'image-converter-webp' ),
-				esc_html( WEBP_AUTOLOAD )
-			);
-		}
-	);
+/**
+ * Bail out, if Composer is NOT installed.
+ * Log error message.
+ *
+ * @return bool
+ */
+function icfw_can_autoload(): bool {
+	if ( ! file_exists( ICFW_AUTOLOAD ) ) {
+		error_log(
+			sprintf(
+				esc_html__( 'Fatal Error: Composer not setup in %', 'image-converter-webp' ),
+				__DIR__
+			)
+		);
 
-	return;
+		return false;
+	}
+
+	// Require autoload.
+	require_once ICFW_AUTOLOAD;
+
+	return true;
 }
 
-// Autoload classes.
-require_once WEBP_AUTOLOAD;
+/**
+ * Generate autoload notice if Composer is
+ * NOT installed.
+ *
+ * @return void
+ */
+function icfw_autoload_notice(): void {
+	printf(
+		/* translators: plugin autoload file path. */
+		esc_html__( 'Fatal Error: %s file does not exist, please check if Composer is installed!', 'image-converter-webp' ),
+		esc_html( ICFW_AUTOLOAD )
+	);
+}
 
-// Get instance and Run plugin.
-( \ImageConverterWebP\Plugin::get_instance() )->run();
+/**
+ * Run plugin.
+ *
+ * @return void
+ */
+function icfw_run(): void {
+	if ( icfw_can_autoload() ) {
+		require_once __DIR__ . '/inc/Helpers/functions.php';
+		( \ImageConverterWebP\Plugin::get_instance() )->run();
+	} else {
+		add_action( 'admin_notices', 'icfw_autoload_notice' );
+	}
+}
+
+icfw_run();

@@ -2,8 +2,8 @@
 Contributors: badasswp
 Tags: webp, image, convert, jpeg, png.
 Requires at least: 4.0
-Tested up to: 6.5.5
-Stable tag: 1.1.0
+Tested up to: 6.6.1
+Stable tag: 1.1.1
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -22,7 +22,20 @@ As an internet user, you already know images can be the difference between a gre
 
 You may not realize it, but imagery is a large part of it. This plugin helps take care of all those concerns, by converting your WordPress images to WebP format during page load so that your site loads extremely fast, without any disruptions or downtime.
 
+== Screenshots ==
+
+1. Generated WebP Image - Convert your images both on upload and page load easily.
+2. Options Page - Configure your plugin options here.
+3. Attachment Modal - See Converted WebP image path here.
+
 == Changelog ==
+
+= 1.1.1 =
+* Ensure WP_Error is passed and returned to Hook.
+* Rename hooks across codebase to use `icfw` prefix.
+* Implement Kernel interface.
+* Fix bugs & failing tests.
+* Update README notes.
 
 = 1.1.0 =
 * Major code base refactor.
@@ -53,7 +66,7 @@ You may not realize it, but imagery is a large part of it. This plugin helps tak
 * Add more Unit tests & Code coverage.
 
 = 1.0.2 =
-* Add `webp_img_delete` and `webp_img_metadata_delete` hooks.
+* Add `icfw_delete` and `icfw_metadata_delete` hooks.
 * Add Settings page for plugin options.
 * Add WebP field on WP attachment modal.
 * Add new class methods.
@@ -62,14 +75,14 @@ You may not realize it, but imagery is a large part of it. This plugin helps tak
 * Update README notes.
 
 = 1.0.1 =
-* Refactor hook webp_img_convert to placement within convert public method.
+* Refactor hook icfw_convert to placement within convert public method.
 * Add more Unit tests & Code coverage.
 * Update README notes.
 
 = 1.0.0 =
 * Initial release
 * WebP image conversion for any type of image.
-* Custom Hooks - webp_img_options, webp_img_convert, webp_img_attachment_html, webp_img_thumbnail_html.
+* Custom Hooks - icfw_options, icfw_convert, icfw_attachment_html, icfw_thumbnail_html.
 * Unit Tests coverage.
 * Tested up to WP 6.5.3.
 

@@ -11,9 +11,10 @@
 namespace ImageConverterWebP\Services;
 
 use DOMDocument;
+use ImageConverterWebP\Interfaces\Kernel;
 use ImageConverterWebP\Abstracts\Service;
 
-class PageLoad extends Service {
+class PageLoad extends Service implements Kernel {
 	/**
 	 * Bind to WP.
 	 *
@@ -22,9 +23,9 @@ class PageLoad extends Service {
 	 * @return void
 	 */
 	public function register(): void {
-		add_filter( 'render_block', [ $this, 'filter_render_image_block' ], 20, 2 );
-		add_filter( 'wp_get_attachment_image', [ $this, 'filter_wp_get_attachment_image' ], 10, 5 );
-		add_filter( 'post_thumbnail_html', [ $this, 'filter_post_thumbnail_html' ], 10, 5 );
+		add_filter( 'render_block', [ $this, 'register_render_block' ], 20, 2 );
+		add_filter( 'wp_get_attachment_image', [ $this, 'register_wp_get_attachment_image' ], 10, 5 );
+		add_filter( 'post_thumbnail_html', [ $this, 'register_post_thumbnail_html' ], 10, 5 );
 	}
 
 	/**
@@ -41,7 +42,7 @@ class PageLoad extends Service {
 	 *
 	 * @return string
 	 */
-	public function filter_render_image_block( $html, $block ): string {
+	public function register_render_block( $html, $block ): string {
 		// Bail out, if empty or NOT image.
 		if ( empty( $html ) || ! preg_match( '/<img.*>/', $html, $image ) ) {
 			return $html;
@@ -67,7 +68,7 @@ class PageLoad extends Service {
 	 *
 	 * @return string
 	 */
-	public function filter_wp_get_attachment_image( $html, $attachment_id, $size, $icon, $attr ): string {
+	public function register_wp_get_attachment_image( $html, $attachment_id, $size, $icon, $attr ): string {
 		if ( empty( $html ) ) {
 			return $html;
 		}
@@ -79,13 +80,14 @@ class PageLoad extends Service {
 		 *
 		 * @since 1.0.0
 		 * @since 1.1.0 Moved to PageLoad class.
+		 * @since 1.1.1 Rename hook to use `icfw` prefix.
 		 *
 		 * @param string $html          WebP Image HTML.
 		 * @param int    $attachment_id Image ID.
 		 *
 		 * @return string
 		 */
-		return (string) apply_filters( 'webp_img_attachment_html', $html, $attachment_id );
+		return (string) apply_filters( 'icfw_attachment_html', $html, $attachment_id );
 	}
 
 	/**
@@ -105,7 +107,7 @@ class PageLoad extends Service {
 	 *
 	 * @return string
 	 */
-	public function filter_post_thumbnail_html( $html, $post_id, $thumbnail_id, $size, $attr ): string {
+	public function register_post_thumbnail_html( $html, $post_id, $thumbnail_id, $size, $attr ): string {
 		if ( empty( $html ) ) {
 			return $html;
 		}
@@ -116,13 +118,14 @@ class PageLoad extends Service {
 		 * Filter WebP Image Thumbnail HTML.
 		 *
 		 * @since 1.0.0
+		 * @since 1.1.1 Rename hook to use `icfw` prefix.
 		 *
 		 * @param string $html         WebP Image HTML.
 		 * @param int    $thumbnail_id The post thumbnail ID, or 0 if there isn't one.
 		 *
 		 * @return string
 		 */
-		return (string) apply_filters( 'webp_img_thumbnail_html', $html, $thumbnail_id );
+		return (string) apply_filters( 'icfw_thumbnail_html', $html, $thumbnail_id );
 	}
 
 	/**
@@ -196,7 +199,7 @@ class PageLoad extends Service {
 		];
 
 		// Ensure this is allowed.
-		if ( ! get_option( 'webp_img_converter', [] )['page_load'] ) {
+		if ( ! icfw_get_settings( 'page_load' ) ) {
 			return $img_html;
 		}
 

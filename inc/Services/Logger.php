@@ -11,8 +11,9 @@
 namespace ImageConverterWebP\Services;
 
 use ImageConverterWebP\Abstracts\Service;
+use ImageConverterWebP\Interfaces\Kernel;
 
-class Logger extends Service {
+class Logger extends Service implements Kernel {
 	/**
 	 * Bind to WP.
 	 *
@@ -21,7 +22,7 @@ class Logger extends Service {
 	 * @return void
 	 */
 	public function register(): void {
-		add_action( 'webp_img_convert', [ $this, 'add_webp_meta_to_attachment' ], 10, 2 );
+		add_action( 'icfw_convert', [ $this, 'add_webp_meta_to_attachment' ], 10, 2 );
 	}
 
 	/**
@@ -39,8 +40,8 @@ class Logger extends Service {
 	 * @return void
 	 */
 	public function add_webp_meta_to_attachment( $webp, $attachment_id ): void {
-		if ( ! is_wp_error( $webp ) && ! get_post_meta( $attachment_id, 'webp_img', true ) ) {
-			update_post_meta( $attachment_id, 'webp_img', $webp );
+		if ( ! is_wp_error( $webp ) && ! get_post_meta( $attachment_id, 'icfw_img', true ) ) {
+			update_post_meta( $attachment_id, 'icfw_img', $webp );
 		}
 
 		if ( is_wp_error( $webp ) ) {

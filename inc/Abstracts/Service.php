@@ -11,8 +11,9 @@
 namespace ImageConverterWebP\Abstracts;
 
 use ImageConverterWebP\Core\Converter;
+use ImageConverterWebP\Interfaces\Kernel;
 
-abstract class Service {
+abstract class Service implements Kernel {
 	/**
 	 * Service classes.
 	 *

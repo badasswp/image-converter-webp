@@ -47,7 +47,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 						min="0"
 						max="100"
 						placeholder="20"
-						value="<?php echo esc_attr( get_option( 'webp_img_converter', [] )['quality'] ?? '' ); ?>"
+						value="<?php echo esc_attr( get_option( 'icfw', [] )['quality'] ?? '' ); ?>"
 					/>
 					<em>
 						<?php echo esc_html__( 'e.g. 75', 'image-converter-webp' ); ?>
@@ -67,7 +67,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 						'gmagick' => 'Gmagick',
 					];
 
-					$engine = get_option( 'webp_img_converter', [] )['converter'] ?? '';
+					$engine = get_option( 'icfw', [] )['converter'] ?? '';
 
 					foreach ( $engines as $key => $value ) {
 						$selected = $engine === $key ? ' selected' : '';
@@ -97,7 +97,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 					</label>
 					<input
 						name="upload"
-						<?php esc_attr_e( ! empty( get_option( 'webp_img_converter', [] )['upload'] ?? '' ) ? 'checked' : '' ); ?>
+						<?php esc_attr_e( ! empty( get_option( 'icfw', [] )['upload'] ?? '' ) ? 'checked' : '' ); ?>
 						type="checkbox"
 					/>
 					<em>
@@ -110,7 +110,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 					</label>
 					<input
 						name="page_load"
-						<?php esc_attr_e( ! empty( get_option( 'webp_img_converter', [] )['page_load'] ?? '' ) ? 'checked' : '' ); ?>
+						<?php esc_attr_e( ! empty( get_option( 'icfw', [] )['page_load'] ?? '' ) ? 'checked' : '' ); ?>
 						type="checkbox"
 					/>
 					<em>

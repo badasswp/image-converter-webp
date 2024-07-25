@@ -1,6 +1,6 @@
 <?php
 
-namespace ImageConverterWebP\Tests\Core;
+namespace ImageConverterWebP\Tests\Services;
 
 use Mockery;
 use WP_Mock\Tools\TestCase;
@@ -10,10 +10,11 @@ use ImageConverterWebP\Core\Converter;
 /**
  * @covers \ImageConverterWebP\Core\Converter::__construct
  * @covers \ImageConverterWebP\Services\Main::__construct
- * @covers \ImageConverterWebP\Services\Main::generate_webp_image
- * @covers \ImageConverterWebP\Services\Main::generate_webp_srcset_images
- * @covers \ImageConverterWebP\Services\Main::delete_webp_images
- * @covers \ImageConverterWebP\Services\Main::add_webp_attachment_fields
+ * @covers \ImageConverterWebP\Services\Main::register_webp_img_creation
+ * @covers \ImageConverterWebP\Services\Main::register_webp_img_srcset_creation
+ * @covers \ImageConverterWebP\Services\Main::register_webp_img_deletion
+ * @covers \ImageConverterWebP\Services\Main::register_webp_attachment_fields
+ * @covers icfw_get_settings
  */
 class MainTest extends TestCase {
 	public function setUp(): void {
@@ -26,7 +27,7 @@ class MainTest extends TestCase {
 		\WP_Mock::tearDown();
 	}
 
-	public function test_generate_webp_image_satisfies_conditions() {
+	public function test_register_webp_img_creation_satisfies_conditions() {
 		$converter = Mockery::mock( Converter::class )->makePartial();
 		$converter->shouldAllowMockingProtectedMethods();
 
@@ -50,19 +51,19 @@ class MainTest extends TestCase {
 
 		\WP_Mock::userFunction( 'get_option' )
 			->once()
-			->with( 'webp_img_converter', [] )
+			->with( 'icfw', [] )
 			->andReturn(
 				[
 					'upload' => true,
 				]
 			);
 
-		$main->generate_webp_image( 1 );
+		$main->register_webp_img_creation( 1 );
 
 		$this->assertConditionsMet();
 	}
 
-	public function test_generate_webp_srcset_images() {
+	public function test_register_webp_img_srcset_creation() {
 		$main = Mockery::mock( Main::class )->makePartial();
 		$main->shouldAllowMockingProtectedMethods();
 
@@ -98,19 +99,19 @@ class MainTest extends TestCase {
 
 		\WP_Mock::userFunction( 'get_option' )
 			->times( 3 )
-			->with( 'webp_img_converter', [] )
+			->with( 'icfw', [] )
 			->andReturn(
 				[
 					'upload' => true,
 				]
 			);
 
-		$srcset = $main->generate_webp_srcset_images( $data, 1, 'create' );
+		$srcset = $main->register_webp_img_srcset_creation( $data, 1, 'create' );
 
 		$this->assertConditionsMet();
 	}
 
-	public function test_delete_webp_images_fails_if_not_image() {
+	public function test_register_webp_img_deletion_fails_if_not_image() {
 		$main = Mockery::mock( Main::class )->makePartial();
 		$main->shouldAllowMockingProtectedMethods();
 
@@ -119,12 +120,12 @@ class MainTest extends TestCase {
 			->with( 1 )
 			->andReturn( false );
 
-		$image = $main->delete_webp_images( 1 );
+		$image = $main->register_webp_img_deletion( 1 );
 
 		$this->assertConditionsMet();
 	}
 
-	public function test_delete_webp_images_bails_if_no_parent_image_abs_path_or_metadata_is_found() {
+	public function test_register_webp_img_deletion_bails_if_no_parent_image_abs_path_or_metadata_is_found() {
 		$main = Mockery::mock( Main::class )->makePartial();
 		$main->shouldAllowMockingProtectedMethods();
 
@@ -143,12 +144,12 @@ class MainTest extends TestCase {
 			->with( 1 )
 			->andReturn( [] );
 
-		$image = $main->delete_webp_images( 1 );
+		$image = $main->register_webp_img_deletion( 1 );
 
 		$this->assertConditionsMet();
 	}
 
-	public function test_delete_webp_images_removes_parent_webp_image() {
+	public function test_register_webp_img_deletion_removes_parent_webp_image() {
 		$main = Mockery::mock( Main::class )->makePartial();
 		$main->shouldAllowMockingProtectedMethods();
 
@@ -162,7 +163,7 @@ class MainTest extends TestCase {
 			->with( 1 )
 			->andReturn( __DIR__ . '/sample.jpeg' );
 
-		\WP_Mock::expectAction( 'webp_img_delete', __DIR__ . '/sample.webp', 1 );
+		\WP_Mock::expectAction( 'icfw_delete', __DIR__ . '/sample.webp', 1 );
 
 		\WP_Mock::userFunction( 'wp_get_attachment_metadata' )
 			->once()
@@ -172,12 +173,12 @@ class MainTest extends TestCase {
 		// Create Mock Images.
 		$this->create_mock_image( __DIR__ . '/sample.webp' );
 
-		$image = $main->delete_webp_images( 1 );
+		$image = $main->register_webp_img_deletion( 1 );
 
 		$this->assertConditionsMet();
 	}
 
-	public function test_delete_webp_images_removes_webp_metadata_image() {
+	public function test_register_webp_img_deletion_removes_webp_metadata_image() {
 		$main = Mockery::mock( Main::class )->makePartial();
 		$main->shouldAllowMockingProtectedMethods();
 
@@ -191,7 +192,7 @@ class MainTest extends TestCase {
 			->with( 1 )
 			->andReturn( __DIR__ . '/sample.jpeg' );
 
-		\WP_Mock::expectAction( 'webp_img_delete', __DIR__ . '/sample.webp', 1 );
+		\WP_Mock::expectAction( 'icfw_delete', __DIR__ . '/sample.webp', 1 );
 
 		\WP_Mock::userFunction(
 			'trailingslashit',
@@ -222,9 +223,9 @@ class MainTest extends TestCase {
 				]
 			);
 
-		\WP_Mock::expectAction( 'webp_img_metadata_delete', __DIR__ . '/sample1.webp', 1 );
-		\WP_Mock::expectAction( 'webp_img_metadata_delete', __DIR__ . '/sample2.webp', 1 );
-		\WP_Mock::expectAction( 'webp_img_metadata_delete', __DIR__ . '/sample3.webp', 1 );
+		\WP_Mock::expectAction( 'icfw_metadata_delete', __DIR__ . '/sample1.webp', 1 );
+		\WP_Mock::expectAction( 'icfw_metadata_delete', __DIR__ . '/sample2.webp', 1 );
+		\WP_Mock::expectAction( 'icfw_metadata_delete', __DIR__ . '/sample3.webp', 1 );
 
 		// Create Mock Images.
 		$this->create_mock_image( __DIR__ . '/sample.webp' );
@@ -232,25 +233,25 @@ class MainTest extends TestCase {
 		$this->create_mock_image( __DIR__ . '/sample2.webp' );
 		$this->create_mock_image( __DIR__ . '/sample3.webp' );
 
-		$image = $main->delete_webp_images( 1 );
+		$image = $main->register_webp_img_deletion( 1 );
 
 		$this->assertConditionsMet();
 	}
 
-	public function test_add_webp_attachment_fields_escapes_array_return_type() {
+	public function test_register_webp_attachment_fields_escapes_array_return_type() {
 		$post     = Mockery::mock( \WP_Post::class )->makePartial();
 		$post->ID = 1;
 
 		\WP_Mock::userFunction( 'get_post_meta' )
 			->once()
-			->with( 1, 'webp_img', true )
+			->with( 1, 'icfw_img', true )
 			->andReturn( [] );
 
-		$expected = $this->main->add_webp_attachment_fields( [], $post );
+		$expected = $this->main->register_webp_attachment_fields( [], $post );
 
 		$this->assertSame(
 			[
-				'webp_img' => [
+				'icfw_img' => [
 					'label' => 'WebP Image',
 					'input' => 'text',
 					'value' => '',
@@ -262,7 +263,7 @@ class MainTest extends TestCase {
 		$this->assertConditionsMet();
 	}
 
-	public function test_add_webp_attachment_fields() {
+	public function test_register_webp_attachment_fields() {
 		$webp = 'https://example.com/wp-content/uploads/2024/01/sample.webp';
 
 		$post     = Mockery::mock( \WP_Post::class )->makePartial();
@@ -270,14 +271,14 @@ class MainTest extends TestCase {
 
 		\WP_Mock::userFunction( 'get_post_meta' )
 			->once()
-			->with( 1, 'webp_img', true )
+			->with( 1, 'icfw_img', true )
 			->andReturn( $webp );
 
-		$expected = $this->main->add_webp_attachment_fields( [], $post );
+		$expected = $this->main->register_webp_attachment_fields( [], $post );
 
 		$this->assertSame(
 			[
-				'webp_img' => [
+				'icfw_img' => [
 					'label' => 'WebP Image',
 					'input' => 'text',
 					'value' => 'https://example.com/wp-content/uploads/2024/01/sample.webp',
