@@ -1,6 +1,6 @@
 <?php
 
-namespace ImageConverterWebP\Tests\Core;
+namespace ImageConverterWebP\Tests\Services;
 
 use Mockery;
 use WP_Mock\Tools\TestCase;
@@ -48,14 +48,10 @@ class MainTest extends TestCase {
 			->once()
 			->andReturn( 'https://example.com/wp-content/uploads/2024/01/sample.webp' );
 
-		\WP_Mock::userFunction( 'get_option' )
+		\WP_Mock::userFunction( 'icfw_get_settings' )
 			->once()
-			->with( 'icfw', [] )
-			->andReturn(
-				[
-					'upload' => true,
-				]
-			);
+			->with( 'upload' )
+			->andReturn( true );
 
 		$main->register_webp_img_creation( 1 );
 
@@ -96,14 +92,10 @@ class MainTest extends TestCase {
 		$main->converter->shouldReceive( 'convert' )
 			->times( 3 );
 
-		\WP_Mock::userFunction( 'get_option' )
+		\WP_Mock::userFunction( 'icfw_get_settings' )
 			->times( 3 )
-			->with( 'icfw', [] )
-			->andReturn(
-				[
-					'upload' => true,
-				]
-			);
+			->with( 'upload' )
+			->andReturn( true );
 
 		$srcset = $main->register_webp_img_srcset_creation( $data, 1, 'create' );
 

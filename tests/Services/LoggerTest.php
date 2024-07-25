@@ -1,6 +1,6 @@
 <?php
 
-namespace ImageConverterWebP\Tests\Core;
+namespace ImageConverterWebP\Tests\Services;
 
 use Mockery;
 use WP_Mock\Tools\TestCase;

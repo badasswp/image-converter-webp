@@ -1,6 +1,6 @@
 <?php
 
-namespace ImageConverterWebP\Tests\Core;
+namespace ImageConverterWebP\Tests\Services;
 
 use Mockery;
 use WP_Mock\Tools\TestCase;
@@ -162,14 +162,10 @@ class PageLoadTest extends TestCase {
 			->with( $error )
 			->andReturn( true );
 
-		\WP_Mock::userFunction( 'get_option' )
-			->times( 1 )
-			->with( 'icfw', [] )
-			->andReturn(
-				[
-					'page_load' => true,
-				]
-			);
+		\WP_Mock::userFunction( 'icfw_get_settings' )
+			->once()
+			->with( 'page_load' )
+			->andReturn( true );
 
 		$img_html = $page_load->_get_webp_html( 'https://example.com/wp-content/uploads/2024/01/sample.pdf', '<img src="https://example.com/wp-content/uploads/2024/01/sample.pdf"/>', 1 );
 
@@ -200,14 +196,10 @@ class PageLoadTest extends TestCase {
 			->with( 'https://example.com/wp-content/uploads/2024/01/sample.webp' )
 			->andReturn( false );
 
-		\WP_Mock::userFunction( 'get_option' )
-			->times( 1 )
-			->with( 'icfw', [] )
-			->andReturn(
-				[
-					'page_load' => true,
-				]
-			);
+		\WP_Mock::userFunction( 'icfw_get_settings' )
+			->once()
+			->with( 'page_load' )
+			->andReturn( true );
 
 		$img_html = $page_load->_get_webp_html( 'https://example.com/wp-content/uploads/2024/01/sample.jpeg', '<img src="https://example.com/wp-content/uploads/2024/01/sample.jpeg"/>', 1 );
 
