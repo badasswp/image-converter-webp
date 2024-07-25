@@ -64,7 +64,7 @@ function icfw_autoload_notice(): void {
  */
 function icfw_run(): void {
 	if ( icfw_can_autoload() ) {
-		require_once __DIR__ . '/inc/Core/Functions.php';
+		require_once __DIR__ . '/inc/Helpers/functions.php';
 		( \ImageConverterWebP\Plugin::get_instance() )->run();
 	} else {
 		add_action( 'admin_notices', 'icfw_autoload_notice' );
