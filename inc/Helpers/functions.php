@@ -16,7 +16,7 @@
  * @param string $option  Plugin option to be retrieved.
  * @param string $default Default return value.
  *
- * @return void
+ * @return mixed
  */
 function icfw_get_settings( $option, $default = '' ) {
 	return get_option( 'icfw', [] )[ $option ] ?? $default;
