@@ -13,13 +13,13 @@
  *
  * @since 1.1.1
  *
- * @param string $option  Plugin option to be retrieved.
- * @param string $default Default return value.
+ * @param string $option   Plugin option to be retrieved.
+ * @param string $fallback Default return value.
  *
  * @return mixed
  */
-function icfw_get_settings( $option, $default = '' ) {
-	return get_option( 'icfw', [] )[ $option ] ?? $default;
+function icfw_get_settings( $option, $fallback = '' ) {
+	return get_option( 'icfw', [] )[ $option ] ?? $fallback;
 }
 
 /**
