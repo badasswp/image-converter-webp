@@ -22,6 +22,12 @@ As an internet user, you already know images can be the difference between a gre
 
 You may not realize it, but imagery is a large part of it. This plugin helps take care of all those concerns, by converting your WordPress images to WebP format during page load so that your site loads extremely fast, without any disruptions or downtime.
 
+== Screenshots ==
+
+1. Generated WebP Image - Convert your images both on upload and page load easily.
+2. Options Page - Configure your plugin options here.
+3. Attachment Modal - See Converted WebP image path here.
+
 == Changelog ==
 
 = 1.1.1 =
