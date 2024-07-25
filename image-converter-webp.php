@@ -20,24 +20,55 @@ if ( ! defined( 'WPINC' ) ) {
 
 define( 'ICFW_AUTOLOAD', __DIR__ . '/vendor/autoload.php' );
 
-// Bail out, if Composer is NOT installed.
-if ( ! file_exists( ICFW_AUTOLOAD ) ) {
-	add_action(
-		'admin_notices',
-		function () {
-			printf(
-				/* translators: Autoload file path. */
-				esc_html__( 'Fatal Error: %s file does not exist, please check if Composer is installed!', 'image-converter-webp' ),
-				esc_html( ICFW_AUTOLOAD )
-			);
-		}
-	);
+/**
+ * Bail out, if Composer is NOT installed.
+ * Log error message.
+ *
+ * @return bool
+ */
+function icfw_can_autoload(): bool {
+	if ( ! file_exists( ICFW_AUTOLOAD ) ) {
+		error_log(
+			sprintf(
+				esc_html__( 'Fatal Error: Composer not setup in %', 'image-converter-webp' ),
+				__DIR__
+			)
+		);
 
-	return;
+		return false;
+	}
+
+	// Require autoload.
+	require_once ICFW_AUTOLOAD;
+
+	return true;
 }
 
-// Autoload classes.
-require_once ICFW_AUTOLOAD;
+/**
+ * Generate autoload notice if Composer is
+ * NOT installed.
+ *
+ * @return void
+ */
+function icfw_autoload_notice(): void {
+	printf(
+		esc_html__( 'Fatal Error: %s file does not exist, please check if Composer is installed!', 'image-converter-webp' ),
+		esc_html( ICFW_AUTOLOAD )
+	);
+}
 
-// Get instance and Run plugin.
-( \ImageConverterWebP\Plugin::get_instance() )->run();
+/**
+ * Run plugin.
+ *
+ * @return void
+ */
+function icfw_run(): void {
+	if ( icfw_can_autoload() ) {
+		require_once __DIR__ . '/inc/Core/Functions.php';
+		( \ImageConverterWebP\Plugin::get_instance() )->run();
+	} else {
+		add_action( 'admin_notices', 'icfw_autoload_notice' );
+	}
+}
+
+icfw_run();
