@@ -14,7 +14,9 @@ use ImageConverterWebP\Services\Logger;
 use ImageConverterWebP\Services\PageLoad;
 
 /**
- * @covers \ImageConverterWebP\Abstracts\Plugin::run
+ * @covers \ImageConverterWebP\Plugin::__construct
+ * @covers \ImageConverterWebP\Plugin::get_instance
+ * @covers \ImageConverterWebP\Plugin::run
  */
 class PluginTest extends TestCase {
 	public function setUp(): void {
