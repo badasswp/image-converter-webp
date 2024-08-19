@@ -16,6 +16,15 @@ use ImageConverterWebP\Services\PageLoad;
 /**
  * @covers \ImageConverterWebP\Plugin::get_instance
  * @covers \ImageConverterWebP\Plugin::run
+ * @covers \ImageConverterWebP\Abstracts\Service::__construct
+ * @covers \ImageConverterWebP\Abstracts\Service::get_instance
+ * @covers \ImageConverterWebP\Core\Container::__construct
+ * @covers \ImageConverterWebP\Core\Container::register
+ * @covers \ImageConverterWebP\Core\Converter::__construct
+ * @covers \ImageConverterWebP\Services\Admin::register
+ * @covers \ImageConverterWebP\Services\Logger::register
+ * @covers \ImageConverterWebP\Services\Main::register
+ * @covers \ImageConverterWebP\Services\PageLoad::register
  */
 class PluginTest extends TestCase {
 	public function setUp(): void {
