@@ -70,7 +70,7 @@ class Options extends Service implements Kernel {
 			</section>',
 			[
 				'caption' => esc_html__( 'Image Converter for WebP', 'image-converter-webp' ),
-				'summary' => esc_html__( 'Convert your WordPress JPG/PNG images to WebP formats during runtime.', 'image-converter-webp' )
+				'summary' => esc_html__( 'Convert your WordPress JPG/PNG images to WebP formats during runtime.', 'image-converter-webp' ),
 			]
 		);
 	}
