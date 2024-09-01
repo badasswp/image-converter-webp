@@ -62,7 +62,10 @@ class Options extends Service implements Kernel {
 				<h1>%s</h1>
 				<p>%s</p>
 				<form>
-
+					<div class="main">
+					</div>
+					<div class="submit">
+					</div>
 				</form>
 			</section>',
 			[
