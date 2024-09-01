@@ -76,6 +76,68 @@ class Options extends Service implements Kernel {
 	}
 
 	/**
+	 * Get Form Group.
+	 *
+	 * @since 1.1.2
+	 *
+	 * @return string
+	 */
+	public function get_form_group(): string {
+		$all_controls = '';
+
+		$form_groups = [
+			'icfw_conv_options' => [
+				'label'    => 'Conversion Options',
+				'controls' => [
+					'quality' => [
+						'control'     => 'text',
+						'placeholder' => '',
+						'label'       => 'Conversion Quality %',
+						'summary'     => 'e.g. 75',
+					],
+					'engine'  => [
+						'control'     => 'text',
+						'placeholder' => '',
+						'label'       => 'WebP Engine',
+						'summary'     => 'e.g. Imagick',
+					],
+				],
+			],
+		];
+
+		foreach ( $form_groups as $form_group ) {
+			foreach ( $form_group as $key => $label ) {
+				switch ( $key ) {
+					case 'label':
+						$all_controls .= sprintf(
+							'<p class="form-group-block">%s</p>',
+							$label
+						);
+						break;
+
+					default:
+						foreach ( $label as $name => $control ) {
+							$all_controls .= sprintf(
+								'<p>
+									<label></label>
+									<input type="text"/>
+									<em></em>
+								</p>'
+							);
+						}
+						break;
+				}
+			}
+		}
+
+		return sprintf(
+			'<div class="form-group">
+			</div>',
+			$all_controls
+		);
+	}
+
+	/**
 	 * Register Settings.
 	 *
 	 * This method handles all save actions for the fields
