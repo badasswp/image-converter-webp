@@ -100,6 +100,9 @@ class Options extends Service implements Kernel {
 	/**
 	 * Get Form Group.
 	 *
+	 * This method is responsible for obtaining
+	 * a single form group.
+	 *
 	 * @since 1.1.2
 	 *
 	 * @return string
