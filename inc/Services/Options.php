@@ -57,6 +57,17 @@ class Options extends Service implements Kernel {
 	 * @return void
 	 */
 	public function register_options_page(): void {
+		$options = [
+			'caption' => esc_html__(
+				'Image Converter for WebP',
+				'image-converter-webp'
+			),
+			'summary' => esc_html__(
+				'Convert your WordPress JPG/PNG images to WebP formats during runtime.', 'image-converter-webp'
+			),
+			'getForm' => $this->get_form(),
+		];
+
 		vprintf(
 			'<section class="wrap">
 				<h1>%s</h1>
@@ -66,11 +77,7 @@ class Options extends Service implements Kernel {
 					<div class="badasswp-form-submit"></div>
 				</form>
 			</section>',
-			[
-				'caption' => esc_html__( 'Image Converter for WebP', 'image-converter-webp' ),
-				'summary' => esc_html__( 'Convert your WordPress JPG/PNG images to WebP formats during runtime.', 'image-converter-webp' ),
-				'getForm' => $this->get_form(),
-			]
+			$options
 		);
 	}
 
