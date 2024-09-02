@@ -95,10 +95,7 @@ class Options extends Service implements Kernel {
 		$form = '';
 
 		foreach ( $this->get_form_groups() as $form_group ) {
-			$this->form_group = $form_group;
-
-			// Set up Form.
-			$form .= $this->get_form_group();
+			$form .= $this->get_form_group( $form_group );
 		}
 
 		return $form;
@@ -112,12 +109,13 @@ class Options extends Service implements Kernel {
 	 *
 	 * @since 1.1.2
 	 *
+	 * @param mixed[] $arg Form group array.
 	 * @return string
 	 */
-	public function get_form_group(): string {
+	public function get_form_group( $arg ): string {
 		$form_group = '';
 
-		foreach ( $this->form_group as $key => $label ) {
+		foreach ( $arg as $key => $label ) {
 			switch ( $key ) {
 				case 'label':
 					$form_group .= sprintf(
