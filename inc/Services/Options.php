@@ -108,9 +108,47 @@ class Options extends Service implements Kernel {
 	 * @return string
 	 */
 	public function get_form_group(): string {
-		$all_controls = '';
+		$form_group = '';
 
-		$form_groups = [
+		foreach ( $this->form_group as $key => $label ) {
+			switch ( $key ) {
+				case 'label':
+					$form_group .= sprintf(
+						'<p class="badasswp-form-group-block">%s</p>',
+						$label
+					);
+					break;
+
+				default:
+					foreach ( $label as $name => $control ) {
+						$form_group .= vsprintf(
+							'<p class="badasswp-form-group-block size-50">
+								<label>%3$s</label>
+								<input type="%1$s" placeholder="%2$s" name=""/>
+								<em>%4$s</em>
+							</p>',
+							$control
+						);
+					}
+					break;
+			}
+		}
+
+		return sprintf( '<div class="badasswp-form-group">%s</div>', $form_group );
+	}
+
+	/**
+	 * Get Form Groups.
+	 *
+	 * This method is responsible for obtaining
+	 * all the form groups.
+	 *
+	 * @since 1.1.2
+	 *
+	 * @return mixed[]
+	 */
+	public function get_form_groups(): array {
+		return [
 			'icfw_conv_options' => [
 				'label'    => 'Conversion Options',
 				'controls' => [
@@ -129,37 +167,6 @@ class Options extends Service implements Kernel {
 				],
 			],
 		];
-
-		foreach ( $form_groups as $form_group ) {
-			foreach ( $form_group as $key => $label ) {
-				switch ( $key ) {
-					case 'label':
-						$all_controls .= sprintf(
-							'<p class="form-group-block">%s</p>',
-							$label
-						);
-						break;
-
-					default:
-						foreach ( $label as $name => $control ) {
-							$all_controls .= sprintf(
-								'<p>
-									<label></label>
-									<input type="text"/>
-									<em></em>
-								</p>'
-							);
-						}
-						break;
-				}
-			}
-		}
-
-		return sprintf(
-			'<div class="form-group">
-			</div>',
-			$all_controls
-		);
 	}
 
 	/**
