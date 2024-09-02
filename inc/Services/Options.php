@@ -69,8 +69,32 @@ class Options extends Service implements Kernel {
 			[
 				'caption' => esc_html__( 'Image Converter for WebP', 'image-converter-webp' ),
 				'summary' => esc_html__( 'Convert your WordPress JPG/PNG images to WebP formats during runtime.', 'image-converter-webp' ),
+				'getForm' => $this->get_form(),
 			]
 		);
+	}
+
+	/**
+	 * Get Form.
+	 *
+	 * This method is responsible for obtaining
+	 * the complete form.
+	 *
+	 * @since 1.1.2
+	 *
+	 * @return string
+	 */
+	public function get_form(): string {
+		$form = '';
+
+		foreach ( $this->get_form_groups() as $form_group ) {
+			$this->form_group = $form_group;
+
+			// Set up Form.
+			$form .= $this->get_form_group();
+		}
+
+		return $form;
 	}
 
 	/**
