@@ -61,11 +61,9 @@ class Options extends Service implements Kernel {
 			'<section class="wrap">
 				<h1>%s</h1>
 				<p>%s</p>
-				<form>
-					<div class="main">
-					</div>
-					<div class="submit">
-					</div>
+				<form class="badasswp-form">
+					<div class="badasswp-form-main">%s</div>
+					<div class="badasswp-form-submit"></div>
 				</form>
 			</section>',
 			[
