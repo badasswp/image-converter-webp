@@ -300,6 +300,35 @@ class Options extends Service implements Kernel {
 	}
 
 	/**
+	 * Get Form Submit.
+	 *
+	 * This method is responsible for getting the
+	 * Submit button.
+	 *
+	 * @since 1.1.2
+	 *
+	 * @return string
+	 */
+	public function get_form_submit(): string {
+		return sprintf(
+			'<div class="badasswp-form-group">
+				<p class="badasswp-form-group-block">
+					<label>%s</label>
+				</p>
+				<p class="badasswp-form-group-block">
+					<button name="webp_save_settings" type="submit" class="button button-primary">
+						<span>%s</span>
+					</button>
+				</p>
+				%s
+			</div>',
+			esc_html__( 'Actions', 'image-converter-webp' ),
+			esc_html__( 'Save Changes', 'image-converter-webp' ),
+			wp_nonce_field( 'webp_settings_action', 'webp_settings_nonce' ),
+		);
+	}
+
+	/**
 	 * Get Form Groups.
 	 *
 	 * This method is responsible for obtaining
