@@ -66,21 +66,42 @@ class Options extends Service implements Kernel {
 				'Convert your WordPress JPG/PNG images to WebP formats during runtime.',
 				'image-converter-webp'
 			),
-			'form_action' => $this->get_form_action(),
-			'form_main'   => $this->get_form_main(),
-			'form_submit' => $this->get_form_submit(),
+			'form' => $this->get_form(),
 		];
 
 		vprintf(
 			'<section class="wrap">
 				<h1>%s</h1>
 				<p>%s</p>
-				<form class="badasswp-form" method="POST" action="%s">
-					<div class="badasswp-form-main">%s</div>
-					<div class="badasswp-form-submit">%s</div>
-				</form>
+				%s
 			</section>',
 			$options
+		);
+	}
+
+	/**
+	 * Get Form.
+	 *
+	 * This method is responsible for getting
+	 * the Form.
+	 *
+	 * @since 1.1.2
+	 *
+	 * @return string
+	 */
+	public function get_form(): string {
+		$form = [
+			'form_action' => $this->get_form_action(),
+			'form_main'   => $this->get_form_main(),
+			'form_submit' => $this->get_form_submit(),
+		];
+
+		return vsprintf(
+			'<form class="badasswp-form" method="POST" action="%s">
+				<div class="badasswp-form-main">%s</div>
+				<div class="badasswp-form-submit">%s</div>
+			</form>',
+			$form
 		);
 	}
 
