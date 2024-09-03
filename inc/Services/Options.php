@@ -150,6 +150,73 @@ class Options extends Service implements Kernel {
 	}
 
 	/**
+	 * Get Form Control.
+	 *
+	 * This method is responsible for getting the
+	 * form control.
+	 *
+	 * @since 1.1.2
+	 *
+	 * @param mixed[] $arg  Form control array.
+	 * @param string  $name Control name.
+	 *
+	 * @return string
+	 */
+	public function get_form_control( $arg, $name ): string {
+		$control = '';
+
+		switch ( $arg['control'] ) {
+			case 'text':
+				$control = sprintf(
+					'<input type="text" placeholder="%1$s" value="%2$s" name="%3$s"/>',
+					$arg['placeholder'],
+					get_option( 'icfw', [] )[ $name ] ?? '',
+					$name,
+				);
+				break;
+
+			case 'select':
+				foreach ( $arg['options'] as $key => $value ) {
+					$is_selected = ( ( get_option( 'icfw', [] )[ $name ] ?? '' ) === $key )
+										? 'selected' : '';
+
+					$options .= sprintf(
+						'<option value="%1$s" %2$s>%3$s</option>',
+						$key,
+						$is_selected,
+						$value,
+					);
+				}
+
+				$control = sprintf(
+					'<select name="%1$s">
+						%2$s
+					</select>',
+					$name,
+					$options,
+				);
+				break;
+
+			case 'checkbox':
+				$is_checked = ! empty( get_option( 'icfw', [] )[ $name ] ?? '' )
+									? 'checked' : '';
+
+				$control = sprintf(
+					'<input
+						name="%1$s"
+						type="checkbox"
+						%2$s
+					/>',
+					$name,
+					$is_checked,
+				);
+				break;
+		}
+
+		return $control;
+	}
+
+	/**
 	 * Get Form Groups.
 	 *
 	 * This method is responsible for obtaining
