@@ -75,12 +75,28 @@ class Options extends Service implements Kernel {
 			'<section class="wrap">
 				<h1>%s</h1>
 				<p>%s</p>
-				<form class="badasswp-form">
+				<form class="badasswp-form" method="POST" action="%s">
 					<div class="badasswp-form-main">%s</div>
-					<div class="badasswp-form-submit"></div>
+					<div class="badasswp-form-submit">%s</div>
 				</form>
 			</section>',
 			$options
+		);
+	}
+
+	/**
+	 * Get Form Action.
+	 *
+	 * This method is responsible for getting the
+	 * Form Action.
+	 *
+	 * @since 1.1.2
+	 *
+	 * @return string
+	 */
+	public function get_form_action(): string {
+		return esc_url(
+			sanitize_text_field( $_SERVER['REQUEST_URI'] )
 		);
 	}
 
