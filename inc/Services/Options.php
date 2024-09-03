@@ -63,7 +63,8 @@ class Options extends Service implements Kernel {
 				'image-converter-webp'
 			),
 			'summary' => esc_html__(
-				'Convert your WordPress JPG/PNG images to WebP formats during runtime.', 'image-converter-webp'
+				'Convert your WordPress JPG/PNG images to WebP formats during runtime.',
+				'image-converter-webp'
 			),
 			'getForm' => $this->get_form(),
 		];
