@@ -231,17 +231,40 @@ class Options extends Service implements Kernel {
 			'icfw_conv_options' => [
 				'label'    => 'Conversion Options',
 				'controls' => [
-					'quality' => [
+					'quality'   => [
 						'control'     => 'text',
 						'placeholder' => '',
 						'label'       => 'Conversion Quality %',
 						'summary'     => 'e.g. 75',
 					],
-					'engine'  => [
-						'control'     => 'text',
+					'converter' => [
+						'control' => 'select',
+						'label'   => 'WebP Engine',
+						'summary' => 'e.g. Imagick',
+						'options' => [
+							'gd'      => 'GD',
+							'cwebp'   => 'CWebP',
+							'ffmpeg'  => 'FFMPeg',
+							'imagick' => 'Imagick',
+							'gmagick' => 'Gmagick',
+						],
+					],
+				],
+			],
+			'icfw_img_options'  => [
+				'label'    => 'Image Options',
+				'controls' => [
+					'upload'    => [
+						'control'     => 'checkbox',
 						'placeholder' => '',
-						'label'       => 'WebP Engine',
-						'summary'     => 'e.g. Imagick',
+						'label'       => 'Convert Images on Upload',
+						'summary'     => 'This is useful for new images.',
+					],
+					'page_load' => [
+						'control'     => 'checkbox',
+						'placeholder' => '',
+						'label'       => 'Convert Images on Page Load',
+						'summary'     => 'This is useful for existing images.',
 					],
 				],
 			],
