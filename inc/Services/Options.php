@@ -233,7 +233,7 @@ class Options extends Service implements Kernel {
 				'controls' => [
 					'quality'   => [
 						'control'     => 'text',
-						'placeholder' => '',
+						'placeholder' => '50',
 						'label'       => 'Conversion Quality %',
 						'summary'     => 'e.g. 75',
 					],
@@ -256,13 +256,11 @@ class Options extends Service implements Kernel {
 				'controls' => [
 					'upload'    => [
 						'control'     => 'checkbox',
-						'placeholder' => '',
 						'label'       => 'Convert Images on Upload',
 						'summary'     => 'This is useful for new images.',
 					],
 					'page_load' => [
 						'control'     => 'checkbox',
-						'placeholder' => '',
 						'label'       => 'Convert Images on Page Load',
 						'summary'     => 'This is useful for existing images.',
 					],
