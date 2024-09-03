@@ -101,7 +101,7 @@ class Options extends Service implements Kernel {
 	}
 
 	/**
-	 * Get Form.
+	 * Get Form Main.
 	 *
 	 * This method is responsible for obtaining
 	 * the complete form.
@@ -110,7 +110,7 @@ class Options extends Service implements Kernel {
 	 *
 	 * @return string
 	 */
-	public function get_form(): string {
+	public function get_form_main(): string {
 		$form = '';
 
 		foreach ( $this->get_form_groups() as $form_group ) {
