@@ -128,9 +128,9 @@ class Options extends Service implements Kernel {
 				default:
 					foreach ( $value as $name => $control ) {
 						$group_block = [
-							'label'   => $control['label'],
+							'label'   => $control['label'] ?? '',
 							'control' => $this->get_form_control( $control, $name ),
-							'summary' => $control['summary'],
+							'summary' => $control['summary'] ?? '',
 						];
 
 						$form_group .= vsprintf(
@@ -165,18 +165,18 @@ class Options extends Service implements Kernel {
 	public function get_form_control( $arg, $name ): string {
 		$control = '';
 
-		switch ( $arg['control'] ) {
+		switch ( $arg['control'] ?? '' ) {
 			case 'text':
 				$control = sprintf(
 					'<input type="text" placeholder="%1$s" value="%2$s" name="%3$s"/>',
-					$arg['placeholder'],
+					$arg['placeholder'] ?? '',
 					get_option( 'icfw', [] )[ $name ] ?? '',
 					$name,
 				);
 				break;
 
 			case 'select':
-				foreach ( $arg['options'] as $key => $value ) {
+				foreach ( $arg['options'] ?? [] as $key => $value ) {
 					$is_selected = ( ( get_option( 'icfw', [] )[ $name ] ?? '' ) === $key )
 										? 'selected' : '';
 
