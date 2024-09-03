@@ -17,7 +17,7 @@ class Options extends Service implements Kernel {
 	/**
 	 * Bind to WP.
 	 *
-	 * @since 1.1.0
+	 * @since 1.1.2
 	 *
 	 * @return void
 	 */
@@ -32,7 +32,7 @@ class Options extends Service implements Kernel {
 	 *
 	 * This controls the menu display for the plugin.
 	 *
-	 * @since 1.0.0
+	 * @since 1.1.2
 	 *
 	 * @return void
 	 */
@@ -52,7 +52,7 @@ class Options extends Service implements Kernel {
 	 *
 	 * This controls the display of the menu page.
 	 *
-	 * @since 1.0.0
+	 * @since 1.1.2
 	 *
 	 * @return void
 	 */
@@ -340,7 +340,7 @@ class Options extends Service implements Kernel {
 	 * This method handles all save actions for the fields
 	 * on the Plugin's settings page.
 	 *
-	 * @since 1.0.0
+	 * @since 1.1.2
 	 *
 	 * @return void
 	 */
@@ -353,7 +353,7 @@ class Options extends Service implements Kernel {
 	/**
 	 * Register Styles.
 	 *
-	 * @since 1.1.0
+	 * @since 1.1.2
 	 *
 	 * @return void
 	 */
