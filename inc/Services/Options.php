@@ -367,14 +367,14 @@ class Options extends Service implements Kernel {
 				'label'    => 'Image Options',
 				'controls' => [
 					'upload'    => [
-						'control'     => 'checkbox',
-						'label'       => 'Convert Images on Upload',
-						'summary'     => 'This is useful for new images.',
+						'control' => 'checkbox',
+						'label'   => 'Convert Images on Upload',
+						'summary' => 'This is useful for new images.',
 					],
 					'page_load' => [
-						'control'     => 'checkbox',
-						'label'       => 'Convert Images on Page Load',
-						'summary'     => 'This is useful for existing images.',
+						'control' => 'checkbox',
+						'label'   => 'Convert Images on Page Load',
+						'summary' => 'This is useful for existing images.',
 					],
 				],
 			],
