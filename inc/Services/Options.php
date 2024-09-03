@@ -116,24 +116,30 @@ class Options extends Service implements Kernel {
 	public function get_form_group( $arg ): string {
 		$form_group = '';
 
-		foreach ( $arg as $key => $label ) {
+		foreach ( $arg as $key => $value ) {
 			switch ( $key ) {
 				case 'label':
 					$form_group .= sprintf(
 						'<p class="badasswp-form-group-block">%s</p>',
-						$label
+						$value
 					);
 					break;
 
 				default:
-					foreach ( $label as $name => $control ) {
+					foreach ( $value as $name => $control ) {
+						$group_block = [
+							'label'   => $control['label'],
+							'control' => $this->get_form_control( $control, $name ),
+							'summary' => $control['summary'],
+						];
+
 						$form_group .= vsprintf(
 							'<p class="badasswp-form-group-block size-50">
-								<label>%3$s</label>
-								<input type="%1$s" placeholder="%2$s" name=""/>
-								<em>%4$s</em>
+								<label>%1$s</label>
+								%2$s
+								<em>%3$s</em>
 							</p>',
-							$control
+							$group_block,
 						);
 					}
 					break;
