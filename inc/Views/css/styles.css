@@ -26,12 +26,16 @@
 .badasswp-form-group-block {
 	margin: 0;
 	padding: 12.5px;
-	box-sizing: border-box;
 	border-bottom: 1px solid #e2e4e7;
+	box-sizing: border-box;
 	width: 100%;
 	display: flex;
 	flex-direction: column;
 	gap: 6.5px;
+}
+
+.badasswp-form-group-block:last-child {
+	border-bottom: 0;
 }
 
 .badasswp-form-group-block label {
@@ -104,7 +108,7 @@
 	border-right: 1px solid #e2e4e7;
 }
 
-.badasswp-form .size-50 + .size-50 {
+.badasswp-form .size-50:nth-child(2n+1) {
 	border-right: none;
 }
 
