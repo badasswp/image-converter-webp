@@ -121,16 +121,28 @@ class Options extends Service implements Kernel {
 				case 'label':
 					$form_group .= sprintf(
 						'<p class="badasswp-form-group-block">%s</p>',
-						$value
+						esc_html__(
+							$value,
+							'image-converter-webp'
+						),
 					);
 					break;
 
 				default:
 					foreach ( $value as $name => $control ) {
 						$group_block = [
-							'label'   => $control['label'] ?? '',
-							'control' => $this->get_form_control( $control, $name ),
-							'summary' => $control['summary'] ?? '',
+							'label'   => esc_html__(
+								$control['label'] ?? '',
+								'image-converter-webp'
+							),
+							'control' => __(
+								$this->get_form_control( $control, $name ),
+								'image-converter-webp'
+							),
+							'summary' => esc_html__(
+								$control['summary'] ?? '',
+								'image-converter-webp'
+							),
 						];
 
 						$form_group .= vsprintf(
