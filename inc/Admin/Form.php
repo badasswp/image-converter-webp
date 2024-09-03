@@ -77,7 +77,7 @@ class Form {
 	public function get_form_main(): string {
 		$form = '';
 
-		foreach ( $this->options() as $option ) {
+		foreach ( $this->options as $option ) {
 			$form .= $this->get_form_group( $option );
 		}
 

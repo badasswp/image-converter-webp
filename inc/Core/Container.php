@@ -11,7 +11,7 @@
 namespace ImageConverterWebP\Core;
 
 use ImageConverterWebP\Services\Admin;
-use ImageConverterWebP\Services\Options;
+use ImageConverterWebP\Services\MyAdmin;
 use ImageConverterWebP\Services\PageLoad;
 use ImageConverterWebP\Services\Main;
 use ImageConverterWebP\Services\Logger;
@@ -38,7 +38,7 @@ class Container implements Kernel {
 			Admin::class,
 			Logger::class,
 			Main::class,
-			Options::class,
+			MyAdmin::class,
 			PageLoad::class,
 		];
 	}

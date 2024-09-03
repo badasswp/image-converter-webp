@@ -15,7 +15,7 @@ use ImageConverterWebP\Admin\Options;
 use ImageConverterWebP\Abstracts\Service;
 use ImageConverterWebP\Interfaces\Kernel;
 
-class Options extends Service implements Kernel {
+class MyAdmin extends Service implements Kernel {
 	/**
 	 * Bind to WP.
 	 *
