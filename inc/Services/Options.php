@@ -179,53 +179,106 @@ class Options extends Service implements Kernel {
 
 		switch ( $arg['control'] ?? '' ) {
 			case 'text':
-				$control = sprintf(
-					'<input type="text" placeholder="%1$s" value="%2$s" name="%3$s"/>',
-					$arg['placeholder'] ?? '',
-					get_option( 'icfw', [] )[ $name ] ?? '',
-					$name,
-				);
+				$control = $this->get_text_control( $arg, $name );
 				break;
 
 			case 'select':
-				foreach ( $arg['options'] ?? [] as $key => $value ) {
-					$is_selected = ( ( get_option( 'icfw', [] )[ $name ] ?? '' ) === $key )
-										? 'selected' : '';
-
-					$options .= sprintf(
-						'<option value="%1$s" %2$s>%3$s</option>',
-						$key,
-						$is_selected,
-						$value,
-					);
-				}
-
-				$control = sprintf(
-					'<select name="%1$s">
-						%2$s
-					</select>',
-					$name,
-					$options,
-				);
+				$control = $this->get_select_control( $arg, $name );
 				break;
 
 			case 'checkbox':
-				$is_checked = ! empty( get_option( 'icfw', [] )[ $name ] ?? '' )
-									? 'checked' : '';
-
-				$control = sprintf(
-					'<input
-						name="%1$s"
-						type="checkbox"
-						%2$s
-					/>',
-					$name,
-					$is_checked,
-				);
+				$control = $this->get_checkbox_control( $arg, $name );
 				break;
 		}
 
 		return $control;
+	}
+
+	/**
+	 * Get Text Control.
+	 *
+	 * This method is responsible for getting
+	 * Text controls.
+	 *
+	 * @since 1.1.2
+	 *
+	 * @param mixed[] $arg  Text args.
+	 * @param string  $name Control name.
+	 *
+	 * @return string
+	 */
+	public function get_text_control( $arg, $name ): string {
+		return sprintf(
+			'<input type="text" placeholder="%1$s" value="%2$s" name="%3$s"/>',
+			$arg['placeholder'] ?? '',
+			get_option( 'icfw', [] )[ $name ] ?? '',
+			$name,
+		);
+	}
+
+	/**
+	 * Get Select Control.
+	 *
+	 * This method is responsible for getting
+	 * Select controls.
+	 *
+	 * @since 1.1.2
+	 *
+	 * @param mixed[] $arg  Select args.
+	 * @param string  $name Control name.
+	 *
+	 * @return string
+	 */
+	public function get_select_control( $arg, $name ): string {
+		$options = '';
+
+		foreach ( $arg['options'] ?? [] as $key => $value ) {
+			$is_selected = ( ( get_option( 'icfw', [] )[ $name ] ?? '' ) === $key )
+								? 'selected' : '';
+
+			$options .= sprintf(
+				'<option value="%1$s" %2$s>%3$s</option>',
+				$key,
+				$is_selected,
+				$value,
+			);
+		}
+
+		return sprintf(
+			'<select name="%1$s">
+				%2$s
+			</select>',
+			$name,
+			$options,
+		);
+	}
+
+	/**
+	 * Get Checkbox Control.
+	 *
+	 * This method is responsible for getting
+	 * Checkbox controls.
+	 *
+	 * @since 1.1.2
+	 *
+	 * @param mixed[] $arg  Checkbox args.
+	 * @param string  $name Control name.
+	 *
+	 * @return string
+	 */
+	public function get_checkbox_control( $arg, $name ): string {
+		$is_checked = ! empty( get_option( 'icfw', [] )[ $name ] ?? '' )
+						? 'checked' : '';
+
+		return sprintf(
+			'<input
+				name="%1$s"
+				type="checkbox"
+				%2$s
+			/>',
+			$name,
+			$is_checked,
+		);
 	}
 
 	/**
