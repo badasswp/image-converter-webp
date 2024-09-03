@@ -58,15 +58,15 @@ class Options extends Service implements Kernel {
 	 */
 	public function register_options_page(): void {
 		$options = [
-			'caption'     => esc_html__(
+			'caption' => esc_html__(
 				'Image Converter for WebP',
 				'image-converter-webp'
 			),
-			'summary'     => esc_html__(
+			'summary' => esc_html__(
 				'Convert your WordPress JPG/PNG images to WebP formats during runtime.',
 				'image-converter-webp'
 			),
-			'form' => $this->get_form(),
+			'form'    => $this->get_form(),
 		];
 
 		vprintf(
