@@ -246,7 +246,7 @@ class Options extends Service implements Kernel {
 					'quality'   => [
 						'control'     => 'text',
 						'placeholder' => '50',
-						'label'       => 'Conversion Quality %',
+						'label'       => 'Conversion Quality',
 						'summary'     => 'e.g. 75',
 					],
 					'converter' => [
