@@ -10,6 +10,8 @@
 
 namespace ImageConverterWebP\Services;
 
+use ImageConverterWebP\Admin\Form;
+use ImageConverterWebP\Admin\Options;
 use ImageConverterWebP\Abstracts\Service;
 use ImageConverterWebP\Interfaces\Kernel;
 
