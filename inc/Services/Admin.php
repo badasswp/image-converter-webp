@@ -60,12 +60,27 @@ class Admin extends Service implements Kernel {
 	 *
 	 * @return void
 	 */
-	public function register_icfw_options_page(): void {
-		$settings = (string) plugin_dir_path( __FILE__ ) . '../Views/settings.php';
+	public function register_options_page(): void {
+		$options = [
+			'caption' => esc_html__(
+				'Image Converter for WebP',
+				'image-converter-webp'
+			),
+			'summary' => esc_html__(
+				'Convert your WordPress JPG/PNG images to WebP formats during runtime.',
+				'image-converter-webp'
+			),
+			'form'    => ( new Form( Options::FIELDS ) )->get_form(),
+		];
 
-		if ( file_exists( $settings ) ) {
-			require_once $settings;
-		}
+		vprintf(
+			'<section class="wrap">
+				<h1>%s</h1>
+				<p>%s</p>
+				%s
+			</section>',
+			$options
+		);
 	}
 
 	/**
