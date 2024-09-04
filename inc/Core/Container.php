@@ -11,6 +11,7 @@
 namespace ImageConverterWebP\Core;
 
 use ImageConverterWebP\Services\Admin;
+use ImageConverterWebP\Services\Boot;
 use ImageConverterWebP\Services\MyAdmin;
 use ImageConverterWebP\Services\PageLoad;
 use ImageConverterWebP\Services\Main;
@@ -36,6 +37,7 @@ class Container implements Kernel {
 	public function __construct() {
 		static::$services = [
 			Admin::class,
+			Boot::class,
 			Logger::class,
 			Main::class,
 			MyAdmin::class,

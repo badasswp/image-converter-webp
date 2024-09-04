@@ -8,7 +8,7 @@
  * @package ImageConverterWebP
  */
 
- namespace ImageConverterWebP\Services;
+namespace ImageConverterWebP\Services;
 
 use ImageConverterWebP\Abstracts\Service;
 use ImageConverterWebP\Interfaces\Kernel;
