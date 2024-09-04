@@ -11,6 +11,11 @@
 namespace ImageConverterWebP\Admin;
 
 class Options {
+	/**
+	 * Form Fields.
+	 *
+	 * @since 1.1.2
+	 */
 	public const FIELDS = [
 		'icfw_conv_options' => [
 			'label'    => 'Conversion Options',
