@@ -35,12 +35,14 @@ class Form {
 	public function get_form(): string {
 		$form = [
 			'form_action' => $this->get_form_action(),
+			'form_notice' => $this->get_form_notice(),
 			'form_main'   => $this->get_form_main(),
 			'form_submit' => $this->get_form_submit(),
 		];
 
 		return vsprintf(
 			'<form class="badasswp-form" method="POST" action="%s">
+				<div class="badasswp-form-notice">%s</div>
 				<div class="badasswp-form-main">%s</div>
 				<div class="badasswp-form-submit">%s</div>
 			</form>',
@@ -290,5 +292,26 @@ class Form {
 			esc_html__( 'Save Changes', 'image-converter-webp' ),
 			wp_nonce_field( 'webp_settings_action', 'webp_settings_nonce' ),
 		);
+	}
+
+	/**
+	 * Get Form Notice.
+	 *
+	 * This method is responsible for getting the
+	 * Form notice.
+	 *
+	 * @since 1.1.2
+	 *
+	 * @return string
+	 */
+	public function get_form_notice(): string {
+		if ( isset( $_POST['webp_save_settings'] ) ) {
+			return sprintf(
+				'<span>%s</span>',
+				esc_html__( 'Settings Saved.', 'image-converter-webp' )
+			);
+		}
+
+		return '';
 	}
 }
