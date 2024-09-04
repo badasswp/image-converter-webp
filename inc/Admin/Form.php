@@ -42,7 +42,7 @@ class Form {
 
 		return vsprintf(
 			'<form class="badasswp-form" method="POST" action="%s">
-				<div class="badasswp-form-notice">%s</div>
+				%s
 				<div class="badasswp-form-main">%s</div>
 				<div class="badasswp-form-submit">%s</div>
 			</form>',
@@ -307,8 +307,10 @@ class Form {
 	public function get_form_notice(): string {
 		if ( isset( $_POST['webp_save_settings'] ) ) {
 			return sprintf(
-				'<span>%s</span>',
-				esc_html__( 'Settings Saved.', 'image-converter-webp' )
+				'<div class="badasswp-form-notice">
+					<span>%s</span>
+				</div>',
+				esc_html__( 'Settings Saved', 'image-converter-webp' )
 			);
 		}
 
