@@ -204,7 +204,7 @@ class Form {
 		return sprintf(
 			'<input type="text" placeholder="%1$s" value="%2$s" name="%3$s"/>',
 			$arg['placeholder'] ?? '',
-			get_option( 'icfw', [] )[ $name ] ?? '',
+			icfw_get_settings( $name ),
 			$name,
 		);
 	}
@@ -226,8 +226,7 @@ class Form {
 		$options = '';
 
 		foreach ( $arg['options'] ?? [] as $key => $value ) {
-			$is_selected = ( ( get_option( 'icfw', [] )[ $name ] ?? '' ) === $key )
-								? 'selected' : '';
+			$is_selected = ( icfw_get_settings( $name ) === $key ) ? 'selected' : '';
 
 			$options .= sprintf(
 				'<option value="%1$s" %2$s>%3$s</option>',
@@ -260,8 +259,7 @@ class Form {
 	 * @return string
 	 */
 	public function get_checkbox_control( $arg, $name ): string {
-		$is_checked = ! empty( get_option( 'icfw', [] )[ $name ] ?? '' )
-						? 'checked' : '';
+		$is_checked = ! empty( icfw_get_settings( $name ) ) ? 'checked' : '';
 
 		return sprintf(
 			'<input
