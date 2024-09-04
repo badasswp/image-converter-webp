@@ -12,6 +12,15 @@ namespace ImageConverterWebP\Admin;
 
 class Form {
 	/**
+	 * Field Options.
+	 *
+	 * @since 1.1.2
+	 *
+	 * @var mixed[]
+	 */
+	private array $options;
+
+	/**
 	 * Set up Constructor.
 	 *
 	 * @since 1.1.2
@@ -77,11 +86,13 @@ class Form {
 	 * @return string
 	 */
 	public function get_form_main(): string {
+		$form_fields = '';
+
 		foreach ( $this->options as $option ) {
-			$form .= $this->get_form_group( $option );
+			$form_fields .= $this->get_form_group( $option );
 		}
 
-		return $form ?? '';
+		return $form_fields;
 	}
 
 	/**
