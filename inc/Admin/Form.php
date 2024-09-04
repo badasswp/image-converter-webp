@@ -77,13 +77,11 @@ class Form {
 	 * @return string
 	 */
 	public function get_form_main(): string {
-		$form = '';
-
 		foreach ( $this->options as $option ) {
 			$form .= $this->get_form_group( $option );
 		}
 
-		return $form;
+		return $form ?? '';
 	}
 
 	/**
@@ -310,7 +308,7 @@ class Form {
 				'<div class="badasswp-form-notice">
 					<span>%s</span>
 				</div>',
-				esc_html__( 'Settings Saved', 'image-converter-webp' )
+				esc_html__( 'Settings Saved.', 'image-converter-webp' )
 			);
 		}
 
