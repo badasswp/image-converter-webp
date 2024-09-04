@@ -22,7 +22,7 @@ class Boot extends Service implements Kernel {
 	 * @return void
 	 */
 	public function register(): void {
-		add_action( 'init', [ $this, 'register_icfw_translation' ] );
+		add_action( 'init', [ $this, 'register_translation' ] );
 	}
 
 	/**
@@ -33,7 +33,7 @@ class Boot extends Service implements Kernel {
 	 *
 	 * @return void
 	 */
-	public function register_icfw_translation(): void {
+	public function register_translation(): void {
 		load_plugin_textdomain(
 			'image-converter-webp',
 			false,
