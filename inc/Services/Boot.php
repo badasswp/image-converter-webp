@@ -22,5 +22,22 @@ class Boot extends Service implements Kernel {
 	 * @return void
 	 */
 	public function register(): void {
+		add_action( 'init', [ $this, 'register_icfw_translation' ] );
+	}
+
+	/**
+	 * Register Text Domain.
+	 *
+	 * @since 1.1.0
+	 * @since 1.1.2 Moved to Boot class.
+	 *
+	 * @return void
+	 */
+	public function register_icfw_translation(): void {
+		load_plugin_textdomain(
+			'image-converter-webp',
+			false,
+			dirname( plugin_basename( __FILE__ ) ) . '/../../languages'
+		);
 	}
 }

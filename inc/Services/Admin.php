@@ -22,7 +22,6 @@ class Admin extends Service implements Kernel {
 	 * @return void
 	 */
 	public function register(): void {
-		add_action( 'init', [ $this, 'register_icfw_translation' ] );
 		add_action( 'admin_init', [ $this, 'register_icfw_settings' ] );
 		add_action( 'admin_menu', [ $this, 'register_icfw_options_menu' ] );
 		add_action( 'admin_enqueue_scripts', [ $this, 'register_icfw_styles' ] );
@@ -102,21 +101,6 @@ class Admin extends Service implements Kernel {
 					$fields
 				)
 			)
-		);
-	}
-
-	/**
-	 * Register Text Domain.
-	 *
-	 * @since 1.1.0
-	 *
-	 * @return void
-	 */
-	public function register_icfw_translation(): void {
-		load_plugin_textdomain(
-			'image-converter-webp',
-			false,
-			dirname( plugin_basename( __FILE__ ) ) . '/../../languages'
 		);
 	}
 
