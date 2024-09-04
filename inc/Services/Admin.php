@@ -19,7 +19,7 @@ class Admin extends Service implements Kernel {
 	/**
 	 * Bind to WP.
 	 *
-	 * @since 1.1.2
+	 * @since 1.1.0
 	 *
 	 * @return void
 	 */
