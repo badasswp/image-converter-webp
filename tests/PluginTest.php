@@ -8,6 +8,7 @@ use WP_Mock\Tools\TestCase;
 use ImageConverterWebP\Plugin;
 use ImageConverterWebP\Abstracts\Service;
 
+use ImageConverterWebP\Services\Boot;
 use ImageConverterWebP\Services\Main;
 use ImageConverterWebP\Services\Admin;
 use ImageConverterWebP\Services\Logger;
@@ -40,6 +41,7 @@ class PluginTest extends TestCase {
 	public function test_run() {
 		$this->services = [
 			'Admin'    => Admin::get_instance(),
+			'Boot'     => Boot::get_instance(),
 			'Logger'   => Logger::get_instance(),
 			'Main'     => Main::get_instance(),
 			'PageLoad' => PageLoad::get_instance(),
@@ -48,8 +50,8 @@ class PluginTest extends TestCase {
 		\WP_Mock::expectActionAdded(
 			'init',
 			[
-				Service::$services['ImageConverterWebP\Services\Admin'],
-				'register_icfw_translation',
+				Service::$services['ImageConverterWebP\Services\Boot'],
+				'register_translation',
 			]
 		);
 
@@ -57,7 +59,7 @@ class PluginTest extends TestCase {
 			'admin_init',
 			[
 				Service::$services['ImageConverterWebP\Services\Admin'],
-				'register_icfw_settings',
+				'register_options_init',
 			]
 		);
 
@@ -65,7 +67,7 @@ class PluginTest extends TestCase {
 			'admin_menu',
 			[
 				Service::$services['ImageConverterWebP\Services\Admin'],
-				'register_icfw_options_menu',
+				'register_options_menu',
 			]
 		);
 
@@ -73,7 +75,7 @@ class PluginTest extends TestCase {
 			'admin_enqueue_scripts',
 			[
 				Service::$services['ImageConverterWebP\Services\Admin'],
-				'register_icfw_styles',
+				'register_options_styles',
 			]
 		);
 
