@@ -19,14 +19,14 @@ class Admin extends Service implements Kernel {
 	/**
 	 * Bind to WP.
 	 *
-	 * @since 1.1.0
+	 * @since 1.1.2
 	 *
 	 * @return void
 	 */
 	public function register(): void {
-		add_action( 'admin_init', [ $this, 'register_icfw_settings' ] );
-		add_action( 'admin_menu', [ $this, 'register_icfw_options_menu' ] );
-		add_action( 'admin_enqueue_scripts', [ $this, 'register_icfw_styles' ] );
+		add_action( 'admin_init', [ $this, 'register_options_init' ] );
+		add_action( 'admin_menu', [ $this, 'register_options_menu' ] );
+		add_action( 'admin_enqueue_scripts', [ $this, 'register_options_styles' ] );
 	}
 
 	/**
@@ -39,14 +39,14 @@ class Admin extends Service implements Kernel {
 	 *
 	 * @return void
 	 */
-	public function register_icfw_options_menu(): void {
+	public function register_options_menu(): void {
 		add_submenu_page(
 			'upload.php',
 			__( 'Image Converter for WebP', 'image-converter-webp' ),
 			__( 'Image Converter for WebP', 'image-converter-webp' ),
 			'manage_options',
 			'image-converter-webp',
-			[ $this, 'register_icfw_options_page' ]
+			[ $this, 'register_options_page' ],
 		);
 	}
 
@@ -79,7 +79,7 @@ class Admin extends Service implements Kernel {
 	 *
 	 * @return void
 	 */
-	public function register_icfw_settings(): void {
+	public function register_options_init(): void {
 		if ( ! isset( $_POST['webp_save_settings'] ) || ! isset( $_POST['webp_settings_nonce'] ) ) {
 			return;
 		}
@@ -113,7 +113,7 @@ class Admin extends Service implements Kernel {
 	 *
 	 * @return void
 	 */
-	public function register_icfw_styles(): void {
+	public function register_options_styles(): void {
 		wp_enqueue_style(
 			'image-converter-webp',
 			plugins_url( 'image-converter-webp/inc/Views/css/styles.css' ),
