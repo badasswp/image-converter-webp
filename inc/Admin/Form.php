@@ -127,10 +127,7 @@ class Form {
 				case 'label':
 					$form_group .= sprintf(
 						'<div class="badasswp-form-group-heading">%s</div>',
-						esc_html__(
-							$value,
-							'image-converter-webp'
-						),
+						esc_html__( $value, 'image-converter-webp' ),
 					);
 					break;
 
@@ -304,21 +301,32 @@ class Form {
 	 * @return string
 	 */
 	public function get_form_submit(): string {
-		return sprintf(
+		$heading      = $this->options['submit']['heading'] ?? '';
+		$button_name  = $this->options['submit']['button']['name'] ?? '';
+		$button_label = $this->options['submit']['button']['label'] ?? '';
+		$nonce_name   = $this->options['submit']['nonce']['name'] ?? '';
+		$nonce_action = $this->options['submit']['nonce']['action'] ?? '';
+
+		$submit = [
+			'heading'      => $heading,
+			'button_name'  => $button_name,
+			'button_label' => $button_label,
+			'nonce'        => wp_nonce_field( $nonce_action, $nonce_name, true, false ),
+		];
+
+		return vsprintf(
 			'<div class="badasswp-form-group">
 				<p class="badasswp-form-group-heading">
-					<label><strong>%s</strong></label>
+					<strong>%s</strong>
 				</p>
 				<p class="badasswp-form-group-heading">
-					<button name="webp_save_settings" type="submit" class="button button-primary">
+					<button name="%s" type="submit" class="button button-primary">
 						<span>%s</span>
 					</button>
 				</p>
 				%s
 			</div>',
-			esc_html__( 'Actions', 'image-converter-webp' ),
-			esc_html__( 'Save Changes', 'image-converter-webp' ),
-			wp_nonce_field( 'webp_settings_action', 'webp_settings_nonce', true, false ),
+			$submit
 		);
 	}
 
