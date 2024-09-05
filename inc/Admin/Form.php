@@ -122,6 +122,8 @@ class Form {
 					break;
 
 				default:
+					$form_group_body = '';
+
 					foreach ( $value as $name => $control ) {
 						$group_block = [
 							'label'   => esc_html__(
