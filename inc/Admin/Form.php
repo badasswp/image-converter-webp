@@ -318,7 +318,7 @@ class Form {
 			</div>',
 			esc_html__( 'Actions', 'image-converter-webp' ),
 			esc_html__( 'Save Changes', 'image-converter-webp' ),
-			(string) wp_nonce_field( 'webp_settings_action', 'webp_settings_nonce' ),
+			wp_nonce_field( 'webp_settings_action', 'webp_settings_nonce', true, false ),
 		);
 	}
 
