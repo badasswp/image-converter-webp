@@ -44,6 +44,10 @@ class Logger extends Service implements Kernel {
 			update_post_meta( $attachment_id, 'icfw_img', $webp );
 		}
 
+		if ( ! icfw_get_settings( 'logs' ) ) {
+			return;
+		}
+
 		if ( is_wp_error( $webp ) ) {
 			wp_insert_post(
 				[
