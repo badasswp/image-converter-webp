@@ -95,11 +95,11 @@ class Admin extends Service implements Kernel {
 	 * @return void
 	 */
 	public function register_options_init(): void {
-		if ( ! isset( $_POST['webp_save_settings'] ) || ! isset( $_POST['webp_settings_nonce'] ) ) {
+		if ( ! isset( $_POST['icfw_save_settings'] ) || ! isset( $_POST['icfw_settings_nonce'] ) ) {
 			return;
 		}
 
-		if ( ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['webp_settings_nonce'] ) ), 'webp_settings_action' ) ) {
+		if ( ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['icfw_settings_nonce'] ) ), 'icfw_settings_action' ) ) {
 			return;
 		}
 
@@ -111,7 +111,7 @@ class Admin extends Service implements Kernel {
 				$fields,
 				array_map(
 					function ( $field ) {
-						if ( wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['webp_settings_nonce'] ) ), 'webp_settings_action' ) ) {
+						if ( wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['icfw_settings_nonce'] ) ), 'icfw_settings_action' ) ) {
 							return sanitize_text_field( $_POST[ $field ] ?? '' );
 						}
 					},

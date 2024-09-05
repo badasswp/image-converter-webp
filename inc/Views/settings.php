@@ -25,7 +25,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 	<form class="badasswp-form" method="POST" action="<?php echo esc_url( sanitize_text_field( $_SERVER['REQUEST_URI'] ) ); ?>">
 		<!-- Form Notice -->
-		<?php if ( isset( $_POST['webp_save_settings'] ) ) : ?>
+		<?php if ( isset( $_POST['icfw_save_settings'] ) ) : ?>
 		<div class="badasswp-form-notice">
 			<span><?php echo esc_html__( 'Settings Saved.', 'image-converter-webp' ); ?></span>
 		</div>
@@ -129,13 +129,13 @@ if ( ! defined( 'ABSPATH' ) ) {
 					</label>
 				</p>
 				<p class="badasswp-form-group-block">
-					<button name="webp_save_settings" type="submit" class="button button-primary">
+					<button name="icfw_save_settings" type="submit" class="button button-primary">
 						<span>
 							<?php echo esc_html__( 'Save Changes', 'image-converter-webp' ); ?>
 						</span>
 					</button>
 				</p>
-				<?php wp_nonce_field( 'webp_settings_action', 'webp_settings_nonce' ); ?>
+				<?php wp_nonce_field( 'icfw_settings_action', 'icfw_settings_nonce' ); ?>
 			</div>
 		</div>
 	</form>

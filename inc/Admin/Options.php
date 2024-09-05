@@ -26,12 +26,12 @@ class Options {
 		'submit' => [
 			'heading' => 'Actions',
 			'button'  => [
-				'name'  => 'webp_save_settings',
+				'name'  => 'icfw_save_settings',
 				'label' => 'Save Changes',
 			],
 			'nonce'   => [
-				'name'   => 'webp_settings_nonce',
-				'action' => 'webp_settings_action',
+				'name'   => 'icfw_settings_nonce',
+				'action' => 'icfw_settings_action',
 			],
 		],
 		'fields' => [

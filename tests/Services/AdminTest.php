@@ -49,7 +49,7 @@ class AdminTest extends TestCase {
 
 	public function test_register_options_init_bails_out_if_any_nonce_settings_is_missing() {
 		$_POST = [
-			'webp_save_settings' => true,
+			'icfw_save_settings' => true,
 		];
 
 		$settings = $this->admin->register_options_init();
@@ -60,8 +60,8 @@ class AdminTest extends TestCase {
 
 	public function test_register_options_init_bails_out_if_nonce_verification_fails() {
 		$_POST = [
-			'webp_save_settings'  => true,
-			'webp_settings_nonce' => 'a8vbq3cg3sa',
+			'icfw_save_settings'  => true,
+			'icfw_settings_nonce' => 'a8vbq3cg3sa',
 		];
 
 		\WP_Mock::userFunction( 'wp_unslash' )
@@ -76,7 +76,7 @@ class AdminTest extends TestCase {
 
 		\WP_Mock::userFunction( 'wp_verify_nonce' )
 			->once()
-			->with( 'a8vbq3cg3sa', 'webp_settings_action' )
+			->with( 'a8vbq3cg3sa', 'icfw_settings_action' )
 			->andReturn( false );
 
 		$settings = $this->admin->register_options_init();
@@ -87,8 +87,8 @@ class AdminTest extends TestCase {
 
 	public function test_register_options_init_passes() {
 		$_POST = [
-			'webp_save_settings'  => true,
-			'webp_settings_nonce' => 'a8vbq3cg3sa',
+			'icfw_save_settings'  => true,
+			'icfw_settings_nonce' => 'a8vbq3cg3sa',
 			'quality'             => 75,
 			'converter'           => 'gd',
 			'upload'              => 1,
@@ -108,7 +108,7 @@ class AdminTest extends TestCase {
 
 		\WP_Mock::userFunction( 'wp_verify_nonce' )
 			->times( 6 )
-			->with( 'a8vbq3cg3sa', 'webp_settings_action' )
+			->with( 'a8vbq3cg3sa', 'icfw_settings_action' )
 			->andReturn( true );
 
 		\WP_Mock::userFunction( 'update_option' )
