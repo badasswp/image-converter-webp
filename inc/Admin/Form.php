@@ -88,7 +88,7 @@ class Form {
 	public function get_form_main(): string {
 		$form_fields = '';
 
-		foreach ( $this->options as $option ) {
+		foreach ( $this->options['fields'] ?? [] as $option ) {
 			$form_fields .= $this->get_form_group( $option );
 		}
 

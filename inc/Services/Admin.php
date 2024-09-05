@@ -70,7 +70,7 @@ class Admin extends Service implements Kernel {
 				'Convert your WordPress JPG/PNG images to WebP formats during runtime.',
 				'image-converter-webp'
 			),
-			'form'    => ( new Form( Options::FIELDS ) )->get_form(),
+			'form'    => ( new Form( Options::FORM ) )->get_form(),
 		];
 
 		vprintf(
