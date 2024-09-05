@@ -19,38 +19,54 @@
 .badasswp-form-group {
 	background: #FFF;
 	border: 1px solid #c3c4c7;
-	display: flex;
-	flex-wrap: wrap;
+	display: block;
+	width: 100%;
+}
+
+.badasswp-form-group-heading {
+	margin: 0 !important;
+	padding: 12.5px;
+	box-sizing: border-box;
+	width: 100%;
+	line-height: 1.25;
+	border-bottom: 1px solid #e2e4e7;
+}
+
+.badasswp-form-group-body {
+	width: 100%;
 }
 
 .badasswp-form-group-block {
-	margin: 0;
+	margin: 0 !important;
 	padding: 12.5px;
-	border-bottom: 1px solid #e2e4e7;
 	box-sizing: border-box;
-	width: 100%;
-	display: flex;
-	flex-direction: column;
-	gap: 6.5px;
-}
-
-.badasswp-form-group-block:last-child {
-	border-bottom: 0;
+	width: 50%;
+	display: inline-block;
 }
 
 .badasswp-form-group-block label {
 	font-weight: bold;
 	display: block;
+	margin-bottom: 7.5px;
 }
 
 .badasswp-form-group-block em {
-	display: inline-block;
-	margin-top: 3.5px;
+	display: block;
+	margin-top: 7.5px;
 	color: #888;
 }
 
+/* FORM CONTROLS */
+
+.badasswp-form-group-block input[type=text] {
+	width: 100%;
+	box-sizing: border-box;
+}
+
 .badasswp-form-group-block select {
+	width: 100%;
 	max-width: 100%;
+	box-sizing: border-box;
 }
 
 .badasswp-form-group-block input[type=checkbox] {
@@ -103,15 +119,6 @@
 	box-sizing: border-box;
 }
 
-.badasswp-form .size-50 {
-	width: calc(50% - 1px);
-	border-right: 1px solid #e2e4e7;
-}
-
-.badasswp-form .size-50:nth-child(2n+1) {
-	border-right: none;
-}
-
 @media only screen and (max-width: 786px) {
 	.badasswp-form {
 		gap: 15px;
@@ -123,7 +130,7 @@
 	}
 
 	.badasswp-form-group-block {
-		width: 100%;
-		border-right: none;
+		width: 100% !important;
+		border-right: none !important;
 	}
 }
