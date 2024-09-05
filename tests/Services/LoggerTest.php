@@ -22,7 +22,29 @@ class LoggerTest extends TestCase {
 		\WP_Mock::tearDown();
 	}
 
-	public function test_add_webp_meta_to_attachment_bails_out_if_wp_error_is_true() {
+	public function test_add_webp_meta_to_attachment_does_not_log_error_if_log_option_is_not_enabled() {
+		$webp = Mockery::mock( '\WP_Error' )->makePartial();
+
+		$options = [
+			'logs' => false,
+		];
+
+		\WP_Mock::userFunction( 'get_option' )
+			->once()
+			->with( 'icfw', [] )
+			->andReturn( $options );
+
+		\WP_Mock::userFunction( 'is_wp_error' )
+			->once()
+			->with( $webp )
+			->andReturn( true );
+
+		$this->logger->add_webp_meta_to_attachment( $webp, 1 );
+
+		$this->assertConditionsMet();
+	}
+
+	public function test_add_webp_meta_to_attachment_logs_error_if_wp_error_is_true() {
 		$webp = Mockery::mock( '\WP_Error' )->makePartial();
 
 		$webp->shouldReceive( 'get_error_message' )
