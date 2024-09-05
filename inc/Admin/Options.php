@@ -20,8 +20,20 @@ class Options {
 	 * @since 1.1.2
 	 */
 	public const FORM = [
-		'submit' => [],
-		'notice' => [],
+		'notice' => [
+			'label' => 'Settings Saved.',
+		],
+		'submit' => [
+			'heading' => 'Actions',
+			'button'  => [
+				'name'  => 'webp_save_settings',
+				'label' => 'Save Changes',
+			],
+			'nonce'   => [
+				'name'   => 'webp_settings_nonce',
+				'action' => 'webp_settings_action',
+			],
+		],
 		'fields' => [
 			'icfw_conv_options' => [
 				'label'    => 'Conversion Options',
