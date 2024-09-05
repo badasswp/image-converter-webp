@@ -58,7 +58,7 @@ class Options {
 		'icfw_log_options'  => [
 			'label'    => 'Log Options',
 			'controls' => [
-				'logs'    => [
+				'logs' => [
 					'control' => 'checkbox',
 					'label'   => 'Log errors for Failed Conversions',
 					'summary' => 'Enable this option to log errors.',
