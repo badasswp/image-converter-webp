@@ -23,6 +23,7 @@ use ImageConverterWebP\Services\PageLoad;
  * @covers \ImageConverterWebP\Core\Container::register
  * @covers \ImageConverterWebP\Core\Converter::__construct
  * @covers \ImageConverterWebP\Services\Admin::register
+ * @covers \ImageConverterWebP\Services\Boot::register
  * @covers \ImageConverterWebP\Services\Logger::register
  * @covers \ImageConverterWebP\Services\Main::register
  * @covers \ImageConverterWebP\Services\PageLoad::register

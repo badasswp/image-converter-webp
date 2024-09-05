@@ -10,6 +10,7 @@ use ImageConverterWebP\Services\Logger;
  * @covers \ImageConverterWebP\Core\Converter::__construct
  * @covers \ImageConverterWebP\Services\Logger::__construct
  * @covers \ImageConverterWebP\Services\Logger::add_webp_meta_to_attachment
+ * @covers icfw_get_settings
  */
 class LoggerTest extends TestCase {
 	public function setUp(): void {
