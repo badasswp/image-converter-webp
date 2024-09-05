@@ -132,44 +132,58 @@ class Form {
 					break;
 
 				default:
-					$form_group_body = '';
-
-					foreach ( $value as $name => $control ) {
-						$group_block = [
-							'label'   => esc_html__(
-								$control['label'] ?? '',
-								'image-converter-webp'
-							),
-							'control' => __(
-								$this->get_form_control( $control, $name ),
-								'image-converter-webp'
-							),
-							'summary' => esc_html__(
-								$control['summary'] ?? '',
-								'image-converter-webp'
-							),
-						];
-
-						$form_group_body .= vsprintf(
-							'<p class="badasswp-form-group-block">
-								<label>%1$s</label>
-								%2$s
-								<em>%3$s</em>
-							</p>',
-							$group_block,
-						);
-					}
-
 					$form_group .= sprintf(
 						'<div class="badasswp-form-group-body">%s</div>',
-						$form_group_body
+						$this->get_form_group_body( $value )
 					);
-
 					break;
 			}
 		}
 
 		return sprintf( '<div class="badasswp-form-group">%s</div>', $form_group );
+	}
+
+	/**
+	 * Get Form Group Body.
+	 *
+	 * This method is responsible for getting
+	 * the form group body.
+	 *
+	 * @since 1.1.2
+	 *
+	 * @param mixed[] $arg Form Group Body args.
+	 * @return string
+	 */
+	public function get_form_group_body( $arg ): string {
+		$form_group_body = '';
+
+		foreach ( $arg as $name => $control ) {
+			$group_block = [
+				'label'   => esc_html__(
+					$control['label'] ?? '',
+					'image-converter-webp'
+				),
+				'control' => __(
+					$this->get_form_control( $control, $name ),
+					'image-converter-webp'
+				),
+				'summary' => esc_html__(
+					$control['summary'] ?? '',
+					'image-converter-webp'
+				),
+			];
+
+			$form_group_body .= vsprintf(
+				'<p class="badasswp-form-group-block">
+					<label>%1$s</label>
+					%2$s
+					<em>%3$s</em>
+				</p>',
+				$group_block,
+			);
+		}
+
+		return $form_group_body;
 	}
 
 	/**
