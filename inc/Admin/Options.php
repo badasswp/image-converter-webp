@@ -36,7 +36,7 @@ class Options {
 		],
 		'fields' => [
 			'icfw_conv_options' => [
-				'label'    => 'Conversion Options',
+				'heading'  => 'Conversion Options',
 				'controls' => [
 					'quality'   => [
 						'control'     => 'text',
@@ -59,7 +59,7 @@ class Options {
 				],
 			],
 			'icfw_img_options'  => [
-				'label'    => 'Image Options',
+				'heading'  => 'Image Options',
 				'controls' => [
 					'upload'    => [
 						'control' => 'checkbox',
@@ -74,7 +74,7 @@ class Options {
 				],
 			],
 			'icfw_log_options'  => [
-				'label'    => 'Log Options',
+				'heading'  => 'Log Options',
 				'controls' => [
 					'logs' => [
 						'control' => 'checkbox',
