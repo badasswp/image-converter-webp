@@ -341,12 +341,15 @@ class Form {
 	 * @return string
 	 */
 	public function get_form_notice(): string {
-		if ( isset( $_POST['webp_save_settings'] ) ) {
+		$notice_label = $this->options['notice']['label'] ?? '';
+		$button_name  = $this->options['submit']['button']['name'] ?? '';
+
+		if ( isset( $_POST[ $button_name ] ) ) {
 			return sprintf(
 				'<div class="badasswp-form-notice">
 					<span>%s</span>
 				</div>',
-				esc_html__( 'Settings Saved.', 'image-converter-webp' )
+				esc_html__( $notice_label, 'image-converter-webp' )
 			);
 		}
 
