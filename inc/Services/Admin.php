@@ -103,7 +103,7 @@ class Admin extends Service implements Kernel {
 			return;
 		}
 
-		$fields = [ 'quality', 'converter', 'upload', 'page_load' ];
+		$fields = [ 'quality', 'converter', 'upload', 'page_load', 'logs' ];
 
 		update_option(
 			'icfw',
