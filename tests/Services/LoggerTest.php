@@ -29,6 +29,15 @@ class LoggerTest extends TestCase {
 			->once()
 			->andReturn( 'Fatal Error: sample.pdf is not an image...' );
 
+		$options = [
+			'logs' => true,
+		];
+
+		\WP_Mock::userFunction( 'get_option' )
+			->once()
+			->with( 'icfw', [] )
+			->andReturn( $options );
+
 		\WP_Mock::userFunction( 'is_wp_error' )
 			->twice()
 			->with( $webp )
@@ -53,6 +62,15 @@ class LoggerTest extends TestCase {
 
 	public function test_add_webp_meta_to_attachment_updates_post_meta() {
 		$webp = 'https://example.com/wp-content/uploads/2024/01/sample.webp';
+
+		$options = [
+			'logs' => true,
+		];
+
+		\WP_Mock::userFunction( 'get_option' )
+			->once()
+			->with( 'icfw', [] )
+			->andReturn( $options );
 
 		\WP_Mock::userFunction( 'is_wp_error' )
 			->twice()
