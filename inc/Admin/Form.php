@@ -88,7 +88,20 @@ class Form {
 	public function get_form_main(): string {
 		$form_fields = '';
 
-		foreach ( $this->options['fields'] ?? [] as $option ) {
+		/**
+		 * Filter Form Fields.
+		 *
+		 * Pass in custom fields to the Admin Form with
+		 * key, value options.
+		 *
+		 * @since 1.1.2
+		 *
+		 * @param mixed[] $fields Form Fields.
+		 * @return mixed[]
+		 */
+		$fields = (array) apply_filters( 'icfw_form_fields', $this->options['fields'] ?? [] );
+
+		foreach ( $fields as $option ) {
 			$form_fields .= $this->get_form_group( $option );
 		}
 
