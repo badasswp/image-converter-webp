@@ -113,7 +113,7 @@ class Form {
 			switch ( $key ) {
 				case 'label':
 					$form_group .= sprintf(
-						'<p class="badasswp-form-group-block">%s</p>',
+						'<div class="badasswp-form-group-heading">%s</div>',
 						esc_html__(
 							$value,
 							'image-converter-webp'
@@ -138,8 +138,8 @@ class Form {
 							),
 						];
 
-						$form_group .= vsprintf(
-							'<p class="badasswp-form-group-block size-50">
+						$form_group_body .= vsprintf(
+							'<p class="badasswp-form-group-block">
 								<label>%1$s</label>
 								%2$s
 								<em>%3$s</em>
@@ -147,6 +147,12 @@ class Form {
 							$group_block,
 						);
 					}
+
+					$form_group .= sprintf(
+						'<div class="badasswp-form-group-body">%s</div>',
+						$form_group_body
+					);
+
 					break;
 			}
 		}
@@ -285,10 +291,10 @@ class Form {
 	public function get_form_submit(): string {
 		return sprintf(
 			'<div class="badasswp-form-group">
-				<p class="badasswp-form-group-block">
-					<label>%s</label>
+				<p class="badasswp-form-group-heading">
+					<label><strong>%s</strong></label>
 				</p>
-				<p class="badasswp-form-group-block">
+				<p class="badasswp-form-group-heading">
 					<button name="webp_save_settings" type="submit" class="button button-primary">
 						<span>%s</span>
 					</button>
