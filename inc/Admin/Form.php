@@ -124,7 +124,7 @@ class Form {
 
 		foreach ( $arg as $key => $value ) {
 			switch ( $key ) {
-				case 'label':
+				case 'heading':
 					$form_group .= sprintf(
 						'<div class="badasswp-form-group-heading">%s</div>',
 						esc_html__( $value, 'image-converter-webp' ),
