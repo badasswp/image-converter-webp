@@ -61,25 +61,13 @@ class Admin extends Service implements Kernel {
 	 * @return void
 	 */
 	public function register_options_page(): void {
-		$options = [
-			'caption' => esc_html__(
-				'Image Converter for WebP',
-				'image-converter-webp'
-			),
-			'summary' => esc_html__(
-				'Convert your WordPress JPG/PNG images to WebP formats during runtime.',
-				'image-converter-webp'
-			),
-			'form'    => ( new Form( Options::FORM ) )->get_form(),
-		];
-
 		vprintf(
 			'<section class="wrap">
 				<h1>%s</h1>
 				<p>%s</p>
 				%s
 			</section>',
-			$options
+			( new Form( Options::FORM ) )->get_options()
 		);
 	}
 

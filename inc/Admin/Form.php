@@ -32,6 +32,30 @@ class Form {
 	}
 
 	/**
+	 * Get Options.
+	 *
+	 * This method grabs the Options for the Admin
+	 * page, including the form.
+	 *
+	 * @since 1.1.2
+	 *
+	 * @return mixed[]
+	 */
+	public function get_options(): array {
+		return [
+			'title'   => esc_html__(
+				$this->options['page']['title'] ?? '',
+				'image-converter-webp'
+			),
+			'summary' => esc_html__(
+				$this->options['page']['summary'] ?? '',
+				'image-converter-webp'
+			),
+			'form'    => $this->get_form(),
+		];
+	}
+
+	/**
 	 * Get Form.
 	 *
 	 * This method is responsible for getting
