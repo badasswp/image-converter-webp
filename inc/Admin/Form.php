@@ -346,10 +346,19 @@ class Form {
 		$nonce_action = $this->options['submit']['nonce']['action'] ?? '';
 
 		$submit = [
-			'heading'      => $heading,
-			'button_name'  => $button_name,
-			'button_label' => $button_label,
-			'nonce'        => wp_nonce_field( $nonce_action, $nonce_name, true, false ),
+			'heading'      => esc_html__(
+				$heading,
+				'image-converter-webp'
+			),
+			'button_name'  => esc_attr__(
+				$button_name,
+				'image-converter-webp'
+			),
+			'button_label' => esc_html__(
+				$button_label,
+				'image-converter-webp'
+			),
+			'nonce_fields' => wp_nonce_field( $nonce_action, $nonce_name, true, false ),
 		];
 
 		return vsprintf(
