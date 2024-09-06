@@ -38,6 +38,9 @@ class Options {
 	/**
 	 * The Form.
 	 *
+	 * This array defines every single aspect of the
+	 * Form displayed on the Admin options page.
+	 *
 	 * @since 1.1.2
 	 */
 	public const FORM = [
@@ -50,6 +53,9 @@ class Options {
 	/**
 	 * Form Page.
 	 *
+	 * The Form page items containg the Page title,
+	 * summary, slug and option name.
+	 *
 	 * @since 1.1.2
 	 */
 	public const FORM_PAGE = [
@@ -61,6 +67,9 @@ class Options {
 
 	/**
 	 * Form Submit.
+	 *
+	 * The Form submit items containing the heading,
+	 * button name & label and nonce params.
 	 *
 	 * @since 1.1.2
 	 */
@@ -78,6 +87,9 @@ class Options {
 
 	/**
 	 * Form Fields.
+	 *
+	 * The Form field items containing the heading for
+	 * each group block and controls.
 	 *
 	 * @since 1.1.2
 	 */
@@ -134,6 +146,9 @@ class Options {
 
 	/**
 	 * Form Notice.
+	 *
+	 * The Form notice containing the notice
+	 * text displayed on save.
 	 *
 	 * @since 1.1.2
 	 */
