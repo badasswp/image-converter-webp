@@ -97,7 +97,7 @@ class Admin extends Service implements Kernel {
 		}
 
 		foreach ( Options::get_fields() as $field ) {
-			$form_fields = wp_parse_args(
+			$form_fields = array_merge(
 				array_keys( $field['controls'] ?? [] ),
 				$form_fields
 			);

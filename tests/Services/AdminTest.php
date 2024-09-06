@@ -97,17 +97,17 @@ class AdminTest extends TestCase {
 		];
 
 		\WP_Mock::userFunction( 'wp_unslash' )
-			->times( 6 )
+			->times( 1 )
 			->with( 'a8vbq3cg3sa' )
 			->andReturn( 'a8vbq3cg3sa' );
 
 		\WP_Mock::userFunction( 'sanitize_text_field' )
-			->times( 6 )
+			->times( 1 )
 			->with( 'a8vbq3cg3sa' )
 			->andReturn( 'a8vbq3cg3sa' );
 
 		\WP_Mock::userFunction( 'wp_verify_nonce' )
-			->times( 6 )
+			->times( 1 )
 			->with( 'a8vbq3cg3sa', 'icfw_settings_action' )
 			->andReturn( true );
 
