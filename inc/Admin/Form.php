@@ -211,6 +211,23 @@ class Form {
 	}
 
 	/**
+	 * Get Setting.
+	 *
+	 * This gets the Options setting for a specific
+	 * key name.
+	 *
+	 * @since 1.1.2
+	 *
+	 * @param string $name Option Key name.
+	 * @return void
+	 */
+	public function get_setting( $name ) {
+		$this->option = $this->option ?: ( $this->options['page']['option'] ?? '' );
+
+		return get_option( $this->option, [] )[ $name ] ?? '';
+	}
+
+	/**
 	 * Get Form Control.
 	 *
 	 * This method is responsible for getting the
@@ -260,7 +277,7 @@ class Form {
 		return sprintf(
 			'<input type="text" placeholder="%1$s" value="%2$s" name="%3$s"/>',
 			$arg['placeholder'] ?? '',
-			icfw_get_settings( $name ),
+			$this->get_setting( $name ),
 			$name,
 		);
 	}
@@ -282,7 +299,7 @@ class Form {
 		$options = '';
 
 		foreach ( $arg['options'] ?? [] as $key => $value ) {
-			$is_selected = ( icfw_get_settings( $name ) === $key ) ? 'selected' : '';
+			$is_selected = ( $this->get_setting( $name ) === $key ) ? 'selected' : '';
 
 			$options .= sprintf(
 				'<option value="%1$s" %2$s>%3$s</option>',
@@ -315,7 +332,7 @@ class Form {
 	 * @return string
 	 */
 	public function get_checkbox_control( $arg, $name ): string {
-		$is_checked = ! empty( icfw_get_settings( $name ) ) ? 'checked' : '';
+		$is_checked = ! empty( $this->get_setting( $name ) ) ? 'checked' : '';
 
 		return sprintf(
 			'<input
