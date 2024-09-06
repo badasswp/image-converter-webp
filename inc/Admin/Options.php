@@ -55,6 +55,8 @@ class Options {
 	public const FORM_PAGE = [
 		'title'   => 'Image Converter for WebP',
 		'summary' => 'Convert your WordPress JPG/PNG images to WebP formats during runtime.',
+		'slug'    => 'image-converter-webp',
+		'option'  => 'icfw',
 	];
 
 	/**

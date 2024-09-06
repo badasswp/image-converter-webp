@@ -42,10 +42,10 @@ class Admin extends Service implements Kernel {
 	public function register_options_menu(): void {
 		add_submenu_page(
 			'upload.php',
-			__( Options::get_page_title(), 'image-converter-webp' ),
-			__( Options::get_page_title(), 'image-converter-webp' ),
+			__( Options::get_page_title(), Options::get_page_slug() ),
+			__( Options::get_page_title(), Options::get_page_slug() ),
 			'manage_options',
-			'image-converter-webp',
+			Options::get_page_slug(),
 			[ $this, 'register_options_page' ],
 		);
 	}
@@ -113,7 +113,7 @@ class Admin extends Service implements Kernel {
 			)
 		);
 
-		update_option( 'icfw', $options );
+		update_option( Options::get_page_option(), $options );
 	}
 
 	/**
@@ -125,7 +125,7 @@ class Admin extends Service implements Kernel {
 	 */
 	public function register_options_styles(): void {
 		wp_enqueue_style(
-			'image-converter-webp',
+			Options::get_page_slug(),
 			plugins_url( 'image-converter-webp/styles.css' ),
 			[],
 			true,
