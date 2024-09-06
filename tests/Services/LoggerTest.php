@@ -70,7 +70,7 @@ class LoggerTest extends TestCase {
 			->once()
 			->with(
 				[
-					'post_type'    => 'webp_error',
+					'post_type'    => 'icfw_error',
 					'post_title'   => 'WebP error log, ID - 1',
 					'post_content' => 'Fatal Error: sample.pdf is not an image...',
 					'post_status'  => 'publish',
