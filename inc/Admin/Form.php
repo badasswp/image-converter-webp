@@ -219,12 +219,10 @@ class Form {
 	 * @since 1.1.2
 	 *
 	 * @param string $name Option Key name.
-	 * @return void
+	 * @return string
 	 */
 	public function get_setting( $name ) {
-		$this->option = $this->option ?: ( $this->options['page']['option'] ?? '' );
-
-		return get_option( $this->option, [] )[ $name ] ?? '';
+		return get_option( ( $this->options['page']['option'] ?? '' ), [] )[ $name ] ?? '';
 	}
 
 	/**
