@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Image Converter for WebP\n"
 "POT-Creation-Date: 2024-07-09 21:46+0100\n"
-"PO-Revision-Date: 2024-09-03 08:55+0100\n"
+"PO-Revision-Date: 2024-09-06 07:09+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: fr_FR\n"
@@ -119,3 +119,15 @@ msgstr "Erreur : %s n’est pas une image."
 #, php-format
 msgid "Fatal Error: %s"
 msgstr "Erreur fatale : %s"
+
+#. Log Options
+msgid "Log Options"
+msgstr "Options de Journal"
+
+#. Log errors for Failed Conversions
+msgid "Log errors for Failed Conversions"
+msgstr "Consigner les erreurs pour les conversions ayant échoué"
+
+#. Enable this option to log errors.
+msgid "Enable this option to log errors."
+msgstr "Activez cette option pour consigner les erreurs."
