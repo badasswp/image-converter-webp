@@ -11,6 +11,7 @@ use ImageConverterWebP\Services\Admin;
  * @covers \ImageConverterWebP\Services\Admin::__construct
  * @covers \ImageConverterWebP\Services\Admin::register_options_menu
  * @covers \ImageConverterWebP\Services\Admin::register_options_init
+ * @covers \ImageConverterWebP\Admin\Options::__callStatic
  */
 class AdminTest extends TestCase {
 	public function setUp(): void {
