@@ -42,8 +42,8 @@ class Admin extends Service implements Kernel {
 	public function register_options_menu(): void {
 		add_submenu_page(
 			'upload.php',
-			__( 'Image Converter for WebP', 'image-converter-webp' ),
-			__( 'Image Converter for WebP', 'image-converter-webp' ),
+			__( Options::get_page_title(), 'image-converter-webp' ),
+			__( Options::get_page_title(), 'image-converter-webp' ),
 			'manage_options',
 			'image-converter-webp',
 			[ $this, 'register_options_page' ],
@@ -83,30 +83,37 @@ class Admin extends Service implements Kernel {
 	 * @return void
 	 */
 	public function register_options_init(): void {
-		if ( ! isset( $_POST['icfw_save_settings'] ) || ! isset( $_POST['icfw_settings_nonce'] ) ) {
+		$form_fields          = [];
+		$form_button_name     = Options::get_submit_button_name();
+		$form_settings_nonce  = Options::get_submit_nonce_name();
+		$form_settings_action = Options::get_submit_nonce_action();
+
+		if ( ! isset( $_POST[ $form_button_name ] ) || ! isset( $_POST[ $form_settings_nonce ] ) ) {
 			return;
 		}
 
-		if ( ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['icfw_settings_nonce'] ) ), 'icfw_settings_action' ) ) {
+		if ( ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST[ $form_settings_nonce ] ) ), $form_settings_action ) ) {
 			return;
 		}
 
-		$fields = [ 'quality', 'converter', 'upload', 'page_load', 'logs' ];
+		foreach ( Options::get_fields() as $field ) {
+			$form_fields = wp_parse_args(
+				array_keys( $field['controls'] ?? [] ),
+				$form_fields
+			);
+		}
 
-		update_option(
-			'icfw',
-			array_combine(
-				$fields,
-				array_map(
-					function ( $field ) {
-						if ( wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['icfw_settings_nonce'] ) ), 'icfw_settings_action' ) ) {
-							return sanitize_text_field( $_POST[ $field ] ?? '' );
-						}
-					},
-					$fields
-				)
+		$options = array_combine(
+			$form_fields,
+			array_map(
+				function ( $field ) {
+					return sanitize_text_field( $_POST[ $field ] ?? '' );
+				},
+				$form_fields
 			)
 		);
+
+		update_option( 'icfw', $options );
 	}
 
 	/**
