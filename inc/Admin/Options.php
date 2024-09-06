@@ -20,7 +20,7 @@ class Options {
 	 * @param string  $method Method name.
 	 * @param mixed[] $args   Method args.
 	 *
-	 * @return void
+	 * @return string|mixed[]
 	 */
 	public static function __callStatic( $method, $args ) {
 		$keys = substr( $method, strpos( $method, '_' ) + 1 );
