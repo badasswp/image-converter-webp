@@ -12,6 +12,30 @@ namespace ImageConverterWebP\Admin;
 
 class Options {
 	/**
+	 * Define custom static method for calling
+	 * dynamic methods for e.g. Options::get_page_title().
+	 *
+	 * @since 1.1.2
+	 *
+	 * @param string  $method Method name.
+	 * @param mixed[] $args   Method args.
+	 *
+	 * @return void
+	 */
+	public static function __callStatic( $method, $args ) {
+		$keys = substr( $method, strpos( $method, '_' ) + 1 );
+		$keys = explode( '_', $keys );
+
+		$value = '';
+
+		foreach ( $keys as $key ) {
+			$value = empty( $value ) ? ( self::FORM[ $key ] ?? '' ) : ( $value[ $key ] ?? '' );
+		}
+
+		return $value;
+	}
+
+	/**
 	 * The Form.
 	 *
 	 * @since 1.1.2
