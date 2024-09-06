@@ -119,7 +119,7 @@ class Admin extends Service implements Kernel {
 	public function register_options_styles(): void {
 		wp_enqueue_style(
 			'image-converter-webp',
-			plugins_url( 'image-converter-webp/inc/Views/css/styles.css' ),
+			plugins_url( 'image-converter-webp/styles.css' ),
 			[],
 			true,
 			'all'
