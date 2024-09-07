@@ -6,6 +6,7 @@
 		<exclude name="Generic.Files.OneObjectStructurePerFile.MultipleFound" />
 		<exclude name="Universal.Arrays.DisallowShortArraySyntax.Found" />
 		<exclude name="WordPress.WP.I18n.NonSingularStringLiteralText" />
+		<exclude name="WordPress.WP.I18n.NonSingularStringLiteralDomain" />
 	</rule>
 
 	<arg value="s" />

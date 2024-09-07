@@ -21,7 +21,7 @@ abstract class Service implements Kernel {
 	 *
 	 * @var mixed[]
 	 */
-	protected static array $services;
+	public static array $services;
 
 	/**
 	 * Converter Instance.

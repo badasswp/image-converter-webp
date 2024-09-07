@@ -3,7 +3,7 @@ Contributors: badasswp
 Tags: webp, image, convert, jpeg, png.
 Requires at least: 4.0
 Tested up to: 6.6.1
-Stable tag: 1.1.1
+Stable tag: 1.1.2
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -29,6 +29,14 @@ You may not realize it, but imagery is a large part of it. This plugin helps tak
 3. Attachment Modal - See Converted WebP image path here.
 
 == Changelog ==
+
+= 1.1.2 =
+* Refactor Admin page, make extensible with new classes.
+* Add new custom filter `icfw_form_fields`.
+* Add new Log error option in Admin page.
+* Update translation files.
+* Update Unit Tests.
+* Update README notes.
 
 = 1.1.1 =
 * Ensure WP_Error is passed and returned to Hook.

@@ -9,8 +9,9 @@ use ImageConverterWebP\Services\Admin;
 /**
  * @covers \ImageConverterWebP\Core\Converter::__construct
  * @covers \ImageConverterWebP\Services\Admin::__construct
- * @covers \ImageConverterWebP\Services\Admin::register_icfw_options_menu
- * @covers \ImageConverterWebP\Services\Admin::register_icfw_settings
+ * @covers \ImageConverterWebP\Services\Admin::register_options_menu
+ * @covers \ImageConverterWebP\Services\Admin::register_options_init
+ * @covers \ImageConverterWebP\Admin\Options::__callStatic
  */
 class AdminTest extends TestCase {
 	public function setUp(): void {
@@ -23,7 +24,7 @@ class AdminTest extends TestCase {
 		\WP_Mock::tearDown();
 	}
 
-	public function test_register_icfw_options_menu() {
+	public function test_register_options_menu() {
 		\WP_Mock::userFunction( '__' )
 			->twice()
 			->with( 'Image Converter for WebP', 'image-converter-webp' )
@@ -37,31 +38,31 @@ class AdminTest extends TestCase {
 				'Image Converter for WebP',
 				'manage_options',
 				'image-converter-webp',
-				[ $this->admin, 'register_icfw_options_page' ]
+				[ $this->admin, 'register_options_page' ]
 			)
 			->andReturn( null );
 
-		$menu = $this->admin->register_icfw_options_menu();
+		$menu = $this->admin->register_options_menu();
 
 		$this->assertNull( $menu );
 		$this->assertConditionsMet();
 	}
 
-	public function test_register_icfw_settings_bails_out_if_any_nonce_settings_is_missing() {
+	public function test_register_options_init_bails_out_if_any_nonce_settings_is_missing() {
 		$_POST = [
-			'webp_save_settings' => true,
+			'icfw_save_settings' => true,
 		];
 
-		$settings = $this->admin->register_icfw_settings();
+		$settings = $this->admin->register_options_init();
 
 		$this->assertNull( $settings );
 		$this->assertConditionsMet();
 	}
 
-	public function test_register_icfw_settings_bails_out_if_nonce_verification_fails() {
+	public function test_register_options_init_bails_out_if_nonce_verification_fails() {
 		$_POST = [
-			'webp_save_settings'  => true,
-			'webp_settings_nonce' => 'a8vbq3cg3sa',
+			'icfw_save_settings'  => true,
+			'icfw_settings_nonce' => 'a8vbq3cg3sa',
 		];
 
 		\WP_Mock::userFunction( 'wp_unslash' )
@@ -76,38 +77,39 @@ class AdminTest extends TestCase {
 
 		\WP_Mock::userFunction( 'wp_verify_nonce' )
 			->once()
-			->with( 'a8vbq3cg3sa', 'webp_settings_action' )
+			->with( 'a8vbq3cg3sa', 'icfw_settings_action' )
 			->andReturn( false );
 
-		$settings = $this->admin->register_icfw_settings();
+		$settings = $this->admin->register_options_init();
 
 		$this->assertNull( $settings );
 		$this->assertConditionsMet();
 	}
 
-	public function test_register_icfw_settings_passes() {
+	public function test_register_options_init_passes() {
 		$_POST = [
-			'webp_save_settings'  => true,
-			'webp_settings_nonce' => 'a8vbq3cg3sa',
+			'icfw_save_settings'  => true,
+			'icfw_settings_nonce' => 'a8vbq3cg3sa',
 			'quality'             => 75,
 			'converter'           => 'gd',
 			'upload'              => 1,
 			'page_load'           => 1,
+			'logs'                => 1,
 		];
 
 		\WP_Mock::userFunction( 'wp_unslash' )
-			->times( 5 )
+			->times( 1 )
 			->with( 'a8vbq3cg3sa' )
 			->andReturn( 'a8vbq3cg3sa' );
 
 		\WP_Mock::userFunction( 'sanitize_text_field' )
-			->times( 5 )
+			->times( 1 )
 			->with( 'a8vbq3cg3sa' )
 			->andReturn( 'a8vbq3cg3sa' );
 
 		\WP_Mock::userFunction( 'wp_verify_nonce' )
-			->times( 5 )
-			->with( 'a8vbq3cg3sa', 'webp_settings_action' )
+			->times( 1 )
+			->with( 'a8vbq3cg3sa', 'icfw_settings_action' )
 			->andReturn( true );
 
 		\WP_Mock::userFunction( 'update_option' )
@@ -119,6 +121,7 @@ class AdminTest extends TestCase {
 					'converter' => 'gd',
 					'upload'    => 1,
 					'page_load' => 1,
+					'logs'      => 1,
 				]
 			)
 			->andReturn( null );
@@ -126,14 +129,14 @@ class AdminTest extends TestCase {
 		\WP_Mock::userFunction(
 			'sanitize_text_field',
 			[
-				'times'  => 4,
+				'times'  => 5,
 				'return' => function ( $text ) {
 					return $text;
 				},
 			]
 		);
 
-		$settings = $this->admin->register_icfw_settings();
+		$settings = $this->admin->register_options_init();
 
 		$this->assertNull( $settings );
 		$this->assertConditionsMet();

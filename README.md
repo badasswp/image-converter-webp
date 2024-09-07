@@ -96,6 +96,50 @@ public function custom_img_html( $html, $attachment_id ): string {
 - attachment_id _`{int}`_ By default this is the Image ID.
 <br/>
 
+#### `icfw_form_fields`
+
+This custom hook (filter) provides the ability to add custom fields to the Admin options page like so:
+
+```php
+add_filter( 'icfw_form_fields', [ $this, 'custom_form_fields' ] );
+
+public function custom_form_fields( $fields ): array {
+    $fields = wp_parse_args(
+        [
+            'custom_group'  => [
+                'label'    => 'Custom Heading',
+                'controls' => [
+                    'custom_option_1' => [
+                        'control' => 'text',
+                        'label'   => 'My Custom Option 1',
+                        'summary' => 'Enable this option to save my custom option 1.',
+                    ],
+                    'custom_option_2' => [
+                        'control' => 'select',
+                        'label'   => 'My Custom Option 2',
+                        'summary' => 'Enable this option to save my custom option 2.',
+                        'options' => [],
+                    ],
+                    'custom_option_3' => [
+                        'control' => 'checkbox',
+                        'label'   => 'My Custom Option 3',
+                        'summary' => 'Enable this option to save my custom option 3.',
+                    ],
+                ],
+            ],
+        ],
+        $fields
+    );
+
+    return (array) $fields;
+}
+```
+
+**Parameters**
+
+- fields _`{array}`_ By default this will be an associative array containing key, value options of each field option.
+<br/>
+
 #### `icfw_thumbnail_html`
 
 This custom hook (filter) provides the ability to modify the resulting WebP image HTML. For e.g. you can nest your image HTML into a figure element like so:

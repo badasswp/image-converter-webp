@@ -122,3 +122,15 @@ msgstr ""
 #, php-format
 msgid "Fatal Error: %s"
 msgstr ""
+
+#. Log Options
+msgid "Log Options"
+msgstr ""
+
+#. Log errors for Failed Conversions
+msgid "Log errors for Failed Conversions"
+msgstr ""
+
+#. Enable this option to log errors.
+msgid "Enable this option to log errors."
+msgstr ""

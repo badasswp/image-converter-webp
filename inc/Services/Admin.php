@@ -10,6 +10,8 @@
 
 namespace ImageConverterWebP\Services;
 
+use ImageConverterWebP\Admin\Form;
+use ImageConverterWebP\Admin\Options;
 use ImageConverterWebP\Abstracts\Service;
 use ImageConverterWebP\Interfaces\Kernel;
 
@@ -22,10 +24,9 @@ class Admin extends Service implements Kernel {
 	 * @return void
 	 */
 	public function register(): void {
-		add_action( 'init', [ $this, 'register_icfw_translation' ] );
-		add_action( 'admin_init', [ $this, 'register_icfw_settings' ] );
-		add_action( 'admin_menu', [ $this, 'register_icfw_options_menu' ] );
-		add_action( 'admin_enqueue_scripts', [ $this, 'register_icfw_styles' ] );
+		add_action( 'admin_init', [ $this, 'register_options_init' ] );
+		add_action( 'admin_menu', [ $this, 'register_options_menu' ] );
+		add_action( 'admin_enqueue_scripts', [ $this, 'register_options_styles' ] );
 	}
 
 	/**
@@ -38,14 +39,14 @@ class Admin extends Service implements Kernel {
 	 *
 	 * @return void
 	 */
-	public function register_icfw_options_menu(): void {
+	public function register_options_menu(): void {
 		add_submenu_page(
 			'upload.php',
-			__( 'Image Converter for WebP', 'image-converter-webp' ),
-			__( 'Image Converter for WebP', 'image-converter-webp' ),
+			__( Options::get_page_title(), Options::get_page_slug() ),
+			__( Options::get_page_title(), Options::get_page_slug() ),
 			'manage_options',
-			'image-converter-webp',
-			[ $this, 'register_icfw_options_page' ]
+			Options::get_page_slug(),
+			[ $this, 'register_options_page' ],
 		);
 	}
 
@@ -59,12 +60,15 @@ class Admin extends Service implements Kernel {
 	 *
 	 * @return void
 	 */
-	public function register_icfw_options_page(): void {
-		$settings = (string) plugin_dir_path( __FILE__ ) . '../Views/settings.php';
-
-		if ( file_exists( $settings ) ) {
-			require_once $settings;
-		}
+	public function register_options_page(): void {
+		vprintf(
+			'<section class="wrap">
+				<h1>%s</h1>
+				<p>%s</p>
+				%s
+			</section>',
+			( new Form( Options::FORM ) )->get_options()
+		);
 	}
 
 	/**
@@ -78,46 +82,38 @@ class Admin extends Service implements Kernel {
 	 *
 	 * @return void
 	 */
-	public function register_icfw_settings(): void {
-		if ( ! isset( $_POST['webp_save_settings'] ) || ! isset( $_POST['webp_settings_nonce'] ) ) {
+	public function register_options_init(): void {
+		$form_fields          = [];
+		$form_button_name     = Options::get_submit_button_name();
+		$form_settings_nonce  = Options::get_submit_nonce_name();
+		$form_settings_action = Options::get_submit_nonce_action();
+
+		if ( ! isset( $_POST[ $form_button_name ] ) || ! isset( $_POST[ $form_settings_nonce ] ) ) {
 			return;
 		}
 
-		if ( ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['webp_settings_nonce'] ) ), 'webp_settings_action' ) ) {
+		if ( ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST[ $form_settings_nonce ] ) ), $form_settings_action ) ) {
 			return;
 		}
 
-		$fields = [ 'quality', 'converter', 'upload', 'page_load' ];
+		foreach ( Options::get_fields() as $field ) {
+			$form_fields = array_merge(
+				array_keys( $field['controls'] ?? [] ),
+				$form_fields
+			);
+		}
 
-		update_option(
-			'icfw',
-			array_combine(
-				$fields,
-				array_map(
-					function ( $field ) {
-						if ( wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['webp_settings_nonce'] ) ), 'webp_settings_action' ) ) {
-							return sanitize_text_field( $_POST[ $field ] ?? '' );
-						}
-					},
-					$fields
-				)
+		$options = array_combine(
+			$form_fields,
+			array_map(
+				function ( $field ) {
+					return sanitize_text_field( $_POST[ $field ] ?? '' );
+				},
+				$form_fields
 			)
 		);
-	}
 
-	/**
-	 * Register Text Domain.
-	 *
-	 * @since 1.1.0
-	 *
-	 * @return void
-	 */
-	public function register_icfw_translation(): void {
-		load_plugin_textdomain(
-			'image-converter-webp',
-			false,
-			dirname( plugin_basename( __FILE__ ) ) . '/../../languages'
-		);
+		update_option( Options::get_page_option(), $options );
 	}
 
 	/**
@@ -127,10 +123,10 @@ class Admin extends Service implements Kernel {
 	 *
 	 * @return void
 	 */
-	public function register_icfw_styles(): void {
+	public function register_options_styles(): void {
 		wp_enqueue_style(
-			'image-converter-webp',
-			plugins_url( 'image-converter-webp/inc/Views/css/styles.css' ),
+			Options::get_page_slug(),
+			plugins_url( 'image-converter-webp/styles.css' ),
 			[],
 			true,
 			'all'

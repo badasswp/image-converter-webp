@@ -1,5 +1,13 @@
 # Changelog
 
+## 1.1.2
+* Refactor Admin page, make extensible with new classes.
+* Add new custom filter `icfw_form_fields`.
+* Add new Log error option in Admin page.
+* Update translation files.
+* Update Unit Tests.
+* Update README notes.
+
 ## 1.1.1
 * Ensure WP_Error is passed and returned to Hook.
 * Rename hooks across codebase to use `icfw` prefix.

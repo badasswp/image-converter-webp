@@ -44,10 +44,14 @@ class Logger extends Service implements Kernel {
 			update_post_meta( $attachment_id, 'icfw_img', $webp );
 		}
 
+		if ( ! icfw_get_settings( 'logs' ) ) {
+			return;
+		}
+
 		if ( is_wp_error( $webp ) ) {
 			wp_insert_post(
 				[
-					'post_type'    => 'webp_error',
+					'post_type'    => 'icfw_error',
 					'post_title'   => 'WebP error log, ID - ' . $attachment_id,
 					'post_content' => (string) $webp->get_error_message(),
 					'post_status'  => 'publish',

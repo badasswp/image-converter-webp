@@ -4,14 +4,14 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Image Converter for WebP\n"
 "POT-Creation-Date: 2024-07-09 21:46+0100\n"
-"PO-Revision-Date: 2024-07-09 22:23+0100\n"
+"PO-Revision-Date: 2024-09-06 07:08+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: he_IL\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 3.4.1\n"
+"X-Generator: Poedit 3.4.4\n"
 "X-Poedit-Basepath: ..\n"
 "X-Poedit-Flags-xgettext: --add-comments=translators:\n"
 "X-Poedit-WPHeader: image-converter-webp.php\n"
@@ -119,3 +119,15 @@ msgstr "שגיאה: %s אינה תמונה."
 #, php-format
 msgid "Fatal Error: %s"
 msgstr "שגיאה מכרעת: %s"
+
+#. Log Options
+msgid "Log Options"
+msgstr "אפשרויות יומן רישום"
+
+#. Log errors for Failed Conversions
+msgid "Log errors for Failed Conversions"
+msgstr "שגיאות יומן רישום עבור המרות שנכשלו"
+
+#. Enable this option to log errors.
+msgid "Enable this option to log errors."
+msgstr "הפעל אפשרות זו כדי לרשום שגיאות."
