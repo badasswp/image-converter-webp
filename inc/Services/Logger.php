@@ -22,7 +22,7 @@ class Logger extends Service implements Kernel {
 	 * @return void
 	 */
 	public function register(): void {
-		add_action( 'icfw_convert', [ $this, 'add_webp_meta_to_attachment' ], 10, 2 );
+		add_action( 'icfw_convert', [ $this, 'add_logs_for_webp_conversions' ], 10, 2 );
 	}
 
 	/**
@@ -39,7 +39,7 @@ class Logger extends Service implements Kernel {
 	 *
 	 * @return void
 	 */
-	public function add_webp_meta_to_attachment( $webp, $attachment_id ): void {
+	public function add_logs_for_webp_conversions( $webp, $attachment_id ): void {
 		if ( ! is_wp_error( $webp ) && ! get_post_meta( $attachment_id, 'icfw_img', true ) ) {
 			update_post_meta( $attachment_id, 'icfw_img', $webp );
 		}
