@@ -37,12 +37,12 @@ function icfw_get_settings( $option, $fallback = '' ) {
  *
  * @since 1.2.0
  *
- * @param string|int $image_id Image ID.
+ * @param int $image_id Image ID.
  * @return string
  */
 function icfw_get_abs_image( $image_id ): string {
 	// Bail out, if it is not an image.
-	if ( ! wp_attachment_is_image( $image_id ) ) {
+	if ( ! wp_attachment_is_image( (int) $image_id ) ) {
 		return '';
 	}
 

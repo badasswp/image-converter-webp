@@ -221,7 +221,7 @@ class Main extends Service implements Kernel {
 		}
 
 		// Bail out, if WebP image does NOT exist.
-		if ( ! file_exists( icfw_get_abs_image() ) ) {
+		if ( ! file_exists( icfw_get_abs_image( $attachment_id ) ) ) {
 			return $metadata;
 		}
 
