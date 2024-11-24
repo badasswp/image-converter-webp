@@ -33,6 +33,7 @@ class Logger extends Service implements Kernel {
 	 *
 	 * @since 1.0.2
 	 * @since 1.1.0 Moved to Logger class.
+	 * @since 1.2.0 Moved meta data logic to MetaData class.
 	 *
 	 * @param string|\WP_Error $webp          WebP's relative path.
 	 * @param int              $attachment_id Image ID.
@@ -40,10 +41,6 @@ class Logger extends Service implements Kernel {
 	 * @return void
 	 */
 	public function add_logs_for_webp_conversions( $webp, $attachment_id ): void {
-		if ( ! is_wp_error( $webp ) && ! get_post_meta( $attachment_id, 'icfw_img', true ) ) {
-			update_post_meta( $attachment_id, 'icfw_img', $webp );
-		}
-
 		if ( ! icfw_get_settings( 'logs' ) ) {
 			return;
 		}
