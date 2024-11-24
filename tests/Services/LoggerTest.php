@@ -9,6 +9,7 @@ use ImageConverterWebP\Services\Logger;
 /**
  * @covers \ImageConverterWebP\Core\Converter::__construct
  * @covers \ImageConverterWebP\Services\Logger::__construct
+ * @covers \ImageConverterWebP\Services\Logger::register
  * @covers \ImageConverterWebP\Services\Logger::add_logs_for_webp_conversions
  * @covers icfw_get_settings
  */

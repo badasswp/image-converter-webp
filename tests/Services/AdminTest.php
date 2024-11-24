@@ -9,6 +9,7 @@ use ImageConverterWebP\Services\Admin;
 /**
  * @covers \ImageConverterWebP\Core\Converter::__construct
  * @covers \ImageConverterWebP\Services\Admin::__construct
+ * @covers \ImageConverterWebP\Services\Admin::register
  * @covers \ImageConverterWebP\Services\Admin::register_options_menu
  * @covers \ImageConverterWebP\Services\Admin::register_options_init
  * @covers \ImageConverterWebP\Services\Admin::register_options_styles

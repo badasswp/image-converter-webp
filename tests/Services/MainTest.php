@@ -10,6 +10,7 @@ use ImageConverterWebP\Core\Converter;
 /**
  * @covers \ImageConverterWebP\Core\Converter::__construct
  * @covers \ImageConverterWebP\Services\Main::__construct
+ * @covers \ImageConverterWebP\Services\Main::register
  * @covers \ImageConverterWebP\Services\Main::register_webp_img_creation
  * @covers \ImageConverterWebP\Services\Main::register_webp_img_srcset_creation
  * @covers \ImageConverterWebP\Services\Main::register_webp_img_deletion
