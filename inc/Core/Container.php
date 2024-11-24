@@ -14,6 +14,7 @@ use ImageConverterWebP\Services\Admin;
 use ImageConverterWebP\Services\Boot;
 use ImageConverterWebP\Services\PageLoad;
 use ImageConverterWebP\Services\Main;
+use ImageConverterWebP\Services\MetaData;
 use ImageConverterWebP\Services\Logger;
 
 use ImageConverterWebP\Interfaces\Kernel;
@@ -39,6 +40,7 @@ class Container implements Kernel {
 			Boot::class,
 			Logger::class,
 			Main::class,
+			MetaData::class,
 			PageLoad::class,
 		];
 	}
