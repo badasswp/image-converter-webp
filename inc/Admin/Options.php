@@ -18,6 +18,8 @@ class Options {
 	 * Form displayed on the Admin options page.
 	 *
 	 * @since 1.2.0
+	 *
+	 * @var mixed[]
 	 */
 	public static array $form;
 
@@ -188,8 +190,10 @@ class Options {
 	 *
 	 * @since 1.1.2
 	 * @since 1.2.0 Make strings translatable.
+	 *
+	 * @return mixed[]
 	 */
-	public static function get_form_notice() {
+	public static function get_form_notice(): array {
 		return [
 			'label' => esc_html__( 'Settings Saved.', 'image-converter-webp' ),
 		];
