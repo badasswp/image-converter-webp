@@ -30,6 +30,14 @@ You may not realize it, but imagery is a large part of it. This plugin helps tak
 
 == Changelog ==
 
+= 1.2.0 =
+* Resolve issue with undefined array keys in Main service.
+* Refactor Form & Option classes.
+* Make strings translatable across plugin.
+* Fix failing tests, add new tests.
+* Update README notes.
+* Tested up to WP 6.7.1.
+
 = 1.1.2 =
 * Refactor Admin page, make extensible with new classes.
 * Add new custom filter `icfw_form_fields`.
