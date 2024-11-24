@@ -213,7 +213,7 @@ class Main extends Service implements Kernel {
 	 * @return mixed[]
 	 */
 	public function show_webp_images_on_wp_media_modal( $metadata, $attachment, $meta ): array {
-		$image_webp = get_post_meta( $attachment->ID, 'icfw_img', true );
+		$webp_image = get_post_meta( $attachment->ID, 'icfw_img', true );
 
 		// Bail out, if it is not an image.
 		if ( ! wp_attachment_is_image( $attachment->ID ) ) {
@@ -225,7 +225,7 @@ class Main extends Service implements Kernel {
 			return $metadata;
 		}
 
-		$metadata['sizes']['full']['url'] = $image_webp;
+		$metadata['sizes']['full']['url'] = $webp_image;
 
 		return $this->get_webp_metadata( $metadata );
 	}
