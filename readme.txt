@@ -59,6 +59,7 @@ Want to add your personal touch? All of our documentation can be found [here](ht
 
 = 1.2.0 =
 * Resolve issue with undefined array keys in Main service.
+* Serve WebP images in WP media library.
 * Refactor Form & Option classes.
 * Make strings translatable across plugin.
 * Fix failing tests, add new tests.
