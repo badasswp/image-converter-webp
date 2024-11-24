@@ -242,33 +242,12 @@ class Main extends Service implements Kernel {
 	 * @return mixed[]
 	 */
 	protected function get_webp_metadata( $metadata ): array {
-		return wp_parse_args(
-			[
-				'sizes' => wp_parse_args(
-					[
-						'thumbnail' => wp_parse_args(
-							[
-								'url' => wmig_get_equivalent( $metadata['sizes']['thumbnail']['url'] ?? '' ),
-							],
-							$metadata['sizes']['thumbnail'] ?? [],
-						),
-						'medium'    => wp_parse_args(
-							[
-								'url' => wmig_get_equivalent( $metadata['sizes']['medium']['url'] ?? '' ),
-							],
-							$metadata['sizes']['medium'] ?? [],
-						),
-						'large'     => wp_parse_args(
-							[
-								'url' => wmig_get_equivalent( $metadata['sizes']['large']['url'] ?? '' ),
-							],
-							$metadata['sizes']['large'] ?? [],
-						),
-					],
-					$metadata['sizes'] ?? []
-				),
-			],
-			$metadata
-		);
+		$types = [ 'thumbnail', 'medium', 'large' ];
+
+		foreach ( $types as $type ) {
+			$metadata['sizes'][ $type ]['url'] = icfw_get_equivalent( $metadata['sizes'][ $type ]['url'] );
+		}
+
+		return $metadata;
 	}
 }
