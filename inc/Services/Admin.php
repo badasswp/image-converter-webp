@@ -43,8 +43,8 @@ class Admin extends Service implements Kernel {
 	public function register_options_menu(): void {
 		add_submenu_page(
 			'upload.php',
-			Options::get_page_title(), Options::get_page_slug(),
-			Options::get_page_title(), Options::get_page_slug(),
+			Options::get_page_title(),
+			Options::get_page_title(),
 			'manage_options',
 			Options::get_page_slug(),
 			[ $this, 'register_options_page' ],
@@ -136,7 +136,7 @@ class Admin extends Service implements Kernel {
 		$screen = get_current_screen();
 
 		// Bail out, if not plugin Admin page.
-		if ( ! is_object( $screen ) || 'toplevel_page_image-converter-webp' !== $screen->id ) {
+		if ( ! is_object( $screen ) || 'media_page_image-converter-webp' !== $screen->id ) {
 			return;
 		}
 
