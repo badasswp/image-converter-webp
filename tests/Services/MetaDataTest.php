@@ -25,6 +25,23 @@ class MetaDataTest extends TestCase {
 		\WP_Mock::tearDown();
 	}
 
+	public function test_add_webp_meta_to_attachment_bails_out_if_is_wp_error() {
+		$webp = 'https://example.com/wp-content/uploads/2024/01/sample.webp';
+
+		$options = [
+			'logs' => true,
+		];
+
+		\WP_Mock::userFunction( 'is_wp_error' )
+			->once()
+			->with( $webp )
+			->andReturn( true );
+
+		$this->metadata->add_webp_meta_to_attachment( $webp, 1 );
+
+		$this->assertConditionsMet();
+	}
+
 	public function test_add_webp_meta_to_attachment_updates_post_meta() {
 		$webp = 'https://example.com/wp-content/uploads/2024/01/sample.webp';
 
