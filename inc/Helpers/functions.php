@@ -47,7 +47,7 @@ function icfw_get_abs_image( $image_id ): string {
 	}
 
 	// Get default WP absolute image.
-	$wp_abs_image = get_attached_file( $image_id );
+	$wp_abs_image = (string) get_attached_file( $image_id );
 
 	// Get WebP absolute image.
 	$webp_abs_image = str_replace(
