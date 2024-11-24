@@ -35,6 +35,7 @@ class MainTest extends TestCase {
 		\WP_Mock::expectFilterAdded( 'wp_generate_attachment_metadata', [ $this->main, 'register_webp_img_srcset_creation' ], 10, 3 );
 		\WP_Mock::expectActionAdded( 'delete_attachment', [ $this->main, 'register_webp_img_deletion' ], 10, 1 );
 		\WP_Mock::expectFilterAdded( 'attachment_fields_to_edit', [ $this->main, 'register_webp_attachment_fields' ], 10, 2 );
+		\WP_Mock::expectFilterAdded( 'wp_prepare_attachment_for_js', [ $this->main, 'show_watermark_images_on_wp_media_modal' ], 10, 3 );
 
 		$this->main->register();
 
