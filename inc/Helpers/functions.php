@@ -15,6 +15,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 /**
  * Get Plugin Options.
  *
+ * As the name implies, this function simply grabs the
+ * plugin options.
+ *
  * @since 1.1.1
  *
  * @param string $option   Plugin option to be retrieved.
