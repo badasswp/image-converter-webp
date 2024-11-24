@@ -128,10 +128,18 @@ class Admin extends Service implements Kernel {
 	 * Register Styles.
 	 *
 	 * @since 1.1.0
+	 * @since 1.2.0 Restrict styles to plugin page.
 	 *
 	 * @return void
 	 */
 	public function register_options_styles(): void {
+		$screen = get_current_screen();
+
+		// Bail out, if not plugin Admin page.
+		if ( ! is_object( $screen ) || 'toplevel_page_image-converter-webp' !== $screen->id ) {
+			return;
+		}
+
 		wp_enqueue_style(
 			Options::get_page_slug(),
 			plugins_url( 'image-converter-webp/styles.css' ),
