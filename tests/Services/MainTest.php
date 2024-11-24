@@ -259,9 +259,9 @@ class MainTest extends TestCase {
 		\WP_Mock::userFunction(
 			'__',
 			[
-				'return' => function( $text, $domain = 'image-converter-webp' ) {
+				'return' => function ( $text, $domain = 'image-converter-webp' ) {
 					return $text;
-				}
+				},
 			]
 		);
 
@@ -295,9 +295,9 @@ class MainTest extends TestCase {
 		\WP_Mock::userFunction(
 			'__',
 			[
-				'return' => function( $text, $domain = 'image-converter-webp' ) {
+				'return' => function ( $text, $domain = 'image-converter-webp' ) {
 					return $text;
-				}
+				},
 			]
 		);
 
