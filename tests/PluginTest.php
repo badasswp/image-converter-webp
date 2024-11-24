@@ -150,7 +150,7 @@ class PluginTest extends TestCase {
 			'wp_prepare_attachment_for_js',
 			[
 				Service::$services['ImageConverterWebP\Services\Main'],
-				'show_watermark_images_on_wp_media_modal',
+				'show_webp_images_on_wp_media_modal',
 			],
 			10,
 			3
