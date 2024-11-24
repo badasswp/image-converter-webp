@@ -250,4 +250,67 @@ class AdminTest extends TestCase {
 		$this->assertNull( $settings );
 		$this->assertConditionsMet();
 	}
+
+	public function test_register_options_styles_passes() {
+		$screen = Mockery::mock( \WP_Screen::class )->makePartial();
+		$screen->shouldAllowMockingProtectedMethods();
+		$screen->id = 'media_page_image-converter-webp';
+
+		\WP_Mock::userFunction( 'get_current_screen' )
+			->andReturn( $screen );
+
+		\WP_Mock::userFunction(
+			'esc_html__',
+			[
+				'return' => function ( $text, $domain = 'image-converter-webp' ) {
+					return $text;
+				},
+			]
+		);
+
+		\WP_Mock::userFunction(
+			'esc_attr__',
+			[
+				'return' => function ( $text, $domain = 'image-converter-webp' ) {
+					return $text;
+				},
+			]
+		);
+
+		\WP_Mock::userFunction(
+			'esc_attr',
+			[
+				'return' => function ( $text ) {
+					return $text;
+				},
+			]
+		);
+
+		\WP_Mock::userFunction( 'plugins_url' )
+			->with( 'image-converter-webp/styles.css' )
+			->andReturn( 'https://example.com/wp-content/plugins/image-converter-webp/styles.css' );
+
+		\WP_Mock::userFunction( 'wp_enqueue_style' )
+			->with(
+				'image-converter-webp',
+				'https://example.com/wp-content/plugins/image-converter-webp/styles.css',
+				[],
+				true,
+				'all'
+			)
+			->andReturn( null );
+
+		$this->admin->register_options_styles();
+
+		$this->assertConditionsMet();
+	}
+
+	public function test_register_options_styles_bails() {
+		\WP_Mock::userFunction( 'get_current_screen' )
+			->andReturn( '' );
+
+		$this->admin->register_options_styles();
+
+		$this->assertConditionsMet();
+	}
 }
