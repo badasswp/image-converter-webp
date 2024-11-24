@@ -43,14 +43,8 @@ class Form {
 	 */
 	public function get_options(): array {
 		return [
-			'title'   => esc_html__(
-				$this->options['page']['title'] ?? '',
-				'image-converter-webp'
-			),
-			'summary' => esc_html__(
-				$this->options['page']['summary'] ?? '',
-				'image-converter-webp'
-			),
+			'title'   => $this->options['page']['title'] ?? '',
+			'summary' => $this->options['page']['summary'] ?? '',
 			'form'    => $this->get_form(),
 		];
 	}
@@ -65,7 +59,7 @@ class Form {
 	 *
 	 * @return string
 	 */
-	public function get_form(): string {
+	protected function get_form(): string {
 		$form = [
 			'form_action' => $this->get_form_action(),
 			'form_notice' => $this->get_form_notice(),
@@ -93,9 +87,9 @@ class Form {
 	 *
 	 * @return string
 	 */
-	public function get_form_action(): string {
+	protected function get_form_action(): string {
 		return esc_url(
-			sanitize_text_field( $_SERVER['REQUEST_URI'] )
+			sanitize_text_field( wp_unslash( $_SERVER['REQUEST_URI'] ?? '' ) )
 		);
 	}
 
@@ -109,7 +103,7 @@ class Form {
 	 *
 	 * @return string
 	 */
-	public function get_form_main(): string {
+	protected function get_form_main(): string {
 		$form_fields = '';
 
 		/**
@@ -143,7 +137,7 @@ class Form {
 	 * @param mixed[] $arg Form group array.
 	 * @return string
 	 */
-	public function get_form_group( $arg ): string {
+	protected function get_form_group( $arg ): string {
 		$form_group = '';
 
 		foreach ( $arg as $key => $value ) {
@@ -151,7 +145,7 @@ class Form {
 				case 'heading':
 					$form_group .= sprintf(
 						'<div class="badasswp-form-group-heading">%s</div>',
-						esc_html__( $value, 'image-converter-webp' ),
+						$value,
 					);
 					break;
 
@@ -178,23 +172,14 @@ class Form {
 	 * @param mixed[] $arg Form Group Body args.
 	 * @return string
 	 */
-	public function get_form_group_body( $arg ): string {
+	protected function get_form_group_body( $arg ): string {
 		$form_group_body = '';
 
 		foreach ( $arg as $name => $control ) {
 			$group_block = [
-				'label'   => esc_html__(
-					$control['label'] ?? '',
-					'image-converter-webp'
-				),
-				'control' => __(
-					$this->get_form_control( $control, $name ),
-					'image-converter-webp'
-				),
-				'summary' => esc_html__(
-					$control['summary'] ?? '',
-					'image-converter-webp'
-				),
+				'label'   => $control['label'] ?? '',
+				'control' => $this->get_form_control( $control, $name ),
+				'summary' => $control['summary'] ?? '',
 			];
 
 			$form_group_body .= vsprintf(
@@ -221,7 +206,7 @@ class Form {
 	 * @param string $name Option Key name.
 	 * @return string
 	 */
-	public function get_setting( $name ) {
+	protected function get_setting( $name ) {
 		return get_option( ( $this->options['page']['option'] ?? '' ), [] )[ $name ] ?? '';
 	}
 
@@ -238,7 +223,7 @@ class Form {
 	 *
 	 * @return string
 	 */
-	public function get_form_control( $arg, $name ): string {
+	protected function get_form_control( $arg, $name ): string {
 		$control = '';
 
 		switch ( $arg['control'] ?? '' ) {
@@ -271,7 +256,7 @@ class Form {
 	 *
 	 * @return string
 	 */
-	public function get_text_control( $arg, $name ): string {
+	protected function get_text_control( $arg, $name ): string {
 		return sprintf(
 			'<input type="text" placeholder="%1$s" value="%2$s" name="%3$s"/>',
 			$arg['placeholder'] ?? '',
@@ -293,7 +278,7 @@ class Form {
 	 *
 	 * @return string
 	 */
-	public function get_select_control( $arg, $name ): string {
+	protected function get_select_control( $arg, $name ): string {
 		$options = '';
 
 		foreach ( $arg['options'] ?? [] as $key => $value ) {
@@ -329,7 +314,7 @@ class Form {
 	 *
 	 * @return string
 	 */
-	public function get_checkbox_control( $arg, $name ): string {
+	protected function get_checkbox_control( $arg, $name ): string {
 		$is_checked = ! empty( $this->get_setting( $name ) ) ? 'checked' : '';
 
 		return sprintf(
@@ -353,7 +338,7 @@ class Form {
 	 *
 	 * @return string
 	 */
-	public function get_form_submit(): string {
+	protected function get_form_submit(): string {
 		$heading      = $this->options['submit']['heading'] ?? '';
 		$button_name  = $this->options['submit']['button']['name'] ?? '';
 		$button_label = $this->options['submit']['button']['label'] ?? '';
@@ -361,18 +346,9 @@ class Form {
 		$nonce_action = $this->options['submit']['nonce']['action'] ?? '';
 
 		$submit = [
-			'heading'      => esc_html__(
-				$heading,
-				'image-converter-webp'
-			),
-			'button_name'  => esc_attr__(
-				$button_name,
-				'image-converter-webp'
-			),
-			'button_label' => esc_html__(
-				$button_label,
-				'image-converter-webp'
-			),
+			'heading'      => $heading,
+			'button_name'  => $button_name,
+			'button_label' => $button_label,
 			'nonce_fields' => wp_nonce_field( $nonce_action, $nonce_name, true, false ),
 		];
 
@@ -402,16 +378,24 @@ class Form {
 	 *
 	 * @return string
 	 */
-	public function get_form_notice(): string {
+	protected function get_form_notice(): string {
 		$notice_label = $this->options['notice']['label'] ?? '';
 		$button_name  = $this->options['submit']['button']['name'] ?? '';
+		$nonce_name   = $this->options['submit']['nonce']['name'] ?? '';
+		$nonce_action = $this->options['submit']['nonce']['action'] ?? '';
 
-		if ( isset( $_POST[ $button_name ] ) ) {
+		if (
+			isset( $_POST[ $button_name ] ) &&
+			wp_verify_nonce(
+				sanitize_text_field( wp_unslash( $_POST[ $nonce_name ] ?? '' ) ),
+				$nonce_action
+			)
+		) {
 			return sprintf(
 				'<div class="badasswp-form-notice">
 					<span>%s</span>
 				</div>',
-				esc_html__( $notice_label, 'image-converter-webp' )
+				$notice_label
 			);
 		}
 
