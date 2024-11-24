@@ -206,9 +206,9 @@ class Main extends Service implements Kernel {
 	 *
 	 * @since 1.2.0
 	 *
-	 * @param mixed[]     $metadata   Image Attachment data to be sent to JS.
-	 * @param \WP_Post    $attachment Attachment ID or object.
-	 * @param array|false $meta       Array of attachment meta data, or false if there is none.
+	 * @param mixed[]       $metadata   Image Attachment data to be sent to JS.
+	 * @param \WP_Post      $attachment Attachment ID or object.
+	 * @param mixed[]|false $meta       Array of attachment meta data, or false if there is none.
 	 *
 	 * @return mixed[]
 	 */
