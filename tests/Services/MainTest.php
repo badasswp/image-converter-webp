@@ -17,6 +17,8 @@ use ImageConverterWebP\Core\Converter;
  * @covers icfw_get_settings
  */
 class MainTest extends TestCase {
+	public Main $main;
+
 	public function setUp(): void {
 		\WP_Mock::setUp();
 

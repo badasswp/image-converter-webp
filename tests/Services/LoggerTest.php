@@ -13,6 +13,8 @@ use ImageConverterWebP\Services\Logger;
  * @covers icfw_get_settings
  */
 class LoggerTest extends TestCase {
+	public Logger $logger;
+
 	public function setUp(): void {
 		\WP_Mock::setUp();
 

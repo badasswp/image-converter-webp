@@ -29,6 +29,9 @@ use ImageConverterWebP\Services\PageLoad;
  * @covers \ImageConverterWebP\Services\PageLoad::register
  */
 class PluginTest extends TestCase {
+	public array $services;
+	public Plugin $instance;
+
 	public function setUp(): void {
 		\WP_Mock::setUp();
 

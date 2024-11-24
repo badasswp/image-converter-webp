@@ -14,6 +14,8 @@ use ImageConverterWebP\Services\Admin;
  * @covers \ImageConverterWebP\Admin\Options::__callStatic
  */
 class AdminTest extends TestCase {
+	public Admin $admin;
+
 	public function setUp(): void {
 		\WP_Mock::setUp();
 

@@ -18,6 +18,9 @@ use ImageConverterWebP\Services\PageLoad;
  * @covers icfw_get_settings
  */
 class PageLoadTest extends TestCase {
+	public array $source;
+	public PageLoad $page_load;
+
 	public function setUp(): void {
 		\WP_Mock::setUp();
 
