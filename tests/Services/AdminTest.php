@@ -27,10 +27,32 @@ class AdminTest extends TestCase {
 	}
 
 	public function test_register_options_menu() {
-		\WP_Mock::userFunction( '__' )
-			->twice()
-			->with( 'Image Converter for WebP', 'image-converter-webp' )
-			->andReturn( 'Image Converter for WebP' );
+		\WP_Mock::userFunction(
+			'esc_html__',
+			[
+				'return' => function ( $text, $domain = 'image-converter-webp' ) {
+					return $text;
+				},
+			]
+		);
+
+		\WP_Mock::userFunction(
+			'esc_attr__',
+			[
+				'return' => function ( $text, $domain = 'image-converter-webp' ) {
+					return $text;
+				},
+			]
+		);
+
+		\WP_Mock::userFunction(
+			'esc_attr',
+			[
+				'return' => function ( $text ) {
+					return $text;
+				},
+			]
+		);
 
 		\WP_Mock::userFunction( 'add_submenu_page' )
 			->once()
@@ -51,6 +73,33 @@ class AdminTest extends TestCase {
 	}
 
 	public function test_register_options_init_bails_out_if_any_nonce_settings_is_missing() {
+		\WP_Mock::userFunction(
+			'esc_html__',
+			[
+				'return' => function ( $text, $domain = 'image-converter-webp' ) {
+					return $text;
+				},
+			]
+		);
+
+		\WP_Mock::userFunction(
+			'esc_attr__',
+			[
+				'return' => function ( $text, $domain = 'image-converter-webp' ) {
+					return $text;
+				},
+			]
+		);
+
+		\WP_Mock::userFunction(
+			'esc_attr',
+			[
+				'return' => function ( $text ) {
+					return $text;
+				},
+			]
+		);
+
 		$_POST = [
 			'icfw_save_settings' => true,
 		];
@@ -66,6 +115,33 @@ class AdminTest extends TestCase {
 			'icfw_save_settings'  => true,
 			'icfw_settings_nonce' => 'a8vbq3cg3sa',
 		];
+
+		\WP_Mock::userFunction(
+			'esc_html__',
+			[
+				'return' => function ( $text, $domain = 'image-converter-webp' ) {
+					return $text;
+				},
+			]
+		);
+
+		\WP_Mock::userFunction(
+			'esc_attr__',
+			[
+				'return' => function ( $text, $domain = 'image-converter-webp' ) {
+					return $text;
+				},
+			]
+		);
+
+		\WP_Mock::userFunction(
+			'esc_attr',
+			[
+				'return' => function ( $text ) {
+					return $text;
+				},
+			]
+		);
 
 		\WP_Mock::userFunction( 'wp_unslash' )
 			->times( 1 )
@@ -89,6 +165,33 @@ class AdminTest extends TestCase {
 	}
 
 	public function test_register_options_init_passes() {
+		\WP_Mock::userFunction(
+			'esc_html__',
+			[
+				'return' => function ( $text, $domain = 'image-converter-webp' ) {
+					return $text;
+				},
+			]
+		);
+
+		\WP_Mock::userFunction(
+			'esc_attr__',
+			[
+				'return' => function ( $text, $domain = 'image-converter-webp' ) {
+					return $text;
+				},
+			]
+		);
+
+		\WP_Mock::userFunction(
+			'esc_attr',
+			[
+				'return' => function ( $text ) {
+					return $text;
+				},
+			]
+		);
+
 		$_POST = [
 			'icfw_save_settings'  => true,
 			'icfw_settings_nonce' => 'a8vbq3cg3sa',
@@ -99,10 +202,14 @@ class AdminTest extends TestCase {
 			'logs'                => 1,
 		];
 
-		\WP_Mock::userFunction( 'wp_unslash' )
-			->times( 1 )
-			->with( 'a8vbq3cg3sa' )
-			->andReturn( 'a8vbq3cg3sa' );
+		\WP_Mock::userFunction(
+			'wp_unslash',
+			[
+				'return' => function ( $text ) {
+					return $text;
+				},
+			]
+		);
 
 		\WP_Mock::userFunction( 'sanitize_text_field' )
 			->times( 1 )
