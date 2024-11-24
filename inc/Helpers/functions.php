@@ -65,6 +65,25 @@ function icfw_get_abs_image( $image_id ): string {
 }
 
 /**
+ * Get WebP equivalent image.
+ *
+ * This function gets the relative image of the
+ * WebP image.
+ *
+ * @since 1.2.0
+ *
+ * @param string $url Relative URL.
+ * @return string
+ */
+function icfw_get_equivalent( $url ): string {
+	return str_replace(
+		sprintf( '.%s', pathinfo( $url, PATHINFO_EXTENSION ) ),
+		'.webp',
+		$url
+	);
+}
+
+/**
  * Get all WebP Images.
  *
  * This function grabs all WebP images and associated
