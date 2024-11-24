@@ -76,7 +76,7 @@ class Main extends Service implements Kernel {
 		$img_url_prefix = substr( $img_url, 0, (int) strrpos( $img_url, '/' ) );
 
 		// Convert srcset images.
-		foreach ( $metadata['sizes'] as $img ) {
+		foreach ( ( $metadata['sizes'] ?? [] ) as $img ) {
 			$this->source = [
 				'id'  => (int) $attachment_id,
 				'url' => trailingslashit( $img_url_prefix ) . $img['file'],
