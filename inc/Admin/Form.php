@@ -38,6 +38,7 @@ class Form {
 	 * page, including the form.
 	 *
 	 * @since 1.1.2
+	 * @since 1.2.0 Move translations to Options class.
 	 *
 	 * @return mixed[]
 	 */
@@ -168,6 +169,7 @@ class Form {
 	 * the form group body.
 	 *
 	 * @since 1.1.2
+	 * @since 1.2.0 Move translations to Options class.
 	 *
 	 * @param mixed[] $arg Form Group Body args.
 	 * @return string
@@ -335,6 +337,7 @@ class Form {
 	 * Submit button.
 	 *
 	 * @since 1.1.2
+	 * @since 1.2.0 Move translations to Options class.
 	 *
 	 * @return string
 	 */
@@ -375,6 +378,7 @@ class Form {
 	 * Form notice.
 	 *
 	 * @since 1.1.2
+	 * @since 1.2.0 Move translations to Options class.
 	 *
 	 * @return string
 	 */
