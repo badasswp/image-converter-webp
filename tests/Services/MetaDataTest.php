@@ -25,6 +25,14 @@ class MetaDataTest extends TestCase {
 		\WP_Mock::tearDown();
 	}
 
+	public function test_register() {
+		\WP_Mock::expectActionAdded( 'icfw_convert', [ $this->metadata, 'add_webp_meta_to_attachment' ], 10, 2 );
+
+		$this->metadata->register();
+
+		$this->assertConditionsMet();
+	}
+
 	public function test_add_webp_meta_to_attachment_bails_out_if_is_wp_error() {
 		$webp = 'https://example.com/wp-content/uploads/2024/01/sample.webp';
 

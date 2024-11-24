@@ -25,6 +25,14 @@ class LoggerTest extends TestCase {
 		\WP_Mock::tearDown();
 	}
 
+	public function test_register() {
+		\WP_Mock::expectActionAdded( 'icfw_convert', [ $this->logger, 'add_logs_for_webp_conversions' ], 10, 2 );
+
+		$this->logger->register();
+
+		$this->assertConditionsMet();
+	}
+
 	public function test_add_logs_for_webp_conversions_does_not_log_error_if_log_option_is_not_enabled() {
 		$webp = Mockery::mock( '\WP_Error' )->makePartial();
 

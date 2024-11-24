@@ -32,6 +32,16 @@ class AdminTest extends TestCase {
 		\WP_Mock::tearDown();
 	}
 
+	public function test_register() {
+		\WP_Mock::expectActionAdded( 'admin_init', [ $this->admin, 'register_options_init' ] );
+		\WP_Mock::expectActionAdded( 'admin_menu', [ $this->admin, 'register_options_menu' ] );
+		\WP_Mock::expectActionAdded( 'admin_enqueue_scripts', [ $this->admin, 'register_options_styles' ] );
+
+		$this->admin->register();
+
+		$this->assertConditionsMet();
+	}
+
 	public function test_register_options_menu() {
 		\WP_Mock::userFunction(
 			'esc_html__',
