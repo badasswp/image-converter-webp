@@ -26,7 +26,7 @@ class Main extends Service implements Kernel {
 		add_filter( 'wp_generate_attachment_metadata', [ $this, 'register_webp_img_srcset_creation' ], 10, 3 );
 		add_action( 'delete_attachment', [ $this, 'register_webp_img_deletion' ], 10, 1 );
 		add_filter( 'attachment_fields_to_edit', [ $this, 'register_webp_attachment_fields' ], 10, 2 );
-		add_filter( 'wp_prepare_attachment_for_js', [ $this, 'show_watermark_images_on_wp_media_modal' ], 10, 3 );
+		add_filter( 'wp_prepare_attachment_for_js', [ $this, 'show_webp_images_on_wp_media_modal' ], 10, 3 );
 	}
 
 	/**
@@ -199,49 +199,49 @@ class Main extends Service implements Kernel {
 	}
 
 	/**
-	 * Show Watermark Images.
+	 * Show WebP Images.
 	 *
-	 * This displays the Watermarked images on the WP
+	 * This displays the WebP converted images on the WP
 	 * Medial modal window.
 	 *
-	 * @since 1.0.0
+	 * @since 1.2.0
 	 *
 	 * @param mixed[]     $metadata   Image Attachment data to be sent to JS.
 	 * @param \WP_Post    $attachment Attachment ID or object.
 	 * @param array|false $meta       Array of attachment meta data, or false if there is none.
 	 *
-	 * @return void
+	 * @return mixed[]
 	 */
-	public function show_watermark_images_on_wp_media_modal( $metadata, $attachment, $meta ) {
-		$image_watermark = get_post_meta( $attachment->ID, 'watermark_my_images', true );
+	public function show_webp_images_on_wp_media_modal( $metadata, $attachment, $meta ): array {
+		$image_webp = get_post_meta( $attachment->ID, 'icfw_img', true );
 
 		// Bail out, if it is not an image.
 		if ( ! wp_attachment_is_image( $attachment->ID ) ) {
 			return $metadata;
 		}
 
-		// Bail out, if watermark image does NOT exist.
-		if ( ! file_exists( $image_watermark['abs'] ?? '' ) ) {
+		// Bail out, if WebP image does NOT exist.
+		if ( ! file_exists( icfw_get_abs_image() ) ) {
 			return $metadata;
 		}
 
-		$metadata['sizes']['full']['url'] = $image_watermark['rel'] ?? '';
+		$metadata['sizes']['full']['url'] = $image_webp;
 
-		return $this->get_watermark_metadata( $metadata );
+		return $this->get_webp_metadata( $metadata );
 	}
 
 	/**
-	 * Get Watermark Metadata.
+	 * Get WebP Metadata.
 	 *
-	 * Mutate Meta data array and get the Watermarked Images
+	 * Mutate Meta data array and get the WebP Images
 	 * for all Image meta data.
 	 *
-	 * @since 1.0.1
+	 * @since 1.2.0
 	 *
 	 * @param mixed[] $metadata Meta data array.
 	 * @return mixed[]
 	 */
-	protected function get_watermark_metadata( $metadata ): array {
+	protected function get_webp_metadata( $metadata ): array {
 		return wp_parse_args(
 			[
 				'sizes' => wp_parse_args(
