@@ -8,6 +8,10 @@
  * @package ImageConverterWebP
  */
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 /**
  * Get Plugin Options.
  *
