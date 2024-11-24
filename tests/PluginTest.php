@@ -12,6 +12,7 @@ use ImageConverterWebP\Services\Boot;
 use ImageConverterWebP\Services\Main;
 use ImageConverterWebP\Services\Admin;
 use ImageConverterWebP\Services\Logger;
+use ImageConverterWebP\Services\MetaData;
 use ImageConverterWebP\Services\PageLoad;
 
 /**
@@ -48,6 +49,7 @@ class PluginTest extends TestCase {
 			'Boot'     => Boot::get_instance(),
 			'Logger'   => Logger::get_instance(),
 			'Main'     => Main::get_instance(),
+			'MetaData' => MetaData::get_instance(),
 			'PageLoad' => PageLoad::get_instance(),
 		];
 
@@ -86,8 +88,18 @@ class PluginTest extends TestCase {
 		\WP_Mock::expectActionAdded(
 			'icfw_convert',
 			[
-				Service::$services['ImageConverterWebP\Services\Logger'],
+				Service::$services['ImageConverterWebP\Services\MetaData'],
 				'add_webp_meta_to_attachment',
+			],
+			10,
+			2
+		);
+
+		\WP_Mock::expectActionAdded(
+			'icfw_convert',
+			[
+				Service::$services['ImageConverterWebP\Services\Logger'],
+				'add_logs_for_webp_conversions',
 			],
 			10,
 			2
