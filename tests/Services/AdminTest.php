@@ -11,7 +11,13 @@ use ImageConverterWebP\Services\Admin;
  * @covers \ImageConverterWebP\Services\Admin::__construct
  * @covers \ImageConverterWebP\Services\Admin::register_options_menu
  * @covers \ImageConverterWebP\Services\Admin::register_options_init
+ * @covers \ImageConverterWebP\Services\Admin::register_options_styles
  * @covers \ImageConverterWebP\Admin\Options::__callStatic
+ * @covers \ImageConverterWebP\Admin\Options::get_form_fields
+ * @covers \ImageConverterWebP\Admin\Options::get_form_notice
+ * @covers \ImageConverterWebP\Admin\Options::get_form_page
+ * @covers \ImageConverterWebP\Admin\Options::get_form_submit
+ * @covers \ImageConverterWebP\Admin\Options::init
  */
 class AdminTest extends TestCase {
 	public Admin $admin;
