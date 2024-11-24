@@ -9,11 +9,20 @@ use ImageConverterWebP\Services\Admin;
 /**
  * @covers \ImageConverterWebP\Core\Converter::__construct
  * @covers \ImageConverterWebP\Services\Admin::__construct
+ * @covers \ImageConverterWebP\Services\Admin::register
  * @covers \ImageConverterWebP\Services\Admin::register_options_menu
  * @covers \ImageConverterWebP\Services\Admin::register_options_init
+ * @covers \ImageConverterWebP\Services\Admin::register_options_styles
  * @covers \ImageConverterWebP\Admin\Options::__callStatic
+ * @covers \ImageConverterWebP\Admin\Options::get_form_fields
+ * @covers \ImageConverterWebP\Admin\Options::get_form_notice
+ * @covers \ImageConverterWebP\Admin\Options::get_form_page
+ * @covers \ImageConverterWebP\Admin\Options::get_form_submit
+ * @covers \ImageConverterWebP\Admin\Options::init
  */
 class AdminTest extends TestCase {
+	public Admin $admin;
+
 	public function setUp(): void {
 		\WP_Mock::setUp();
 
@@ -24,11 +33,43 @@ class AdminTest extends TestCase {
 		\WP_Mock::tearDown();
 	}
 
+	public function test_register() {
+		\WP_Mock::expectActionAdded( 'admin_init', [ $this->admin, 'register_options_init' ] );
+		\WP_Mock::expectActionAdded( 'admin_menu', [ $this->admin, 'register_options_menu' ] );
+		\WP_Mock::expectActionAdded( 'admin_enqueue_scripts', [ $this->admin, 'register_options_styles' ] );
+
+		$this->admin->register();
+
+		$this->assertConditionsMet();
+	}
+
 	public function test_register_options_menu() {
-		\WP_Mock::userFunction( '__' )
-			->twice()
-			->with( 'Image Converter for WebP', 'image-converter-webp' )
-			->andReturn( 'Image Converter for WebP' );
+		\WP_Mock::userFunction(
+			'esc_html__',
+			[
+				'return' => function ( $text, $domain = 'image-converter-webp' ) {
+					return $text;
+				},
+			]
+		);
+
+		\WP_Mock::userFunction(
+			'esc_attr__',
+			[
+				'return' => function ( $text, $domain = 'image-converter-webp' ) {
+					return $text;
+				},
+			]
+		);
+
+		\WP_Mock::userFunction(
+			'esc_attr',
+			[
+				'return' => function ( $text ) {
+					return $text;
+				},
+			]
+		);
 
 		\WP_Mock::userFunction( 'add_submenu_page' )
 			->once()
@@ -49,6 +90,33 @@ class AdminTest extends TestCase {
 	}
 
 	public function test_register_options_init_bails_out_if_any_nonce_settings_is_missing() {
+		\WP_Mock::userFunction(
+			'esc_html__',
+			[
+				'return' => function ( $text, $domain = 'image-converter-webp' ) {
+					return $text;
+				},
+			]
+		);
+
+		\WP_Mock::userFunction(
+			'esc_attr__',
+			[
+				'return' => function ( $text, $domain = 'image-converter-webp' ) {
+					return $text;
+				},
+			]
+		);
+
+		\WP_Mock::userFunction(
+			'esc_attr',
+			[
+				'return' => function ( $text ) {
+					return $text;
+				},
+			]
+		);
+
 		$_POST = [
 			'icfw_save_settings' => true,
 		];
@@ -64,6 +132,33 @@ class AdminTest extends TestCase {
 			'icfw_save_settings'  => true,
 			'icfw_settings_nonce' => 'a8vbq3cg3sa',
 		];
+
+		\WP_Mock::userFunction(
+			'esc_html__',
+			[
+				'return' => function ( $text, $domain = 'image-converter-webp' ) {
+					return $text;
+				},
+			]
+		);
+
+		\WP_Mock::userFunction(
+			'esc_attr__',
+			[
+				'return' => function ( $text, $domain = 'image-converter-webp' ) {
+					return $text;
+				},
+			]
+		);
+
+		\WP_Mock::userFunction(
+			'esc_attr',
+			[
+				'return' => function ( $text ) {
+					return $text;
+				},
+			]
+		);
 
 		\WP_Mock::userFunction( 'wp_unslash' )
 			->times( 1 )
@@ -87,6 +182,33 @@ class AdminTest extends TestCase {
 	}
 
 	public function test_register_options_init_passes() {
+		\WP_Mock::userFunction(
+			'esc_html__',
+			[
+				'return' => function ( $text, $domain = 'image-converter-webp' ) {
+					return $text;
+				},
+			]
+		);
+
+		\WP_Mock::userFunction(
+			'esc_attr__',
+			[
+				'return' => function ( $text, $domain = 'image-converter-webp' ) {
+					return $text;
+				},
+			]
+		);
+
+		\WP_Mock::userFunction(
+			'esc_attr',
+			[
+				'return' => function ( $text ) {
+					return $text;
+				},
+			]
+		);
+
 		$_POST = [
 			'icfw_save_settings'  => true,
 			'icfw_settings_nonce' => 'a8vbq3cg3sa',
@@ -97,10 +219,14 @@ class AdminTest extends TestCase {
 			'logs'                => 1,
 		];
 
-		\WP_Mock::userFunction( 'wp_unslash' )
-			->times( 1 )
-			->with( 'a8vbq3cg3sa' )
-			->andReturn( 'a8vbq3cg3sa' );
+		\WP_Mock::userFunction(
+			'wp_unslash',
+			[
+				'return' => function ( $text ) {
+					return $text;
+				},
+			]
+		);
 
 		\WP_Mock::userFunction( 'sanitize_text_field' )
 			->times( 1 )
@@ -139,6 +265,69 @@ class AdminTest extends TestCase {
 		$settings = $this->admin->register_options_init();
 
 		$this->assertNull( $settings );
+		$this->assertConditionsMet();
+	}
+
+	public function test_register_options_styles_passes() {
+		$screen = Mockery::mock( \WP_Screen::class )->makePartial();
+		$screen->shouldAllowMockingProtectedMethods();
+		$screen->id = 'media_page_image-converter-webp';
+
+		\WP_Mock::userFunction( 'get_current_screen' )
+			->andReturn( $screen );
+
+		\WP_Mock::userFunction(
+			'esc_html__',
+			[
+				'return' => function ( $text, $domain = 'image-converter-webp' ) {
+					return $text;
+				},
+			]
+		);
+
+		\WP_Mock::userFunction(
+			'esc_attr__',
+			[
+				'return' => function ( $text, $domain = 'image-converter-webp' ) {
+					return $text;
+				},
+			]
+		);
+
+		\WP_Mock::userFunction(
+			'esc_attr',
+			[
+				'return' => function ( $text ) {
+					return $text;
+				},
+			]
+		);
+
+		\WP_Mock::userFunction( 'plugins_url' )
+			->with( 'image-converter-webp/styles.css' )
+			->andReturn( 'https://example.com/wp-content/plugins/image-converter-webp/styles.css' );
+
+		\WP_Mock::userFunction( 'wp_enqueue_style' )
+			->with(
+				'image-converter-webp',
+				'https://example.com/wp-content/plugins/image-converter-webp/styles.css',
+				[],
+				true,
+				'all'
+			)
+			->andReturn( null );
+
+		$this->admin->register_options_styles();
+
+		$this->assertConditionsMet();
+	}
+
+	public function test_register_options_styles_bails() {
+		\WP_Mock::userFunction( 'get_current_screen' )
+			->andReturn( '' );
+
+		$this->admin->register_options_styles();
+
 		$this->assertConditionsMet();
 	}
 }

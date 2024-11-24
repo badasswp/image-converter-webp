@@ -12,6 +12,7 @@ use ImageConverterWebP\Services\Boot;
 use ImageConverterWebP\Services\Main;
 use ImageConverterWebP\Services\Admin;
 use ImageConverterWebP\Services\Logger;
+use ImageConverterWebP\Services\MetaData;
 use ImageConverterWebP\Services\PageLoad;
 
 /**
@@ -26,9 +27,13 @@ use ImageConverterWebP\Services\PageLoad;
  * @covers \ImageConverterWebP\Services\Boot::register
  * @covers \ImageConverterWebP\Services\Logger::register
  * @covers \ImageConverterWebP\Services\Main::register
+ * @covers \ImageConverterWebP\Services\MetaData::register
  * @covers \ImageConverterWebP\Services\PageLoad::register
  */
 class PluginTest extends TestCase {
+	public array $services;
+	public Plugin $instance;
+
 	public function setUp(): void {
 		\WP_Mock::setUp();
 
@@ -45,6 +50,7 @@ class PluginTest extends TestCase {
 			'Boot'     => Boot::get_instance(),
 			'Logger'   => Logger::get_instance(),
 			'Main'     => Main::get_instance(),
+			'MetaData' => MetaData::get_instance(),
 			'PageLoad' => PageLoad::get_instance(),
 		];
 
@@ -83,8 +89,18 @@ class PluginTest extends TestCase {
 		\WP_Mock::expectActionAdded(
 			'icfw_convert',
 			[
-				Service::$services['ImageConverterWebP\Services\Logger'],
+				Service::$services['ImageConverterWebP\Services\MetaData'],
 				'add_webp_meta_to_attachment',
+			],
+			10,
+			2
+		);
+
+		\WP_Mock::expectActionAdded(
+			'icfw_convert',
+			[
+				Service::$services['ImageConverterWebP\Services\Logger'],
+				'add_logs_for_webp_conversions',
 			],
 			10,
 			2
@@ -128,6 +144,16 @@ class PluginTest extends TestCase {
 			],
 			10,
 			2
+		);
+
+		\WP_Mock::expectFilterAdded(
+			'wp_prepare_attachment_for_js',
+			[
+				Service::$services['ImageConverterWebP\Services\Main'],
+				'show_webp_images_on_wp_media_modal',
+			],
+			10,
+			3
 		);
 
 		\WP_Mock::expectFilterAdded(

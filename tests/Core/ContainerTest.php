@@ -14,6 +14,8 @@ use ImageConverterWebP\Services\Logger;
  * @covers \ImageConverterWebP\Core\Container::__construct
  */
 class ContainerTest extends TestCase {
+	public Container $container;
+
 	public function setUp(): void {
 		\WP_Mock::setUp();
 	}

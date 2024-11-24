@@ -2,8 +2,8 @@
 Contributors: badasswp
 Tags: webp, image, convert, jpeg, png.
 Requires at least: 4.0
-Tested up to: 6.6.1
-Stable tag: 1.1.2
+Tested up to: 6.7.1
+Stable tag: 1.2.0
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -12,15 +12,42 @@ Convert your WordPress JPG/PNG images to WebP formats.
 
 == Installation ==
 
-1. Go to 'Plugins > Add New' on your WordPress admin dashboard.
-2. Search for 'Image Converter for WebP' plugin from the official WordPress plugin repository.
-3. Click 'Install Now' and then 'Activate'.
+1. Go to <strong>Plugins</strong> > <strong>Add New</strong> on your WordPress admin dashboard.
+2. Search for <strong>Image Converter for WebP</strong> plugin from the official WordPress plugin repository.
+3. Click <strong>Install Now</strong> and then <strong>Activate</strong>.
+4. Locate the <strong>Media</strong> menu option on the left side of the WP admin dashboard.
+5. You should see the <strong>Image Converter for WebP</strong> menu listed as one of the options, click on it.
+6. You can now set your plugin options here. Ensure you enable the <strong>Convert Images on Upload</strong> option.
+7. Now upload any image into your WP website, it would convert it to a WebP format that will be served on your pages when users visit your website.
+8. You're all set!
 
 == Description ==
 
 As an internet user, you already know images can be the difference between a great website experience and a terrible one! Think about how often you've landed on a website and hit the back button because the home page was too busy or the banner image was taking so much time to load due to its size.
 
 You may not realize it, but imagery is a large part of it. This plugin helps take care of all those concerns, by converting your WordPress images to WebP format during page load so that your site loads extremely fast, without any disruptions or downtime.
+
+= ✨ Getting Started =
+
+1. Locate the <strong>Media</strong> menu option on the left side of the WP admin dashboard.
+2. You should see the <strong>Image Converter for WebP</strong> menu listed as one of the options, click on it.
+3. You can now set your plugin options here. Ensure you enable the <strong>Convert Images on Upload</strong> option.
+4. Now upload any image into your WP website, it would convert it to a WebP format that will be served on your pages when users visit your website.
+5. You're all set!
+
+You can get a taste of how this works, by using the [demo](https://tastewp.com/create/NMS/8.0/6.7.0/image-converter-webp/twentytwentythree?ni=true&origin=wp) link.
+
+= ⚡ WooCommerce, Posts, Pages & Images =
+
+By default, <strong>Image Converter for WebP</strong>, will serve WebP images for your posts, pages and woocommerce pages. For future releases, you should be able to toggle this feature ON/OFF based on your needs.
+
+NB: The <strong>Convert Images on Page Load</strong> option helps you convert and serve WebP images for images that were already uploaded on your WP website before the plugin was installed. It does this when the page or post that contains that image is loaded.
+
+= 🔌🎨 Plug and Play or Customize =
+
+The <strong>Image Converter for WebP</strong> plugin is built to work right out of the box. Simply install, activate, configure options and start using straight away.
+
+Want to add your personal touch? All of our documentation can be found [here](https://github.com/badasswp/image-converter-webp). You can override the plugin's behaviour with custom logic of your own using [hooks](https://github.com/badasswp/image-converter-webp?tab=readme-ov-file#hooks).
 
 == Screenshots ==
 
@@ -29,6 +56,15 @@ You may not realize it, but imagery is a large part of it. This plugin helps tak
 3. Attachment Modal - See Converted WebP image path here.
 
 == Changelog ==
+
+= 1.2.0 =
+* Resolve issue with undefined array keys in Main service.
+* Serve WebP images in WP media library.
+* Refactor Form & Option classes.
+* Make strings translatable across plugin.
+* Fix failing tests, add new tests.
+* Update README notes.
+* Tested up to WP 6.7.1.
 
 = 1.1.2 =
 * Refactor Admin page, make extensible with new classes.

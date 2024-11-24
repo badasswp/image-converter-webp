@@ -26,11 +26,11 @@ jobs:
       - name: Linting
         run: composer run lint
 
-      - name: Static Analysis
-        run: composer run analyse
-
       - name: Testing
         run: composer run test
+
+      - name: Static Analysis
+        run: composer run analyse
 
   php80:
     runs-on: ubuntu-latest
@@ -53,11 +53,11 @@ jobs:
       - name: Linting
         run: composer run lint
 
-      - name: Static Analysis
-        run: composer run analyse
-
       - name: Testing
         run: composer run test
+
+      - name: Static Analysis
+        run: composer run analyse
 
   php82:
     runs-on: ubuntu-latest
@@ -80,8 +80,8 @@ jobs:
       - name: Linting
         run: composer run lint
 
-      - name: Static Analysis
-        run: composer run analyse
-
       - name: Testing
         run: composer run test
+
+      - name: Static Analysis
+        run: composer run analyse
