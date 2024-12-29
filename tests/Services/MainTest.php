@@ -347,6 +347,54 @@ class MainTest extends TestCase {
 		$this->assertConditionsMet();
 	}
 
+	public function test_register_webp_img_deletion_bails_out_if_meta_images_do_not_exist() {
+		$main = Mockery::mock( Main::class )->makePartial();
+		$main->shouldAllowMockingProtectedMethods();
+
+		\WP_Mock::userFunction( 'wp_attachment_is_image' )
+			->once()
+			->with( 1 )
+			->andReturn( true );
+
+		\WP_Mock::userFunction( 'get_attached_file' )
+			->once()
+			->with( 1 )
+			->andReturn( __DIR__ . '/sample.jpeg' );
+
+		\WP_Mock::userFunction(
+			'trailingslashit',
+			[
+				'times'  => 3,
+				'return' => function ( $text ) {
+					return $text . '/';
+				},
+			]
+		);
+
+		\WP_Mock::userFunction( 'wp_get_attachment_metadata' )
+			->once()
+			->with( 1 )
+			->andReturn(
+				[
+					'sizes' => [
+						[
+							'file' => 'sample1.jpeg',
+						],
+						[
+							'file' => 'sample2.jpeg',
+						],
+						[
+							'file' => 'sample3.jpeg',
+						],
+					],
+				]
+			);
+
+		$image = $main->register_webp_img_deletion( 1 );
+
+		$this->assertConditionsMet();
+	}
+
 	public function test_register_webp_attachment_fields_escapes_array_return_type() {
 		$post     = Mockery::mock( \WP_Post::class )->makePartial();
 		$post->ID = 1;
