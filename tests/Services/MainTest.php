@@ -360,7 +360,7 @@ class MainTest extends TestCase {
 		\WP_Mock::userFunction( 'get_attached_file' )
 			->once()
 			->with( 1 )
-			->andReturn( __DIR__ . '/sample.jpeg' );
+			->andReturn( '/sample.jpeg' );
 
 		\WP_Mock::userFunction(
 			'trailingslashit',
@@ -472,11 +472,21 @@ class MainTest extends TestCase {
 
 		\WP_Mock::userFunction( 'get_post_meta' )
 			->with( 1, 'icfw_img', true )
-			->andReturn( true );
+			->andReturn( 'https://example.com/wp-content/uploads/sample.pdf' );
 
 		\WP_Mock::userFunction( 'wp_attachment_is_image' )
 			->with( 1 )
-			->andReturn( false );
+			->andReturnUsing(
+				function( $arg ) {
+					$img_types = [ 'gif', 'png', 'jpg', 'jpeg', 'bmp', 'svg' ];
+
+					if ( in_array( pathinfo( $arg, PATHINFO_EXTENSION ), $img_types, true ) ) {
+						return true;
+					}
+
+					return false;
+				}
+			);
 
 		$metadata = [
 			'sizes' => [
@@ -506,7 +516,7 @@ class MainTest extends TestCase {
 
 		\WP_Mock::userFunction( 'get_post_meta' )
 			->with( 1, 'icfw_img', true )
-			->andReturn( true );
+			->andReturn( 'https://example.com/wp-content/uploads/image.webp' );
 
 		\WP_Mock::userFunction( 'wp_attachment_is_image' )
 			->twice()
@@ -515,7 +525,7 @@ class MainTest extends TestCase {
 
 		\WP_Mock::userFunction( 'get_attached_file' )
 			->with( 1 )
-			->andReturn( 'https://example.com/wp-content/uploads/image.jpeg' );
+			->andReturn( '/var/www/html/wp-content/uploads/image.jpeg' );
 
 		$metadata = [
 			'sizes' => [
