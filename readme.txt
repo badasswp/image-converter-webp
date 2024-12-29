@@ -70,6 +70,13 @@ Want to add your personal touch? All of our documentation can be found [here](ht
 
 == Changelog ==
 
+= 1.2.1 =
+* Implement WebP image display on WP Media Library.
+* Prevent style bleeding from Options page.
+* Update Unit Tests & Code Coverage.
+* Update README notes.
+* Tested up to WP 6.7.1.
+
 = 1.2.0 =
 * Resolve issue with undefined array keys in Main service.
 * Serve WebP images in WP media library.
