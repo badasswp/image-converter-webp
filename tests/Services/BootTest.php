@@ -8,6 +8,8 @@ use ImageConverterWebP\Services\Boot;
 use ImageConverterWebP\Abstracts\Service;
 
 /**
+ * @covers \ImageConverterWebP\Abstracts\Service::__construct
+ * @covers \ImageConverterWebP\Core\Converter::__construct
  * @covers \ImageConverterWebP\Services\Boot::register
  * @covers \ImageConverterWebP\Services\Boot::register_translation
  */
