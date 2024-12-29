@@ -276,7 +276,7 @@ class MainTest extends TestCase {
 		\WP_Mock::userFunction( 'get_attached_file' )
 			->once()
 			->with( 1 )
-			->andReturn( __DIR__ . '/sample.jpeg' );
+			->andReturn( '/sample.jpeg' );
 
 		\WP_Mock::userFunction( 'wp_get_attachment_metadata' )
 			->once()
@@ -543,9 +543,12 @@ class MainTest extends TestCase {
 		$attachment     = Mockery::mock( \WP_Post::class )->makePartial();
 		$attachment->ID = 1;
 
+		$main = Mockery::mock( Main::class )->makePartial();
+		$main->shouldAllowMockingProtectedMethods();
+
 		\WP_Mock::userFunction( 'get_post_meta' )
 			->with( 1, 'icfw_img', true )
-			->andReturn( true );
+			->andReturn( __DIR__ . '/sample.webp' );
 
 		\WP_Mock::userFunction( 'wp_attachment_is_image' )
 			->twice()
@@ -561,13 +564,13 @@ class MainTest extends TestCase {
 				[
 					'sizes' => [
 						'thumbnail' => [
-							'url' => 'https://example.com/wp-content/uploads/image-150x150.webp',
+							'url' => 'https://example.com/wp-content/uploads/image-150x150.jpeg',
 						],
 						'medium'    => [
-							'url' => 'https://example.com/wp-content/uploads/image-300x300.webp',
+							'url' => 'https://example.com/wp-content/uploads/image-300x300.jpeg',
 						],
 						'large'     => [
-							'url' => 'https://example.com/wp-content/uploads/image-1024x1024.webp',
+							'url' => 'https://example.com/wp-content/uploads/image-1024x1024.jpeg',
 						],
 						'full'      => [
 							'url' => __DIR__ . '/sample.webp',
@@ -576,14 +579,11 @@ class MainTest extends TestCase {
 				]
 			)->andReturnUsing(
 				function ( $arg ) {
-					array_walk_recursive(
-						$arg,
-						function ( $key, $value ) {
-							if ( 'url' === $arg[ $key ] ) {
-								$arg[ $value ] = str_replace( '.jpeg', '.webp', $value );
-							}
-						}
-					);
+					$types = [ 'thumbnail', 'medium', 'large' ];
+
+					foreach ( $types as $type ) {
+						$arg['sizes'][ $type ]['url'] = str_replace( '.jpeg', '.webp', $arg['sizes'][ $type ]['url'] );
+					}
 
 					return $arg;
 				}
@@ -608,8 +608,27 @@ class MainTest extends TestCase {
 
 		$this->create_mock_image( __DIR__ . '/sample.webp' );
 
-		$this->main->show_webp_images_on_wp_media_modal( $metadata, $attachment, false );
+		$metadata = $main->show_webp_images_on_wp_media_modal( $metadata, $attachment, false );
 
+		$this->assertSame(
+			$metadata,
+			[
+				'sizes' => [
+					'thumbnail' => [
+						'url' => 'https://example.com/wp-content/uploads/image-150x150.webp',
+					],
+					'medium'    => [
+						'url' => 'https://example.com/wp-content/uploads/image-300x300.webp',
+					],
+					'large'     => [
+						'url' => 'https://example.com/wp-content/uploads/image-1024x1024.webp',
+					],
+					'full'      => [
+						'url' => __DIR__ . '/sample.webp',
+					],
+				],
+			]
+		);
 		$this->assertConditionsMet();
 	}
 
