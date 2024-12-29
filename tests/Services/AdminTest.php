@@ -330,4 +330,17 @@ class AdminTest extends TestCase {
 
 		$this->assertConditionsMet();
 	}
+
+	public function test_register_options_styles_bails_out_if_screen_is_not_media_page() {
+		$screen = Mockery::mock( \WP_Screen::class )->makePartial();
+		$screen->shouldAllowMockingProtectedMethods();
+		$screen->id = 'toplevel_page_image-converter-webp';
+
+		\WP_Mock::userFunction( 'get_current_screen' )
+			->andReturn( $screen );
+
+		$this->admin->register_options_styles();
+
+		$this->assertConditionsMet();
+	}
 }
