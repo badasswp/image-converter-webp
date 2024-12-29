@@ -481,16 +481,16 @@ class MainTest extends TestCase {
 		$metadata = [
 			'sizes' => [
 				'thumbnail' => [
-					'url' => 'https://example.com/wp-content/uploads/image-150x150.webp',
+					'url' => 'https://example.com/wp-content/uploads/image-150x150.jpeg',
 				],
 				'medium'    => [
-					'url' => 'https://example.com/wp-content/uploads/image-300x300.webp',
+					'url' => 'https://example.com/wp-content/uploads/image-300x300.jpeg',
 				],
 				'large'     => [
-					'url' => 'https://example.com/wp-content/uploads/image-1024x1024.webp',
+					'url' => 'https://example.com/wp-content/uploads/image-1024x1024.jpeg',
 				],
 				'full'      => [
-					'url' => 'https://example.com/wp-content/uploads/image.webp',
+					'url' => 'https://example.com/wp-content/uploads/image.jpeg',
 				],
 			],
 		];
@@ -520,16 +520,16 @@ class MainTest extends TestCase {
 		$metadata = [
 			'sizes' => [
 				'thumbnail' => [
-					'url' => 'https://example.com/wp-content/uploads/image-150x150.webp',
+					'url' => 'https://example.com/wp-content/uploads/image-150x150.jpeg',
 				],
 				'medium'    => [
-					'url' => 'https://example.com/wp-content/uploads/image-300x300.webp',
+					'url' => 'https://example.com/wp-content/uploads/image-300x300.jpeg',
 				],
 				'large'     => [
-					'url' => 'https://example.com/wp-content/uploads/image-1024x1024.webp',
+					'url' => 'https://example.com/wp-content/uploads/image-1024x1024.jpeg',
 				],
 				'full'      => [
-					'url' => 'https://example.com/wp-content/uploads/image.webp',
+					'url' => 'https://example.com/wp-content/uploads/image.jpeg',
 				],
 			],
 		];
