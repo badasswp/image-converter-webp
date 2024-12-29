@@ -18,6 +18,8 @@ use ImageConverterWebP\Core\Converter;
  * @covers \ImageConverterWebP\Services\Main::show_webp_images_on_wp_media_modal
  * @covers \ImageConverterWebP\Services\Main::get_webp_metadata
  * @covers icfw_get_settings
+ * @covers icfw_get_equivalent
+ * @covers icfw_get_abs_image
  */
 class MainTest extends TestCase {
 	public Main $main;
