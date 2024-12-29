@@ -163,9 +163,9 @@ class PageLoadTest extends TestCase {
 		$page_load = Mockery::mock( PageLoad::class )->makePartial();
 		$page_load->shouldAllowMockingProtectedMethods();
 
-		$image = $page_load->get_webp_image_html( '<figure><img src=""/></figure>' );
+		$image = $page_load->get_webp_image_html( '<figure><img/></figure>' );
 
-		$this->assertSame( '<figure><img src=""/></figure>', $image );
+		$this->assertSame( '<figure><img/></figure>', $image );
 		$this->assertConditionsMet();
 	}
 
