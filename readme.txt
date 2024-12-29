@@ -36,6 +36,7 @@ Our plugin comes with everything you need to convert your WP website images to W
 ✔️ <strong>Conversion Quality & WebP Engine</strong> options.
 ✔️ <strong>Error Loggging Capabilities</strong>.
 ✔️ <strong>Custom Hooks</strong> to help you customize plugin behaviour.
+✔️ Compatible with <strong>Divi & Elementor</strong> page builders.
 ✔️ Available in <strong>mutiple langauges</strong> such as Arabic, Chinese, Hebrew, Hindi, Russian, German, Italian, Croatian, Spanish & French languages.
 ✔️ <strong>Backward compatible</strong>, works with most WP versions.
 
