@@ -27,6 +27,18 @@ As an internet user, you already know images can be the difference between a gre
 
 You may not realize it, but imagery is a large part of it. This plugin helps take care of all those concerns, by converting your WordPress images to WebP format during page load so that your site loads extremely fast, without any disruptions or downtime.
 
+= ✔️ Features =
+
+Our plugin comes with everything you need to convert your WP website images to WebP.
+
+✔️ <strong>Convert your WP images to WebP</strong> feature.
+✔️ <strong>Convert images on both upload and page load</strong>.
+✔️ <strong>Conversion Quality & WebP Engine</strong> options.
+✔️ <strong>Error Loggging Capabilities</strong>.
+✔️ <strong>Custom Hooks</strong> to help you customize plugin behaviour.
+✔️ Available in <strong>mutiple langauges</strong> such as Arabic, Chinese, Hebrew, Hindi, Russian, German, Italian, Croatian, Spanish & French languages.
+✔️ <strong>Backward compatible</strong>, works with most WP versions.
+
 = ✨ Getting Started =
 
 1. Locate the <strong>Media</strong> menu option on the left side of the WP admin dashboard.
