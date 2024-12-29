@@ -499,6 +499,45 @@ class MainTest extends TestCase {
 		$this->assertConditionsMet();
 	}
 
+	public function test_show_webp_images_on_wp_media_modal_bails_out_if_webp_image_does_not_exist() {
+		$attachment = Mockery::mock( \WP_Post::class )->makePartial();
+		$attachment->ID = 1;
+
+		\WP_Mock::userFunction( 'get_post_meta' )
+			->with( 1, 'icfw_img', true )
+			->andReturn( true );
+
+		\WP_Mock::userFunction( 'wp_attachment_is_image' )
+			->twice()
+			->with( 1 )
+			->andReturn( true );
+
+		\WP_Mock::userFunction( 'get_attached_file' )
+			->with( 1 )
+			->andReturn( 'https://example.com/wp-content/uploads/image.jpeg' );
+
+		$metadata = [
+			'sizes' => [
+				'thumbnail' => [
+					'url' => 'https://example.com/wp-content/uploads/image-150x150.webp'
+				],
+				'medium' => [
+					'url' => 'https://example.com/wp-content/uploads/image-300x300.webp'
+				],
+				'large' => [
+					'url' => 'https://example.com/wp-content/uploads/image-1024x1024.webp'
+				],
+				'full' => [
+					'url' => 'https://example.com/wp-content/uploads/image.webp'
+				],
+			]
+		];
+
+		$this->main->show_webp_images_on_wp_media_modal( $metadata, $attachment, false );
+
+		$this->assertConditionsMet();
+	}
+
 	public function create_mock_image( $image_file_name ) {
 		// Create a blank image.
 		$width  = 400;
