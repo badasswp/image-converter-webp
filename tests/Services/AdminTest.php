@@ -322,7 +322,7 @@ class AdminTest extends TestCase {
 		$this->assertConditionsMet();
 	}
 
-	public function test_register_options_styles_bails() {
+	public function test_register_options_styles_bails_out_if_screen_is_not_an_object() {
 		\WP_Mock::userFunction( 'get_current_screen' )
 			->andReturn( '' );
 
