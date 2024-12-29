@@ -52,6 +52,16 @@ class PageLoadTest extends TestCase {
 		$this->assertConditionsMet();
 	}
 
+	public function test_register_render_block_returns_html_if_no_image() {
+		$page_load = Mockery::mock( PageLoad::class )->makePartial();
+		$page_load->shouldAllowMockingProtectedMethods();
+
+		$image = $page_load->register_render_block( '<p>John Doe</p>', [] );
+
+		$this->assertSame( '<p>John Doe</p>', $image );
+		$this->assertConditionsMet();
+	}
+
 	public function test_register_render_block_returns_img_html() {
 		$page_load = Mockery::mock( PageLoad::class )->makePartial();
 		$page_load->shouldAllowMockingProtectedMethods();
