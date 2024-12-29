@@ -538,6 +538,80 @@ class MainTest extends TestCase {
 		$this->assertConditionsMet();
 	}
 
+	public function test_show_webp_images_on_wp_media_modal_passes() {
+		$attachment = Mockery::mock( \WP_Post::class )->makePartial();
+		$attachment->ID = 1;
+
+		\WP_Mock::userFunction( 'get_post_meta' )
+			->with( 1, 'icfw_img', true )
+			->andReturn( true );
+
+		\WP_Mock::userFunction( 'wp_attachment_is_image' )
+			->twice()
+			->with( 1 )
+			->andReturn( true );
+
+		\WP_Mock::userFunction( 'get_attached_file' )
+			->with( 1 )
+			->andReturn( __DIR__ . '/sample.webp' );
+
+		$main->shouldReceive( 'get_webp_metadata' )
+			->with(
+				[
+					'sizes' => [
+						'thumbnail' => [
+							'url' => 'https://example.com/wp-content/uploads/image-150x150.webp'
+						],
+						'medium' => [
+							'url' => 'https://example.com/wp-content/uploads/image-300x300.webp'
+						],
+						'large' => [
+							'url' => 'https://example.com/wp-content/uploads/image-1024x1024.webp'
+						],
+						'full' => [
+							'url' => __DIR__ . '/sample.webp'
+						],
+					]
+				]
+			)->andReturnUsing(
+				function( $arg ) {
+					array_walk_recursive(
+						$arg,
+						function( $key, $value ) {
+							if ( 'url' === $arg[ $key ] ) {
+								$arg[ $value ] = str_replace( '.jpeg', '.webp', $value );
+							}
+						}
+					);
+
+					return $arg;
+				}
+			);
+
+		$metadata = [
+			'sizes' => [
+				'thumbnail' => [
+					'url' => 'https://example.com/wp-content/uploads/image-150x150.jpeg'
+				],
+				'medium' => [
+					'url' => 'https://example.com/wp-content/uploads/image-300x300.jpeg'
+				],
+				'large' => [
+					'url' => 'https://example.com/wp-content/uploads/image-1024x1024.jpeg'
+				],
+				'full' => [
+					'url' => 'https://example.com/wp-content/uploads/image.jpeg'
+				],
+			]
+		];
+
+		$this->create_mock_image( __DIR__ . '/sample.webp' );
+
+		$this->main->show_webp_images_on_wp_media_modal( $metadata, $attachment, false );
+
+		$this->assertConditionsMet();
+	}
+
 	public function create_mock_image( $image_file_name ) {
 		// Create a blank image.
 		$width  = 400;
