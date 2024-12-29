@@ -42,6 +42,34 @@ class MainTest extends TestCase {
 		$this->assertConditionsMet();
 	}
 
+	public function test_register_webp_img_creation_bails_out() {
+		$main = Mockery::mock( Main::class )->makePartial();
+		$main->shouldAllowMockingProtectedMethods();
+
+		\WP_Mock::userFunction( 'wp_get_attachment_url' )
+			->once()
+			->with( 1 )
+			->andReturn( 'https://example.com/wp-content/uploads/2024/01/sample.jpeg' );
+
+		$main->source = [
+			'id'  => 1,
+			'url' => 'https://example.com/wp-content/uploads/2024/01/sample.jpeg',
+		];
+
+		\WP_Mock::userFunction( 'get_option' )
+			->once()
+			->with( 'icfw', [] )
+			->andReturn(
+				[
+					'upload' => false,
+				]
+			);
+
+		$main->register_webp_img_creation( 1 );
+
+		$this->assertConditionsMet();
+	}
+
 	public function test_register_webp_img_creation_satisfies_conditions() {
 		$converter = Mockery::mock( Converter::class )->makePartial();
 		$converter->shouldAllowMockingProtectedMethods();
