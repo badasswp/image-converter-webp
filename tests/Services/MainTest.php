@@ -466,7 +466,7 @@ class MainTest extends TestCase {
 	}
 
 	public function test_show_webp_images_on_wp_media_modal_bails_out_if_not_image() {
-		$attachment = Mockery::mock( \WP_Post::class )->makePartial();
+		$attachment     = Mockery::mock( \WP_Post::class )->makePartial();
 		$attachment->ID = 1;
 
 		\WP_Mock::userFunction( 'get_post_meta' )
@@ -480,18 +480,18 @@ class MainTest extends TestCase {
 		$metadata = [
 			'sizes' => [
 				'thumbnail' => [
-					'url' => 'https://example.com/wp-content/uploads/image-150x150.webp'
+					'url' => 'https://example.com/wp-content/uploads/image-150x150.webp',
 				],
-				'medium' => [
-					'url' => 'https://example.com/wp-content/uploads/image-300x300.webp'
+				'medium'    => [
+					'url' => 'https://example.com/wp-content/uploads/image-300x300.webp',
 				],
-				'large' => [
-					'url' => 'https://example.com/wp-content/uploads/image-1024x1024.webp'
+				'large'     => [
+					'url' => 'https://example.com/wp-content/uploads/image-1024x1024.webp',
 				],
-				'full' => [
-					'url' => 'https://example.com/wp-content/uploads/image.webp'
+				'full'      => [
+					'url' => 'https://example.com/wp-content/uploads/image.webp',
 				],
-			]
+			],
 		];
 
 		$this->main->show_webp_images_on_wp_media_modal( $metadata, $attachment, false );
@@ -500,7 +500,7 @@ class MainTest extends TestCase {
 	}
 
 	public function test_show_webp_images_on_wp_media_modal_bails_out_if_webp_image_does_not_exist() {
-		$attachment = Mockery::mock( \WP_Post::class )->makePartial();
+		$attachment     = Mockery::mock( \WP_Post::class )->makePartial();
 		$attachment->ID = 1;
 
 		\WP_Mock::userFunction( 'get_post_meta' )
@@ -519,18 +519,18 @@ class MainTest extends TestCase {
 		$metadata = [
 			'sizes' => [
 				'thumbnail' => [
-					'url' => 'https://example.com/wp-content/uploads/image-150x150.webp'
+					'url' => 'https://example.com/wp-content/uploads/image-150x150.webp',
 				],
-				'medium' => [
-					'url' => 'https://example.com/wp-content/uploads/image-300x300.webp'
+				'medium'    => [
+					'url' => 'https://example.com/wp-content/uploads/image-300x300.webp',
 				],
-				'large' => [
-					'url' => 'https://example.com/wp-content/uploads/image-1024x1024.webp'
+				'large'     => [
+					'url' => 'https://example.com/wp-content/uploads/image-1024x1024.webp',
 				],
-				'full' => [
-					'url' => 'https://example.com/wp-content/uploads/image.webp'
+				'full'      => [
+					'url' => 'https://example.com/wp-content/uploads/image.webp',
 				],
-			]
+			],
 		];
 
 		$this->main->show_webp_images_on_wp_media_modal( $metadata, $attachment, false );
@@ -539,7 +539,7 @@ class MainTest extends TestCase {
 	}
 
 	public function test_show_webp_images_on_wp_media_modal_passes() {
-		$attachment = Mockery::mock( \WP_Post::class )->makePartial();
+		$attachment     = Mockery::mock( \WP_Post::class )->makePartial();
 		$attachment->ID = 1;
 
 		\WP_Mock::userFunction( 'get_post_meta' )
@@ -560,24 +560,24 @@ class MainTest extends TestCase {
 				[
 					'sizes' => [
 						'thumbnail' => [
-							'url' => 'https://example.com/wp-content/uploads/image-150x150.webp'
+							'url' => 'https://example.com/wp-content/uploads/image-150x150.webp',
 						],
-						'medium' => [
-							'url' => 'https://example.com/wp-content/uploads/image-300x300.webp'
+						'medium'    => [
+							'url' => 'https://example.com/wp-content/uploads/image-300x300.webp',
 						],
-						'large' => [
-							'url' => 'https://example.com/wp-content/uploads/image-1024x1024.webp'
+						'large'     => [
+							'url' => 'https://example.com/wp-content/uploads/image-1024x1024.webp',
 						],
-						'full' => [
-							'url' => __DIR__ . '/sample.webp'
+						'full'      => [
+							'url' => __DIR__ . '/sample.webp',
 						],
-					]
+					],
 				]
 			)->andReturnUsing(
-				function( $arg ) {
+				function ( $arg ) {
 					array_walk_recursive(
 						$arg,
-						function( $key, $value ) {
+						function ( $key, $value ) {
 							if ( 'url' === $arg[ $key ] ) {
 								$arg[ $value ] = str_replace( '.jpeg', '.webp', $value );
 							}
@@ -591,18 +591,18 @@ class MainTest extends TestCase {
 		$metadata = [
 			'sizes' => [
 				'thumbnail' => [
-					'url' => 'https://example.com/wp-content/uploads/image-150x150.jpeg'
+					'url' => 'https://example.com/wp-content/uploads/image-150x150.jpeg',
 				],
-				'medium' => [
-					'url' => 'https://example.com/wp-content/uploads/image-300x300.jpeg'
+				'medium'    => [
+					'url' => 'https://example.com/wp-content/uploads/image-300x300.jpeg',
 				],
-				'large' => [
-					'url' => 'https://example.com/wp-content/uploads/image-1024x1024.jpeg'
+				'large'     => [
+					'url' => 'https://example.com/wp-content/uploads/image-1024x1024.jpeg',
 				],
-				'full' => [
-					'url' => 'https://example.com/wp-content/uploads/image.jpeg'
+				'full'      => [
+					'url' => 'https://example.com/wp-content/uploads/image.jpeg',
 				],
-			]
+			],
 		];
 
 		$this->create_mock_image( __DIR__ . '/sample.webp' );
