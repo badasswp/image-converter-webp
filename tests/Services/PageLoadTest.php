@@ -169,6 +169,16 @@ class PageLoadTest extends TestCase {
 		$this->assertConditionsMet();
 	}
 
+	public function test_get_webp_image_html_returns_original_html_if_image_is_webp() {
+		$page_load = Mockery::mock( PageLoad::class )->makePartial();
+		$page_load->shouldAllowMockingProtectedMethods();
+
+		$image = $page_load->get_webp_image_html( '<figure><img src="john.webp"/></figure>' );
+
+		$this->assertSame( '<figure><img src="john.webp"/></figure>', $image );
+		$this->assertConditionsMet();
+	}
+
 	public function test_get_webp_html_bails_out_and_returns_same_image_html() {
 		$page_load = Mockery::mock( PageLoad::class )->makePartial();
 		$page_load->shouldAllowMockingProtectedMethods();
