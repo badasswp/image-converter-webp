@@ -477,7 +477,7 @@ class MainTest extends TestCase {
 		\WP_Mock::userFunction( 'wp_attachment_is_image' )
 			->with( 1 )
 			->andReturnUsing(
-				function( $arg ) {
+				function ( $arg ) {
 					$img_types = [ 'gif', 'png', 'jpg', 'jpeg', 'bmp', 'svg' ];
 
 					if ( in_array( pathinfo( $arg, PATHINFO_EXTENSION ), $img_types, true ) ) {
