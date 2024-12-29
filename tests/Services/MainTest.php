@@ -16,6 +16,7 @@ use ImageConverterWebP\Core\Converter;
  * @covers \ImageConverterWebP\Services\Main::register_webp_img_deletion
  * @covers \ImageConverterWebP\Services\Main::register_webp_attachment_fields
  * @covers \ImageConverterWebP\Services\Main::show_webp_images_on_wp_media_modal
+ * @covers \ImageConverterWebP\Services\Main::get_webp_metadata
  * @covers icfw_get_settings
  */
 class MainTest extends TestCase {
@@ -635,6 +636,51 @@ class MainTest extends TestCase {
 					],
 					'full'      => [
 						'url' => __DIR__ . '/sample.webp',
+					],
+				],
+			]
+		);
+		$this->assertConditionsMet();
+	}
+
+	public function test_get_webp_metadata() {
+		$main = Mockery::mock( Main::class )->makePartial();
+		$main->shouldAllowMockingProtectedMethods();
+
+		$metadata = [
+			'sizes' => [
+				'thumbnail' => [
+					'url' => 'https://example.com/wp-content/uploads/image-150x150.jpeg',
+				],
+				'medium'    => [
+					'url' => 'https://example.com/wp-content/uploads/image-300x300.jpeg',
+				],
+				'large'     => [
+					'url' => 'https://example.com/wp-content/uploads/image-1024x1024.jpeg',
+				],
+				'full'      => [
+					'url' => 'https://example.com/wp-content/uploads/image.webp',
+				],
+			],
+		];
+
+		$metadata = $main->get_webp_metadata( $metadata );
+
+		$this->assertSame(
+			$metadata,
+			[
+				'sizes' => [
+					'thumbnail' => [
+						'url' => 'https://example.com/wp-content/uploads/image-150x150.webp',
+					],
+					'medium'    => [
+						'url' => 'https://example.com/wp-content/uploads/image-300x300.webp',
+					],
+					'large'     => [
+						'url' => 'https://example.com/wp-content/uploads/image-1024x1024.webp',
+					],
+					'full'      => [
+						'url' => 'https://example.com/wp-content/uploads/image.webp',
 					],
 				],
 			]
