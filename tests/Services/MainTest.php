@@ -154,6 +154,48 @@ class MainTest extends TestCase {
 		$this->assertConditionsMet();
 	}
 
+	public function test_register_webp_img_srcset_creation_bails_out() {
+		$main = Mockery::mock( Main::class )->makePartial();
+		$main->shouldAllowMockingProtectedMethods();
+
+		$data = [
+			'sizes' => [
+				[
+					'file' => 'sample1.jpeg',
+				],
+				[
+					'file' => 'sample2.jpeg',
+				],
+				[
+					'file' => 'sample3.jpeg',
+				],
+			],
+		];
+
+		\WP_Mock::userFunction( 'wp_get_attachment_image_url' )
+			->once()
+			->with( 1 )
+			->andReturn( 'https://example.com/wp-content/uploads/2024/01/sample.jpeg' );
+
+		\WP_Mock::userFunction( 'trailingslashit' )
+			->times( 3 )
+			->with( 'https://example.com/wp-content/uploads/2024/01' )
+			->andReturn( 'https://example.com/wp-content/uploads/2024/01/' );
+
+		\WP_Mock::userFunction( 'get_option' )
+			->times( 3 )
+			->with( 'icfw', [] )
+			->andReturn(
+				[
+					'upload' => false,
+				]
+			);
+
+		$srcset = $main->register_webp_img_srcset_creation( $data, 1, 'create' );
+
+		$this->assertConditionsMet();
+	}
+
 	public function test_register_webp_img_deletion_fails_if_not_image() {
 		$main = Mockery::mock( Main::class )->makePartial();
 		$main->shouldAllowMockingProtectedMethods();
