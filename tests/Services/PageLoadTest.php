@@ -10,6 +10,7 @@ use ImageConverterWebP\Services\PageLoad;
 /**
  * @covers \ImageConverterWebP\Core\Converter::__construct
  * @covers \ImageConverterWebP\Services\PageLoad::__construct
+ * @covers \ImageConverterWebP\Services\PageLoad::register
  * @covers \ImageConverterWebP\Services\PageLoad::register_render_block
  * @covers \ImageConverterWebP\Services\PageLoad::register_wp_get_attachment_image
  * @covers \ImageConverterWebP\Services\PageLoad::register_post_thumbnail_html
@@ -29,6 +30,16 @@ class PageLoadTest extends TestCase {
 
 	public function tearDown(): void {
 		\WP_Mock::tearDown();
+	}
+
+	public function test_register() {
+		\WP_Mock::expectFilterAdded( 'render_block', [ $this->page_load, 'register_render_block' ], 20, 2 );
+		\WP_Mock::expectFilterAdded( 'wp_get_attachment_image', [ $this->page_load, 'register_wp_get_attachment_image' ], 10, 5 );
+		\WP_Mock::expectFilterAdded( 'post_thumbnail_html', [ $this->page_load, 'register_post_thumbnail_html' ], 10, 5 );
+
+		$this->page_load->register();
+
+		$this->assertConditionsMet();
 	}
 
 	public function test_register_render_block_returns_empty_string() {
