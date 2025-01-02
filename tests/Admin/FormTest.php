@@ -413,7 +413,8 @@ class FormTest extends TestCase {
 	}
 
 	public function test_get_form_notice_bails_out_if_button_name_is_not_set() {
-		$_POST['nonce_name'] = 'nonce_action\/';
+		$_POST['button_name'] = null;
+		$_POST['nonce_name']  = 'nonce_action\/';
 
 		\WP_Mock::userFunction( 'wp_unslash' )
 			->andReturnUsing(
