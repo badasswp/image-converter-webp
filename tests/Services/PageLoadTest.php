@@ -10,6 +10,7 @@ use ImageConverterWebP\Services\PageLoad;
 /**
  * @covers \ImageConverterWebP\Core\Converter::__construct
  * @covers \ImageConverterWebP\Services\PageLoad::__construct
+ * @covers \ImageConverterWebP\Services\PageLoad::register
  * @covers \ImageConverterWebP\Services\PageLoad::register_render_block
  * @covers \ImageConverterWebP\Services\PageLoad::register_wp_get_attachment_image
  * @covers \ImageConverterWebP\Services\PageLoad::register_post_thumbnail_html
@@ -31,6 +32,16 @@ class PageLoadTest extends TestCase {
 		\WP_Mock::tearDown();
 	}
 
+	public function test_register() {
+		\WP_Mock::expectFilterAdded( 'render_block', [ $this->page_load, 'register_render_block' ], 20, 2 );
+		\WP_Mock::expectFilterAdded( 'wp_get_attachment_image', [ $this->page_load, 'register_wp_get_attachment_image' ], 10, 5 );
+		\WP_Mock::expectFilterAdded( 'post_thumbnail_html', [ $this->page_load, 'register_post_thumbnail_html' ], 10, 5 );
+
+		$this->page_load->register();
+
+		$this->assertConditionsMet();
+	}
+
 	public function test_register_render_block_returns_empty_string() {
 		$page_load = Mockery::mock( PageLoad::class )->makePartial();
 		$page_load->shouldAllowMockingProtectedMethods();
@@ -38,6 +49,16 @@ class PageLoadTest extends TestCase {
 		$image = $page_load->register_render_block( '', [] );
 
 		$this->assertSame( '', $image );
+		$this->assertConditionsMet();
+	}
+
+	public function test_register_render_block_returns_html_if_no_image() {
+		$page_load = Mockery::mock( PageLoad::class )->makePartial();
+		$page_load->shouldAllowMockingProtectedMethods();
+
+		$image = $page_load->register_render_block( '<p>John Doe</p>', [] );
+
+		$this->assertSame( '<p>John Doe</p>', $image );
 		$this->assertConditionsMet();
 	}
 
@@ -142,9 +163,19 @@ class PageLoadTest extends TestCase {
 		$page_load = Mockery::mock( PageLoad::class )->makePartial();
 		$page_load->shouldAllowMockingProtectedMethods();
 
-		$image = $page_load->get_webp_image_html( '<figure><img src=""/></figure>' );
+		$image = $page_load->get_webp_image_html( '<figure><img/></figure>' );
 
-		$this->assertSame( '<figure><img src=""/></figure>', $image );
+		$this->assertSame( '<figure><img/></figure>', $image );
+		$this->assertConditionsMet();
+	}
+
+	public function test_get_webp_image_html_returns_original_html_if_image_is_webp() {
+		$page_load = Mockery::mock( PageLoad::class )->makePartial();
+		$page_load->shouldAllowMockingProtectedMethods();
+
+		$image = $page_load->get_webp_image_html( '<figure><img src="john.webp"/></figure>' );
+
+		$this->assertSame( '<figure><img src="john.webp"/></figure>', $image );
 		$this->assertConditionsMet();
 	}
 

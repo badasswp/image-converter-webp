@@ -3,7 +3,7 @@ Contributors: badasswp
 Tags: webp, image, convert, jpeg, png.
 Requires at least: 4.0
 Tested up to: 6.7.1
-Stable tag: 1.2.0
+Stable tag: 1.2.1
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -26,6 +26,19 @@ Convert your WordPress JPG/PNG images to WebP formats.
 As an internet user, you already know images can be the difference between a great website experience and a terrible one! Think about how often you've landed on a website and hit the back button because the home page was too busy or the banner image was taking so much time to load due to its size.
 
 You may not realize it, but imagery is a large part of it. This plugin helps take care of all those concerns, by converting your WordPress images to WebP format during page load so that your site loads extremely fast, without any disruptions or downtime.
+
+= ✔️ Features =
+
+Our plugin comes with everything you need to convert your WP website images to WebP.
+
+✔️ <strong>Convert your WP images to WebP</strong> feature.
+✔️ <strong>Convert images on both upload and page load</strong>.
+✔️ <strong>Conversion Quality & WebP Engine</strong> options.
+✔️ <strong>Error Loggging Capabilities</strong>.
+✔️ <strong>Custom Hooks</strong> to help you customize plugin behaviour.
+✔️ Compatible with <strong>Divi & Elementor</strong> page builders.
+✔️ Available in <strong>mutiple langauges</strong> such as Arabic, Chinese, Hebrew, Hindi, Russian, German, Italian, Croatian, Spanish & French languages.
+✔️ <strong>Backward compatible</strong>, works with most WP versions.
 
 = ✨ Getting Started =
 
@@ -56,6 +69,13 @@ Want to add your personal touch? All of our documentation can be found [here](ht
 3. Attachment Modal - See Converted WebP image path here.
 
 == Changelog ==
+
+= 1.2.1 =
+* Implement WebP image display on WP Media Library.
+* Prevent style bleeding from Options page.
+* Update Unit Tests & Code Coverage.
+* Update README notes.
+* Tested up to WP 6.7.1.
 
 = 1.2.0 =
 * Resolve issue with undefined array keys in Main service.

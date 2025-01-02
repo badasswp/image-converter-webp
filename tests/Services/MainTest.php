@@ -15,7 +15,11 @@ use ImageConverterWebP\Core\Converter;
  * @covers \ImageConverterWebP\Services\Main::register_webp_img_srcset_creation
  * @covers \ImageConverterWebP\Services\Main::register_webp_img_deletion
  * @covers \ImageConverterWebP\Services\Main::register_webp_attachment_fields
+ * @covers \ImageConverterWebP\Services\Main::show_webp_images_on_wp_media_modal
+ * @covers \ImageConverterWebP\Services\Main::get_webp_metadata
  * @covers icfw_get_settings
+ * @covers icfw_get_equivalent
+ * @covers icfw_get_abs_image
  */
 class MainTest extends TestCase {
 	public Main $main;
@@ -38,6 +42,34 @@ class MainTest extends TestCase {
 		\WP_Mock::expectFilterAdded( 'wp_prepare_attachment_for_js', [ $this->main, 'show_webp_images_on_wp_media_modal' ], 10, 3 );
 
 		$this->main->register();
+
+		$this->assertConditionsMet();
+	}
+
+	public function test_register_webp_img_creation_bails_out() {
+		$main = Mockery::mock( Main::class )->makePartial();
+		$main->shouldAllowMockingProtectedMethods();
+
+		\WP_Mock::userFunction( 'wp_get_attachment_url' )
+			->once()
+			->with( 1 )
+			->andReturn( 'https://example.com/wp-content/uploads/2024/01/sample.jpeg' );
+
+		$main->source = [
+			'id'  => 1,
+			'url' => 'https://example.com/wp-content/uploads/2024/01/sample.jpeg',
+		];
+
+		\WP_Mock::userFunction( 'get_option' )
+			->once()
+			->with( 'icfw', [] )
+			->andReturn(
+				[
+					'upload' => false,
+				]
+			);
+
+		$main->register_webp_img_creation( 1 );
 
 		$this->assertConditionsMet();
 	}
@@ -126,6 +158,48 @@ class MainTest extends TestCase {
 		$this->assertConditionsMet();
 	}
 
+	public function test_register_webp_img_srcset_creation_bails_out() {
+		$main = Mockery::mock( Main::class )->makePartial();
+		$main->shouldAllowMockingProtectedMethods();
+
+		$data = [
+			'sizes' => [
+				[
+					'file' => 'sample1.jpeg',
+				],
+				[
+					'file' => 'sample2.jpeg',
+				],
+				[
+					'file' => 'sample3.jpeg',
+				],
+			],
+		];
+
+		\WP_Mock::userFunction( 'wp_get_attachment_image_url' )
+			->once()
+			->with( 1 )
+			->andReturn( 'https://example.com/wp-content/uploads/2024/01/sample.jpeg' );
+
+		\WP_Mock::userFunction( 'trailingslashit' )
+			->times( 3 )
+			->with( 'https://example.com/wp-content/uploads/2024/01' )
+			->andReturn( 'https://example.com/wp-content/uploads/2024/01/' );
+
+		\WP_Mock::userFunction( 'get_option' )
+			->times( 3 )
+			->with( 'icfw', [] )
+			->andReturn(
+				[
+					'upload' => false,
+				]
+			);
+
+		$srcset = $main->register_webp_img_srcset_creation( $data, 1, 'create' );
+
+		$this->assertConditionsMet();
+	}
+
 	public function test_register_webp_img_deletion_fails_if_not_image() {
 		$main = Mockery::mock( Main::class )->makePartial();
 		$main->shouldAllowMockingProtectedMethods();
@@ -193,6 +267,30 @@ class MainTest extends TestCase {
 		$this->assertConditionsMet();
 	}
 
+	public function test_register_webp_img_deletion_bails_out_if_image_does_not_exist() {
+		$main = Mockery::mock( Main::class )->makePartial();
+		$main->shouldAllowMockingProtectedMethods();
+
+		\WP_Mock::userFunction( 'wp_attachment_is_image' )
+			->once()
+			->with( 1 )
+			->andReturn( true );
+
+		\WP_Mock::userFunction( 'get_attached_file' )
+			->once()
+			->with( 1 )
+			->andReturn( '/sample.jpeg' );
+
+		\WP_Mock::userFunction( 'wp_get_attachment_metadata' )
+			->once()
+			->with( 1 )
+			->andReturn( [] );
+
+		$image = $main->register_webp_img_deletion( 1 );
+
+		$this->assertConditionsMet();
+	}
+
 	public function test_register_webp_img_deletion_removes_webp_metadata_image() {
 		$main = Mockery::mock( Main::class )->makePartial();
 		$main->shouldAllowMockingProtectedMethods();
@@ -247,6 +345,54 @@ class MainTest extends TestCase {
 		$this->create_mock_image( __DIR__ . '/sample1.webp' );
 		$this->create_mock_image( __DIR__ . '/sample2.webp' );
 		$this->create_mock_image( __DIR__ . '/sample3.webp' );
+
+		$image = $main->register_webp_img_deletion( 1 );
+
+		$this->assertConditionsMet();
+	}
+
+	public function test_register_webp_img_deletion_bails_out_if_meta_images_do_not_exist() {
+		$main = Mockery::mock( Main::class )->makePartial();
+		$main->shouldAllowMockingProtectedMethods();
+
+		\WP_Mock::userFunction( 'wp_attachment_is_image' )
+			->once()
+			->with( 1 )
+			->andReturn( true );
+
+		\WP_Mock::userFunction( 'get_attached_file' )
+			->once()
+			->with( 1 )
+			->andReturn( '/sample.jpeg' );
+
+		\WP_Mock::userFunction(
+			'trailingslashit',
+			[
+				'times'  => 3,
+				'return' => function ( $text ) {
+					return $text . '/';
+				},
+			]
+		);
+
+		\WP_Mock::userFunction( 'wp_get_attachment_metadata' )
+			->once()
+			->with( 1 )
+			->andReturn(
+				[
+					'sizes' => [
+						[
+							'file' => 'sample1.jpeg',
+						],
+						[
+							'file' => 'sample2.jpeg',
+						],
+						[
+							'file' => 'sample3.jpeg',
+						],
+					],
+				]
+			);
 
 		$image = $main->register_webp_img_deletion( 1 );
 
@@ -319,6 +465,227 @@ class MainTest extends TestCase {
 				],
 			],
 			$expected
+		);
+		$this->assertConditionsMet();
+	}
+
+	public function test_show_webp_images_on_wp_media_modal_bails_out_if_not_image() {
+		$attachment     = Mockery::mock( \WP_Post::class )->makePartial();
+		$attachment->ID = 1;
+
+		\WP_Mock::userFunction( 'get_post_meta' )
+			->with( 1, 'icfw_img', true )
+			->andReturn( 'https://example.com/wp-content/uploads/sample.pdf' );
+
+		\WP_Mock::userFunction( 'wp_attachment_is_image' )
+			->with( 1 )
+			->andReturnUsing(
+				function ( $arg ) {
+					$img_types = [ 'gif', 'png', 'jpg', 'jpeg', 'bmp', 'svg' ];
+
+					if ( in_array( pathinfo( $arg, PATHINFO_EXTENSION ), $img_types, true ) ) {
+						return true;
+					}
+
+					return false;
+				}
+			);
+
+		$metadata = [
+			'sizes' => [
+				'thumbnail' => [
+					'url' => 'https://example.com/wp-content/uploads/image-150x150.jpeg',
+				],
+				'medium'    => [
+					'url' => 'https://example.com/wp-content/uploads/image-300x300.jpeg',
+				],
+				'large'     => [
+					'url' => 'https://example.com/wp-content/uploads/image-1024x1024.jpeg',
+				],
+				'full'      => [
+					'url' => 'https://example.com/wp-content/uploads/image.jpeg',
+				],
+			],
+		];
+
+		$this->main->show_webp_images_on_wp_media_modal( $metadata, $attachment, false );
+
+		$this->assertConditionsMet();
+	}
+
+	public function test_show_webp_images_on_wp_media_modal_bails_out_if_webp_image_does_not_exist() {
+		$attachment     = Mockery::mock( \WP_Post::class )->makePartial();
+		$attachment->ID = 1;
+
+		\WP_Mock::userFunction( 'get_post_meta' )
+			->with( 1, 'icfw_img', true )
+			->andReturn( 'https://example.com/wp-content/uploads/image.webp' );
+
+		\WP_Mock::userFunction( 'wp_attachment_is_image' )
+			->twice()
+			->with( 1 )
+			->andReturn( true );
+
+		\WP_Mock::userFunction( 'get_attached_file' )
+			->with( 1 )
+			->andReturn( '/var/www/html/wp-content/uploads/image.jpeg' );
+
+		$metadata = [
+			'sizes' => [
+				'thumbnail' => [
+					'url' => 'https://example.com/wp-content/uploads/image-150x150.jpeg',
+				],
+				'medium'    => [
+					'url' => 'https://example.com/wp-content/uploads/image-300x300.jpeg',
+				],
+				'large'     => [
+					'url' => 'https://example.com/wp-content/uploads/image-1024x1024.jpeg',
+				],
+				'full'      => [
+					'url' => 'https://example.com/wp-content/uploads/image.jpeg',
+				],
+			],
+		];
+
+		$this->main->show_webp_images_on_wp_media_modal( $metadata, $attachment, false );
+
+		$this->assertConditionsMet();
+	}
+
+	public function test_show_webp_images_on_wp_media_modal_passes() {
+		$attachment     = Mockery::mock( \WP_Post::class )->makePartial();
+		$attachment->ID = 1;
+
+		$main = Mockery::mock( Main::class )->makePartial();
+		$main->shouldAllowMockingProtectedMethods();
+
+		\WP_Mock::userFunction( 'get_post_meta' )
+			->with( 1, 'icfw_img', true )
+			->andReturn( __DIR__ . '/sample.webp' );
+
+		\WP_Mock::userFunction( 'wp_attachment_is_image' )
+			->twice()
+			->with( 1 )
+			->andReturn( true );
+
+		\WP_Mock::userFunction( 'get_attached_file' )
+			->with( 1 )
+			->andReturn( __DIR__ . '/sample.webp' );
+
+		$main->shouldReceive( 'get_webp_metadata' )
+			->with(
+				[
+					'sizes' => [
+						'thumbnail' => [
+							'url' => 'https://example.com/wp-content/uploads/image-150x150.jpeg',
+						],
+						'medium'    => [
+							'url' => 'https://example.com/wp-content/uploads/image-300x300.jpeg',
+						],
+						'large'     => [
+							'url' => 'https://example.com/wp-content/uploads/image-1024x1024.jpeg',
+						],
+						'full'      => [
+							'url' => __DIR__ . '/sample.webp',
+						],
+					],
+				]
+			)->andReturnUsing(
+				function ( $arg ) {
+					$types = [ 'thumbnail', 'medium', 'large' ];
+
+					foreach ( $types as $type ) {
+						$arg['sizes'][ $type ]['url'] = str_replace( '.jpeg', '.webp', $arg['sizes'][ $type ]['url'] );
+					}
+
+					return $arg;
+				}
+			);
+
+		$metadata = [
+			'sizes' => [
+				'thumbnail' => [
+					'url' => 'https://example.com/wp-content/uploads/image-150x150.jpeg',
+				],
+				'medium'    => [
+					'url' => 'https://example.com/wp-content/uploads/image-300x300.jpeg',
+				],
+				'large'     => [
+					'url' => 'https://example.com/wp-content/uploads/image-1024x1024.jpeg',
+				],
+				'full'      => [
+					'url' => 'https://example.com/wp-content/uploads/image.jpeg',
+				],
+			],
+		];
+
+		$this->create_mock_image( __DIR__ . '/sample.webp' );
+
+		$metadata = $main->show_webp_images_on_wp_media_modal( $metadata, $attachment, false );
+
+		$this->assertSame(
+			$metadata,
+			[
+				'sizes' => [
+					'thumbnail' => [
+						'url' => 'https://example.com/wp-content/uploads/image-150x150.webp',
+					],
+					'medium'    => [
+						'url' => 'https://example.com/wp-content/uploads/image-300x300.webp',
+					],
+					'large'     => [
+						'url' => 'https://example.com/wp-content/uploads/image-1024x1024.webp',
+					],
+					'full'      => [
+						'url' => __DIR__ . '/sample.webp',
+					],
+				],
+			]
+		);
+		$this->assertConditionsMet();
+	}
+
+	public function test_get_webp_metadata() {
+		$main = Mockery::mock( Main::class )->makePartial();
+		$main->shouldAllowMockingProtectedMethods();
+
+		$metadata = [
+			'sizes' => [
+				'thumbnail' => [
+					'url' => 'https://example.com/wp-content/uploads/image-150x150.jpeg',
+				],
+				'medium'    => [
+					'url' => 'https://example.com/wp-content/uploads/image-300x300.jpeg',
+				],
+				'large'     => [
+					'url' => 'https://example.com/wp-content/uploads/image-1024x1024.jpeg',
+				],
+				'full'      => [
+					'url' => 'https://example.com/wp-content/uploads/image.webp',
+				],
+			],
+		];
+
+		$metadata = $main->get_webp_metadata( $metadata );
+
+		$this->assertSame(
+			$metadata,
+			[
+				'sizes' => [
+					'thumbnail' => [
+						'url' => 'https://example.com/wp-content/uploads/image-150x150.webp',
+					],
+					'medium'    => [
+						'url' => 'https://example.com/wp-content/uploads/image-300x300.webp',
+					],
+					'large'     => [
+						'url' => 'https://example.com/wp-content/uploads/image-1024x1024.webp',
+					],
+					'full'      => [
+						'url' => 'https://example.com/wp-content/uploads/image.webp',
+					],
+				],
+			]
 		);
 		$this->assertConditionsMet();
 	}
