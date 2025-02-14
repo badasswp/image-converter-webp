@@ -70,8 +70,11 @@ Want to add your personal touch? All of our documentation can be found [here](ht
 
 == Changelog ==
 
-= Unrealesed =
+= 1.3.0 =
 * Implement conversion for WP scaled images.
+* Added Unit tests.
+* Update README notes.
+* Tested up tp WP 6.7.2.
 
 = 1.2.1 =
 * Implement WebP image display on WP Media Library.
