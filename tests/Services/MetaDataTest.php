@@ -38,18 +38,21 @@ class MetaDataTest extends TestCase {
 	}
 
 	public function test_add_webp_meta_to_attachment_bails_out_if_is_wp_error() {
-		$webp = 'https://example.com/wp-content/uploads/2024/01/sample.webp';
+		$wp_error = Mockery::mock( \WP_Error::class )->makePartial();
+		$wp_error->shouldAllowMockingProtectedMethods();
+
+		\WP_Mock::userFunction( 'is_wp_error' )
+			->andReturnUsing(
+				function ( $arg ) {
+					return $arg instanceof \WP_Error;
+				}
+			);
 
 		$options = [
 			'logs' => true,
 		];
 
-		\WP_Mock::userFunction( 'is_wp_error' )
-			->once()
-			->with( $webp )
-			->andReturn( true );
-
-		$this->metadata->add_webp_meta_to_attachment( $webp, 1 );
+		$this->metadata->add_webp_meta_to_attachment( $wp_error, 1 );
 
 		$this->assertConditionsMet();
 	}
@@ -62,9 +65,11 @@ class MetaDataTest extends TestCase {
 		];
 
 		\WP_Mock::userFunction( 'is_wp_error' )
-			->once()
-			->with( $webp )
-			->andReturn( false );
+			->andReturnUsing(
+				function ( $arg ) {
+					return $arg instanceof \WP_Error;
+				}
+			);
 
 		\WP_Mock::userFunction( 'get_post_meta' )
 			->once()
