@@ -2,8 +2,8 @@
 Contributors: badasswp
 Tags: webp, image, convert, jpeg, png.
 Requires at least: 4.0
-Tested up to: 6.7.1
-Stable tag: 1.2.1
+Tested up to: 6.7.2
+Stable tag: 1.3.0
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -76,7 +76,7 @@ Want to add your personal touch? All of our documentation can be found [here](ht
 * Update README notes.
 * Tested up tp WP 6.7.2.
 
-= 1.2.1 =
+= 1.3.0 =
 * Implement WebP image display on WP Media Library.
 * Prevent style bleeding from Options page.
 * Update Unit Tests & Code Coverage.
