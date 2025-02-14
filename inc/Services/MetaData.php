@@ -23,7 +23,7 @@ class MetaData extends Service implements Kernel {
 	 */
 	public function register(): void {
 		add_action( 'icfw_convert', [ $this, 'add_webp_meta_to_attachment' ], 10, 2 );
-		add_action( 'icfw_convert', [ $this, 'add_webp_for_scaled_image' ], 10, 2 );
+		add_action( 'icfw_convert', [ $this, 'add_webp_for_scaled_images' ], 10, 2 );
 	}
 
 	/**
@@ -64,7 +64,7 @@ class MetaData extends Service implements Kernel {
 	 *
 	 * @return void
 	 */
-	public function add_webp_for_scaled_image( $webp, $attachment_id ): void {
+	public function add_webp_for_scaled_images( $webp, $attachment_id ): void {
 		// Bail out early, if \WP_Error.
 		if ( is_wp_error( $webp ) ) {
 			return;
