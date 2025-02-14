@@ -1,5 +1,8 @@
 # Changelog
 
+## Unrealesed
+* Implement conversion for WP scaled images.
+
 ## 1.2.1
 * Implement WebP image display on WP Media Library.
 * Prevent style bleeding from Options page.

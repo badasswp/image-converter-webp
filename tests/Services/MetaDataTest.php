@@ -11,6 +11,7 @@ use ImageConverterWebP\Services\MetaData;
  * @covers \ImageConverterWebP\Services\MetaData::__construct
  * @covers \ImageConverterWebP\Services\MetaData::register
  * @covers \ImageConverterWebP\Services\MetaData::add_webp_meta_to_attachment
+ * @covers \ImageConverterWebP\Services\MetaData::add_webp_for_scaled_image
  * @covers icfw_get_settings
  */
 class MetaDataTest extends TestCase {
@@ -28,6 +29,7 @@ class MetaDataTest extends TestCase {
 
 	public function test_register() {
 		\WP_Mock::expectActionAdded( 'icfw_convert', [ $this->metadata, 'add_webp_meta_to_attachment' ], 10, 2 );
+		\WP_Mock::expectActionAdded( 'icfw_convert', [ $this->metadata, 'add_webp_for_scaled_image' ], 10, 2 );
 
 		$this->metadata->register();
 
