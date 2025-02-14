@@ -12,7 +12,7 @@ use ImageConverterWebP\Services\MetaData;
  * @covers \ImageConverterWebP\Services\MetaData::__construct
  * @covers \ImageConverterWebP\Services\MetaData::register
  * @covers \ImageConverterWebP\Services\MetaData::add_webp_meta_to_attachment
- * @covers \ImageConverterWebP\Services\MetaData::add_webp_for_scaled_image
+ * @covers \ImageConverterWebP\Services\MetaData::add_webp_for_scaled_images
  * @covers icfw_get_settings
  */
 class MetaDataTest extends TestCase {
