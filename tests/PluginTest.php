@@ -100,7 +100,7 @@ class PluginTest extends TestCase {
 			'icfw_convert',
 			[
 				Service::$services['ImageConverterWebP\Services\MetaData'],
-				'add_webp_for_scaled_image',
+				'add_webp_for_scaled_images',
 			],
 			10,
 			2
