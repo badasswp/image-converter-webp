@@ -2,13 +2,13 @@
 Contributors: badasswp
 Tags: webp, image, convert, jpeg, png.
 Requires at least: 4.0
-Tested up to: 6.7.1
-Stable tag: 1.2.1
+Tested up to: 6.7.2
+Stable tag: 1.3.0
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-Convert your WordPress JPG/PNG images to WebP formats.
+Convert your WordPress JPG and PNG images to efficient WebP format, improving performance, reducing file size, and enhancing website speed.
 
 == Installation ==
 
@@ -70,7 +70,13 @@ Want to add your personal touch? All of our documentation can be found [here](ht
 
 == Changelog ==
 
-= 1.2.1 =
+= 1.3.0 =
+* Implement conversion for WP scaled images.
+* Added Unit tests.
+* Update README notes.
+* Tested up tp WP 6.7.2.
+
+= 1.3.0 =
 * Implement WebP image display on WP Media Library.
 * Prevent style bleeding from Options page.
 * Update Unit Tests & Code Coverage.

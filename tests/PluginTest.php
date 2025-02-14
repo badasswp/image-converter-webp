@@ -99,6 +99,16 @@ class PluginTest extends TestCase {
 		\WP_Mock::expectActionAdded(
 			'icfw_convert',
 			[
+				Service::$services['ImageConverterWebP\Services\MetaData'],
+				'add_webp_for_scaled_images',
+			],
+			10,
+			2
+		);
+
+		\WP_Mock::expectActionAdded(
+			'icfw_convert',
+			[
 				Service::$services['ImageConverterWebP\Services\Logger'],
 				'add_logs_for_webp_conversions',
 			],

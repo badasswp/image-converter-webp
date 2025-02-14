@@ -23,6 +23,7 @@ class MetaData extends Service implements Kernel {
 	 */
 	public function register(): void {
 		add_action( 'icfw_convert', [ $this, 'add_webp_meta_to_attachment' ], 10, 2 );
+		add_action( 'icfw_convert', [ $this, 'add_webp_for_scaled_images' ], 10, 2 );
 	}
 
 	/**
@@ -48,5 +49,38 @@ class MetaData extends Service implements Kernel {
 		if ( empty( get_post_meta( $attachment_id, 'icfw_img', true ) ) ) {
 			update_post_meta( $attachment_id, 'icfw_img', $webp );
 		}
+	}
+
+	/**
+	 * Add WebP meta for WP Scaled Images.
+	 *
+	 * This is responsible for creating WebP images for WP scaled
+	 * images (if any).
+	 *
+	 * @since 1.3.0
+	 *
+	 * @param string|\WP_Error $webp          WebP's relative path.
+	 * @param int              $attachment_id Image ID.
+	 *
+	 * @return void
+	 */
+	public function add_webp_for_scaled_images( $webp, $attachment_id ): void {
+		// Bail out early, if \WP_Error.
+		if ( is_wp_error( $webp ) ) {
+			return;
+		}
+
+		$image_url = (string) wp_get_attachment_url( $attachment_id );
+
+		if ( false === strpos( $image_url, '-scaled' ) ) {
+			return;
+		}
+
+		$this->source = [
+			'id'  => (int) $attachment_id,
+			'url' => $image_url,
+		];
+
+		$webp = $this->converter->convert();
 	}
 }
