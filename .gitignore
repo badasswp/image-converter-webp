@@ -6,6 +6,7 @@
 ###############################
 composer.lock
 package-lock.json
+yarn.lock
 
 # Ignore Folders #
 ##################
