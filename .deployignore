@@ -1,13 +1,16 @@
 .editorconfig
 .gitignore
 .github
+.wp-env.json
 CHANGELOG.md
+package.json
 phpcs.xml
 phpstan.neon
 phpunit.xml
 README.md
 assets
 tests
+bin
 vendor/rosell-dk/exec-with-fallback/.github
 vendor/rosell-dk/file-util/.github
 vendor/rosell-dk/image-mime-type-guesser/.github

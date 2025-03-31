@@ -211,11 +211,30 @@ public function delete_bmp_image( $webp, $attachment_id ): void {
 
 ---
 
-## Development
+## Contribute
 
-### Setup
+Contributions are __welcome__ and will be fully __credited__. To contribute, please fork this repo and raise a PR (Pull Request) against the `master` branch.
 
-- Clone the repository.
-- Make sure you have [Composer](https://getcomposer.org) and PHP `v7.4|v8.0` installed in your computer.
-- Run `composer install` to build PHP dependencies.
-- For local development, you can use [Docker](https://docs.docker.com/install/) or [Local by Flywheel](https://localwp.com/).
+### Pre-requisites
+
+You should have the following tools before proceeding to the next steps:
+
+- Composer
+- Yarn
+- Docker
+
+To enable you start development, please run:
+
+```bash
+yarn start
+```
+
+This should spin up a local WP env instance for you to work with at:
+
+```bash
+http://icfw.localhost:5447
+```
+
+You should now have a functioning local WP env to work with. To login to the `wp-admin` backend, please use `admin` for username & `password` for password.
+
+__Awesome!__ - Thanks for being interested in contributing your time and code to this project!
