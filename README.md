@@ -235,6 +235,6 @@ This should spin up a local WP env instance for you to work with at:
 http://icfw.localhost:5447
 ```
 
-You should now have a functioning local WP env to work with. To login to the `wp-admin` backend, please username as `admin` & password as `password`.
+You should now have a functioning local WP env to work with. To login to the `wp-admin` backend, please use `admin` for username & `password` for password.
 
 __Awesome!__ - Thanks for being interested in contributing your time and code to this project!
