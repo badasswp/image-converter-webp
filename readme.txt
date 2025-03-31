@@ -70,6 +70,11 @@ Want to add your personal touch? All of our documentation can be found [here](ht
 
 == Changelog ==
 
+= 1.3.1 =
+* Chore: Add WP local dev env.
+* Chore: Update README docs.
+* Tested up to WP 6.7.2.
+
 = 1.3.0 =
 * Implement conversion for WP scaled images.
 * Added Unit tests.
