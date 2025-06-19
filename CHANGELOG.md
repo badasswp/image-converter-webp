@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.3.2
+* Translate Options label correctly.
+* Tested up to WP 6.8.
+
 ## 1.3.1
 * Chore: Add WP local dev env.
 * Chore: Update README docs.
