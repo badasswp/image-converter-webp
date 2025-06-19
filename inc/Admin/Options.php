@@ -170,7 +170,7 @@ class Options {
 				],
 			],
 			'icfw_log_options'  => [
-				'heading'  => 'Log Options',
+				'heading'  => esc_html__( 'Log Options', 'image-converter-webp' ),
 				'controls' => [
 					'logs' => [
 						'control' => esc_attr( 'checkbox' ),
