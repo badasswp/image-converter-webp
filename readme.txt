@@ -2,7 +2,7 @@
 Contributors: badasswp
 Tags: webp, image, convert, jpeg, png.
 Requires at least: 4.0
-Tested up to: 6.7.2
+Tested up to: 6.8
 Stable tag: 1.3.2
 Requires PHP: 7.4
 License: GPLv2 or later
