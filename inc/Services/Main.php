@@ -145,27 +145,29 @@ class Main extends Service implements Kernel {
 			$metadata_image = trailingslashit( $img_url_prefix ) . $img['file'];
 
 			// Ensure image exists before proceeding.
-			if ( $metadata_image ) {
-				// Get WebP version of metadata image.
-				$metadata_extension  = '.' . pathinfo( $metadata_image, PATHINFO_EXTENSION );
-				$webp_metadata_image = str_replace( $metadata_extension, '.webp', $metadata_image );
+			if ( ! $metadata_image ) {
+				continue;
+			}
 
-				if ( file_exists( $webp_metadata_image ) ) {
-					unlink( $webp_metadata_image );
+			// Get WebP version of metadata image.
+			$metadata_extension  = '.' . pathinfo( $metadata_image, PATHINFO_EXTENSION );
+			$webp_metadata_image = str_replace( $metadata_extension, '.webp', $metadata_image );
 
-					/**
-					 * Fires after WebP Metadata Image has been deleted.
-					 *
-					 * @since 1.0.2
-					 * @since 1.1.1 Rename hook to use `icfw` prefix.
-					 *
-					 * @param string $webp_metadata_image Absolute path to WebP image.
-					 * @param int    $attachment_id       Image ID.
-					 *
-					 * @return void
-					 */
-					do_action( 'icfw_metadata_delete', $webp_metadata_image, $attachment_id );
-				}
+			if ( file_exists( $webp_metadata_image ) ) {
+				unlink( $webp_metadata_image );
+
+				/**
+				 * Fires after WebP Metadata Image has been deleted.
+				 *
+				 * @since 1.0.2
+				 * @since 1.1.1 Rename hook to use `icfw` prefix.
+				 *
+				 * @param string $webp_metadata_image Absolute path to WebP image.
+				 * @param int    $attachment_id       Image ID.
+				 *
+				 * @return void
+				 */
+				do_action( 'icfw_metadata_delete', $webp_metadata_image, $attachment_id );
 			}
 		}
 	}
