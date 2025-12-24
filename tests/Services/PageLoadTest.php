@@ -2,8 +2,10 @@
 
 namespace ImageConverterWebP\Tests\Services;
 
+use WP_Mock;
 use Mockery;
-use WP_Mock\Tools\TestCase;
+use WP_Error;
+use Badasswp\WPMockTC\WPMockTestCase;
 use ImageConverterWebP\Core\Converter;
 use ImageConverterWebP\Services\PageLoad;
 
@@ -18,24 +20,41 @@ use ImageConverterWebP\Services\PageLoad;
  * @covers \ImageConverterWebP\Services\PageLoad::_get_webp_html
  * @covers icfw_get_settings
  */
-class PageLoadTest extends TestCase {
+class PageLoadTest extends WPMockTestCase {
 	public array $source;
 	public PageLoad $page_load;
 
 	public function setUp(): void {
-		\WP_Mock::setUp();
+		parent::setUp();
 
 		$this->page_load = new PageLoad();
 	}
 
 	public function tearDown(): void {
-		\WP_Mock::tearDown();
+		parent::tearDown();
 	}
 
 	public function test_register() {
-		\WP_Mock::expectFilterAdded( 'render_block', [ $this->page_load, 'register_render_block' ], 20, 2 );
-		\WP_Mock::expectFilterAdded( 'wp_get_attachment_image', [ $this->page_load, 'register_wp_get_attachment_image' ], 10, 5 );
-		\WP_Mock::expectFilterAdded( 'post_thumbnail_html', [ $this->page_load, 'register_post_thumbnail_html' ], 10, 5 );
+		WP_Mock::expectFilterAdded(
+			'render_block',
+			[ $this->page_load, 'register_render_block' ],
+			20,
+			2
+		);
+
+		WP_Mock::expectFilterAdded(
+			'wp_get_attachment_image',
+			[ $this->page_load, 'register_wp_get_attachment_image' ],
+			10,
+			5
+		);
+
+		WP_Mock::expectFilterAdded(
+			'post_thumbnail_html',
+			[ $this->page_load, 'register_post_thumbnail_html' ],
+			10,
+			5
+		);
 
 		$this->page_load->register();
 
@@ -93,7 +112,7 @@ class PageLoadTest extends TestCase {
 			->with( '<img src="sample.jpeg"/>', 1 )
 			->andReturn( '<img src="sample.webp"/>' );
 
-		\WP_Mock::onFilter( 'icfw_attachment_html' )
+		WP_Mock::onFilter( 'icfw_attachment_html' )
 			->with(
 				'<img src="sample.webp"/>',
 				1
@@ -124,7 +143,7 @@ class PageLoadTest extends TestCase {
 			->with( '<img src="sample.jpeg"/>', 2 )
 			->andReturn( '<img src="sample.webp"/>' );
 
-		\WP_Mock::onFilter( 'icfw_thumbnail_html' )
+		WP_Mock::onFilter( 'icfw_thumbnail_html' )
 			->with(
 				'<img src="sample.webp"/>',
 				2
@@ -186,18 +205,13 @@ class PageLoadTest extends TestCase {
 		$page_load->converter = Mockery::mock( Converter::class )->makePartial();
 		$page_load->converter->shouldAllowMockingProtectedMethods();
 
-		$error = Mockery::mock( \WP_Error::class )->makePartial();
+		$error = Mockery::mock( WP_Error::class )->makePartial();
 
 		$page_load->converter->shouldReceive( 'convert' )
 			->once()->with()
 			->andReturn( $error );
 
-		\WP_Mock::userFunction( 'is_wp_error' )
-			->once()
-			->with( $error )
-			->andReturn( true );
-
-		\WP_Mock::userFunction( 'get_option' )
+		WP_Mock::userFunction( 'get_option' )
 			->once()
 			->with( 'icfw', [] )
 			->andReturn(
@@ -222,7 +236,7 @@ class PageLoadTest extends TestCase {
 		$this->create_mock_image( __DIR__ . '/sample.webp' );
 		$page_load->converter->abs_dest = __DIR__ . '/sample.webp';
 
-		$error = Mockery::mock( \WP_Error::class )->makePartial();
+		$error = Mockery::mock( WP_Error::class )->makePartial();
 
 		$this->source['url'] = 'https://example.com/wp-content/uploads/2024/01/sample.jpeg';
 
@@ -230,12 +244,7 @@ class PageLoadTest extends TestCase {
 			->once()->with()
 			->andReturn( 'https://example.com/wp-content/uploads/2024/01/sample.webp' );
 
-		\WP_Mock::userFunction( 'is_wp_error' )
-			->once()
-			->with( 'https://example.com/wp-content/uploads/2024/01/sample.webp' )
-			->andReturn( false );
-
-		\WP_Mock::userFunction( 'get_option' )
+		WP_Mock::userFunction( 'get_option' )
 			->once()
 			->with( 'icfw', [] )
 			->andReturn(

@@ -28,7 +28,8 @@
     "phpunit/phpcov": "^8.2",
     "phpstan/phpstan": "^1.10",
     "szepeviktor/phpstan-wordpress": "^1.3",
-    "phpstan/extension-installer": "^1.3"
+    "phpstan/extension-installer": "^1.3",
+    "badasswp/wp-mock-tc": "^1.0"
   },
   "config": {
     "allow-plugins": {
