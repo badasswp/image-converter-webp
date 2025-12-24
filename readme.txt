@@ -15,8 +15,8 @@ Convert your WordPress JPG and PNG images to efficient WebP format, improving pe
 1. Go to <strong>Plugins</strong> > <strong>Add New</strong> on your WordPress admin dashboard.
 2. Search for <strong>Image Converter for WebP</strong> plugin from the official WordPress plugin repository.
 3. Click <strong>Install Now</strong> and then <strong>Activate</strong>.
-4. Locate the <strong>Media</strong> menu option on the left side of the WP admin dashboard.
-5. You should see the <strong>Image Converter for WebP</strong> menu listed as one of the options, click on it.
+4. Locate the <strong>Image Converter for WebP</strong> menu option on the WP admin dashboard.
+5. Click on it.
 6. You can now set your plugin options here. Ensure you enable the <strong>Convert Images on Upload</strong> option.
 7. Now upload any image into your WP website, it would convert it to a WebP format that will be served on your pages when users visit your website.
 8. You're all set!
