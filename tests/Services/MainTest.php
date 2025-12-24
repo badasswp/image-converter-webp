@@ -2,6 +2,8 @@
 
 namespace ImageConverterWebP\Tests\Services;
 
+use WP_Mock;
+use WP_Post;
 use Mockery;
 use WP_Mock\Tools\TestCase;
 use ImageConverterWebP\Services\Main;
@@ -25,21 +27,50 @@ class MainTest extends TestCase {
 	public Main $main;
 
 	public function setUp(): void {
-		\WP_Mock::setUp();
+		WP_Mock::setUp();
 
 		$this->main = new Main();
 	}
 
 	public function tearDown(): void {
-		\WP_Mock::tearDown();
+		WP_Mock::tearDown();
 	}
 
 	public function test_register() {
-		\WP_Mock::expectActionAdded( 'add_attachment', [ $this->main, 'register_webp_img_creation' ], 10, 1 );
-		\WP_Mock::expectFilterAdded( 'wp_generate_attachment_metadata', [ $this->main, 'register_webp_img_srcset_creation' ], 10, 3 );
-		\WP_Mock::expectActionAdded( 'delete_attachment', [ $this->main, 'register_webp_img_deletion' ], 10, 1 );
-		\WP_Mock::expectFilterAdded( 'attachment_fields_to_edit', [ $this->main, 'register_webp_attachment_fields' ], 10, 2 );
-		\WP_Mock::expectFilterAdded( 'wp_prepare_attachment_for_js', [ $this->main, 'show_webp_images_on_wp_media_modal' ], 10, 3 );
+		WP_Mock::expectActionAdded(
+			'add_attachment',
+			[ $this->main, 'register_webp_img_creation' ],
+			10,
+			1
+		);
+
+		WP_Mock::expectFilterAdded(
+			'wp_generate_attachment_metadata',
+			[ $this->main, 'register_webp_img_srcset_creation' ],
+			10,
+			3
+		);
+
+		WP_Mock::expectActionAdded(
+			'delete_attachment',
+			[ $this->main, 'register_webp_img_deletion' ],
+			10,
+			1
+		);
+
+		WP_Mock::expectFilterAdded(
+			'attachment_fields_to_edit',
+			[ $this->main, 'register_webp_attachment_fields' ],
+			10,
+			2
+		);
+
+		WP_Mock::expectFilterAdded(
+			'wp_prepare_attachment_for_js',
+			[ $this->main, 'show_webp_images_on_wp_media_modal' ],
+			10,
+			3
+		);
 
 		$this->main->register();
 
@@ -50,7 +81,7 @@ class MainTest extends TestCase {
 		$main = Mockery::mock( Main::class )->makePartial();
 		$main->shouldAllowMockingProtectedMethods();
 
-		\WP_Mock::userFunction( 'wp_get_attachment_url' )
+		WP_Mock::userFunction( 'wp_get_attachment_url' )
 			->once()
 			->with( 1 )
 			->andReturn( 'https://example.com/wp-content/uploads/2024/01/sample.jpeg' );
@@ -60,7 +91,7 @@ class MainTest extends TestCase {
 			'url' => 'https://example.com/wp-content/uploads/2024/01/sample.jpeg',
 		];
 
-		\WP_Mock::userFunction( 'get_option' )
+		WP_Mock::userFunction( 'get_option' )
 			->once()
 			->with( 'icfw', [] )
 			->andReturn(
@@ -87,7 +118,7 @@ class MainTest extends TestCase {
 			'url' => 'https://example.com/wp-content/uploads/2024/01/sample.jpeg',
 		];
 
-		\WP_Mock::userFunction( 'wp_get_attachment_url' )
+		WP_Mock::userFunction( 'wp_get_attachment_url' )
 			->once()
 			->with( 1 )
 			->andReturn( 'https://example.com/wp-content/uploads/2024/01/sample.jpeg' );
@@ -96,7 +127,7 @@ class MainTest extends TestCase {
 			->once()
 			->andReturn( 'https://example.com/wp-content/uploads/2024/01/sample.webp' );
 
-		\WP_Mock::userFunction( 'get_option' )
+		WP_Mock::userFunction( 'get_option' )
 			->once()
 			->with( 'icfw', [] )
 			->andReturn(
@@ -131,12 +162,12 @@ class MainTest extends TestCase {
 			],
 		];
 
-		\WP_Mock::userFunction( 'wp_get_attachment_image_url' )
+		WP_Mock::userFunction( 'wp_get_attachment_image_url' )
 			->once()
 			->with( 1 )
 			->andReturn( 'https://example.com/wp-content/uploads/2024/01/sample.jpeg' );
 
-		\WP_Mock::userFunction( 'trailingslashit' )
+		WP_Mock::userFunction( 'trailingslashit' )
 			->times( 3 )
 			->with( 'https://example.com/wp-content/uploads/2024/01' )
 			->andReturn( 'https://example.com/wp-content/uploads/2024/01/' );
@@ -144,7 +175,7 @@ class MainTest extends TestCase {
 		$main->converter->shouldReceive( 'convert' )
 			->times( 3 );
 
-		\WP_Mock::userFunction( 'get_option' )
+		WP_Mock::userFunction( 'get_option' )
 			->times( 3 )
 			->with( 'icfw', [] )
 			->andReturn(
@@ -176,17 +207,17 @@ class MainTest extends TestCase {
 			],
 		];
 
-		\WP_Mock::userFunction( 'wp_get_attachment_image_url' )
+		WP_Mock::userFunction( 'wp_get_attachment_image_url' )
 			->once()
 			->with( 1 )
 			->andReturn( 'https://example.com/wp-content/uploads/2024/01/sample.jpeg' );
 
-		\WP_Mock::userFunction( 'trailingslashit' )
+		WP_Mock::userFunction( 'trailingslashit' )
 			->times( 3 )
 			->with( 'https://example.com/wp-content/uploads/2024/01' )
 			->andReturn( 'https://example.com/wp-content/uploads/2024/01/' );
 
-		\WP_Mock::userFunction( 'get_option' )
+		WP_Mock::userFunction( 'get_option' )
 			->times( 3 )
 			->with( 'icfw', [] )
 			->andReturn(
@@ -204,7 +235,7 @@ class MainTest extends TestCase {
 		$main = Mockery::mock( Main::class )->makePartial();
 		$main->shouldAllowMockingProtectedMethods();
 
-		\WP_Mock::userFunction( 'wp_attachment_is_image' )
+		WP_Mock::userFunction( 'wp_attachment_is_image' )
 			->once()
 			->with( 1 )
 			->andReturn( false );
@@ -218,17 +249,17 @@ class MainTest extends TestCase {
 		$main = Mockery::mock( Main::class )->makePartial();
 		$main->shouldAllowMockingProtectedMethods();
 
-		\WP_Mock::userFunction( 'wp_attachment_is_image' )
+		WP_Mock::userFunction( 'wp_attachment_is_image' )
 			->once()
 			->with( 1 )
 			->andReturn( true );
 
-		\WP_Mock::userFunction( 'get_attached_file' )
+		WP_Mock::userFunction( 'get_attached_file' )
 			->once()
 			->with( 1 )
 			->andReturn( '' );
 
-		\WP_Mock::userFunction( 'wp_get_attachment_metadata' )
+		WP_Mock::userFunction( 'wp_get_attachment_metadata' )
 			->once()
 			->with( 1 )
 			->andReturn( [] );
@@ -242,19 +273,19 @@ class MainTest extends TestCase {
 		$main = Mockery::mock( Main::class )->makePartial();
 		$main->shouldAllowMockingProtectedMethods();
 
-		\WP_Mock::userFunction( 'wp_attachment_is_image' )
+		WP_Mock::userFunction( 'wp_attachment_is_image' )
 			->once()
 			->with( 1 )
 			->andReturn( true );
 
-		\WP_Mock::userFunction( 'get_attached_file' )
+		WP_Mock::userFunction( 'get_attached_file' )
 			->once()
 			->with( 1 )
 			->andReturn( __DIR__ . '/sample.jpeg' );
 
-		\WP_Mock::expectAction( 'icfw_delete', __DIR__ . '/sample.webp', 1 );
+		WP_Mock::expectAction( 'icfw_delete', __DIR__ . '/sample.webp', 1 );
 
-		\WP_Mock::userFunction( 'wp_get_attachment_metadata' )
+		WP_Mock::userFunction( 'wp_get_attachment_metadata' )
 			->once()
 			->with( 1 )
 			->andReturn( [] );
@@ -271,17 +302,17 @@ class MainTest extends TestCase {
 		$main = Mockery::mock( Main::class )->makePartial();
 		$main->shouldAllowMockingProtectedMethods();
 
-		\WP_Mock::userFunction( 'wp_attachment_is_image' )
+		WP_Mock::userFunction( 'wp_attachment_is_image' )
 			->once()
 			->with( 1 )
 			->andReturn( true );
 
-		\WP_Mock::userFunction( 'get_attached_file' )
+		WP_Mock::userFunction( 'get_attached_file' )
 			->once()
 			->with( 1 )
 			->andReturn( '/sample.jpeg' );
 
-		\WP_Mock::userFunction( 'wp_get_attachment_metadata' )
+		WP_Mock::userFunction( 'wp_get_attachment_metadata' )
 			->once()
 			->with( 1 )
 			->andReturn( [] );
@@ -295,19 +326,19 @@ class MainTest extends TestCase {
 		$main = Mockery::mock( Main::class )->makePartial();
 		$main->shouldAllowMockingProtectedMethods();
 
-		\WP_Mock::userFunction( 'wp_attachment_is_image' )
+		WP_Mock::userFunction( 'wp_attachment_is_image' )
 			->once()
 			->with( 1 )
 			->andReturn( true );
 
-		\WP_Mock::userFunction( 'get_attached_file' )
+		WP_Mock::userFunction( 'get_attached_file' )
 			->once()
 			->with( 1 )
 			->andReturn( __DIR__ . '/sample.jpeg' );
 
-		\WP_Mock::expectAction( 'icfw_delete', __DIR__ . '/sample.webp', 1 );
+		WP_Mock::expectAction( 'icfw_delete', __DIR__ . '/sample.webp', 1 );
 
-		\WP_Mock::userFunction(
+		WP_Mock::userFunction(
 			'trailingslashit',
 			[
 				'times'  => 3,
@@ -317,7 +348,7 @@ class MainTest extends TestCase {
 			]
 		);
 
-		\WP_Mock::userFunction( 'wp_get_attachment_metadata' )
+		WP_Mock::userFunction( 'wp_get_attachment_metadata' )
 			->once()
 			->with( 1 )
 			->andReturn(
@@ -336,9 +367,9 @@ class MainTest extends TestCase {
 				]
 			);
 
-		\WP_Mock::expectAction( 'icfw_metadata_delete', __DIR__ . '/sample1.webp', 1 );
-		\WP_Mock::expectAction( 'icfw_metadata_delete', __DIR__ . '/sample2.webp', 1 );
-		\WP_Mock::expectAction( 'icfw_metadata_delete', __DIR__ . '/sample3.webp', 1 );
+		WP_Mock::expectAction( 'icfw_metadata_delete', __DIR__ . '/sample1.webp', 1 );
+		WP_Mock::expectAction( 'icfw_metadata_delete', __DIR__ . '/sample2.webp', 1 );
+		WP_Mock::expectAction( 'icfw_metadata_delete', __DIR__ . '/sample3.webp', 1 );
 
 		// Create Mock Images.
 		$this->create_mock_image( __DIR__ . '/sample.webp' );
@@ -355,17 +386,17 @@ class MainTest extends TestCase {
 		$main = Mockery::mock( Main::class )->makePartial();
 		$main->shouldAllowMockingProtectedMethods();
 
-		\WP_Mock::userFunction( 'wp_attachment_is_image' )
+		WP_Mock::userFunction( 'wp_attachment_is_image' )
 			->once()
 			->with( 1 )
 			->andReturn( true );
 
-		\WP_Mock::userFunction( 'get_attached_file' )
+		WP_Mock::userFunction( 'get_attached_file' )
 			->once()
 			->with( 1 )
 			->andReturn( '/sample.jpeg' );
 
-		\WP_Mock::userFunction(
+		WP_Mock::userFunction(
 			'trailingslashit',
 			[
 				'times'  => 3,
@@ -375,7 +406,7 @@ class MainTest extends TestCase {
 			]
 		);
 
-		\WP_Mock::userFunction( 'wp_get_attachment_metadata' )
+		WP_Mock::userFunction( 'wp_get_attachment_metadata' )
 			->once()
 			->with( 1 )
 			->andReturn(
@@ -400,10 +431,10 @@ class MainTest extends TestCase {
 	}
 
 	public function test_register_webp_attachment_fields_escapes_array_return_type() {
-		$post     = Mockery::mock( \WP_Post::class )->makePartial();
+		$post     = Mockery::mock( WP_Post::class )->makePartial();
 		$post->ID = 1;
 
-		\WP_Mock::userFunction(
+		WP_Mock::userFunction(
 			'__',
 			[
 				'return' => function ( $text, $domain = 'image-converter-webp' ) {
@@ -412,7 +443,7 @@ class MainTest extends TestCase {
 			]
 		);
 
-		\WP_Mock::userFunction( 'get_post_meta' )
+		WP_Mock::userFunction( 'get_post_meta' )
 			->once()
 			->with( 1, 'icfw_img', true )
 			->andReturn( [] );
@@ -436,10 +467,10 @@ class MainTest extends TestCase {
 	public function test_register_webp_attachment_fields() {
 		$webp = 'https://example.com/wp-content/uploads/2024/01/sample.webp';
 
-		$post     = Mockery::mock( \WP_Post::class )->makePartial();
+		$post     = Mockery::mock( WP_Post::class )->makePartial();
 		$post->ID = 1;
 
-		\WP_Mock::userFunction(
+		WP_Mock::userFunction(
 			'__',
 			[
 				'return' => function ( $text, $domain = 'image-converter-webp' ) {
@@ -448,7 +479,7 @@ class MainTest extends TestCase {
 			]
 		);
 
-		\WP_Mock::userFunction( 'get_post_meta' )
+		WP_Mock::userFunction( 'get_post_meta' )
 			->once()
 			->with( 1, 'icfw_img', true )
 			->andReturn( $webp );
@@ -470,14 +501,14 @@ class MainTest extends TestCase {
 	}
 
 	public function test_show_webp_images_on_wp_media_modal_bails_out_if_not_image() {
-		$attachment     = Mockery::mock( \WP_Post::class )->makePartial();
+		$attachment     = Mockery::mock( WP_Post::class )->makePartial();
 		$attachment->ID = 1;
 
-		\WP_Mock::userFunction( 'get_post_meta' )
+		WP_Mock::userFunction( 'get_post_meta' )
 			->with( 1, 'icfw_img', true )
 			->andReturn( 'https://example.com/wp-content/uploads/sample.pdf' );
 
-		\WP_Mock::userFunction( 'wp_attachment_is_image' )
+		WP_Mock::userFunction( 'wp_attachment_is_image' )
 			->with( 1 )
 			->andReturnUsing(
 				function ( $arg ) {
@@ -514,19 +545,19 @@ class MainTest extends TestCase {
 	}
 
 	public function test_show_webp_images_on_wp_media_modal_bails_out_if_webp_image_does_not_exist() {
-		$attachment     = Mockery::mock( \WP_Post::class )->makePartial();
+		$attachment     = Mockery::mock( WP_Post::class )->makePartial();
 		$attachment->ID = 1;
 
-		\WP_Mock::userFunction( 'get_post_meta' )
+		WP_Mock::userFunction( 'get_post_meta' )
 			->with( 1, 'icfw_img', true )
 			->andReturn( 'https://example.com/wp-content/uploads/image.webp' );
 
-		\WP_Mock::userFunction( 'wp_attachment_is_image' )
+		WP_Mock::userFunction( 'wp_attachment_is_image' )
 			->twice()
 			->with( 1 )
 			->andReturn( true );
 
-		\WP_Mock::userFunction( 'get_attached_file' )
+		WP_Mock::userFunction( 'get_attached_file' )
 			->with( 1 )
 			->andReturn( '/var/www/html/wp-content/uploads/image.jpeg' );
 
@@ -553,22 +584,22 @@ class MainTest extends TestCase {
 	}
 
 	public function test_show_webp_images_on_wp_media_modal_passes() {
-		$attachment     = Mockery::mock( \WP_Post::class )->makePartial();
+		$attachment     = Mockery::mock( WP_Post::class )->makePartial();
 		$attachment->ID = 1;
 
 		$main = Mockery::mock( Main::class )->makePartial();
 		$main->shouldAllowMockingProtectedMethods();
 
-		\WP_Mock::userFunction( 'get_post_meta' )
+		WP_Mock::userFunction( 'get_post_meta' )
 			->with( 1, 'icfw_img', true )
 			->andReturn( __DIR__ . '/sample.webp' );
 
-		\WP_Mock::userFunction( 'wp_attachment_is_image' )
+		WP_Mock::userFunction( 'wp_attachment_is_image' )
 			->twice()
 			->with( 1 )
 			->andReturn( true );
 
-		\WP_Mock::userFunction( 'get_attached_file' )
+		WP_Mock::userFunction( 'get_attached_file' )
 			->with( 1 )
 			->andReturn( __DIR__ . '/sample.webp' );
 

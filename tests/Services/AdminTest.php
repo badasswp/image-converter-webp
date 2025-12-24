@@ -2,8 +2,10 @@
 
 namespace ImageConverterWebP\Tests\Services;
 
+use WP_Mock;
 use Mockery;
-use WP_Mock\Tools\TestCase;
+use WP_Screen;
+use Badasswp\WPMockTC\WPMockTestCase;
 use ImageConverterWebP\Services\Admin;
 
 /**
@@ -20,23 +22,23 @@ use ImageConverterWebP\Services\Admin;
  * @covers \ImageConverterWebP\Admin\Options::get_form_submit
  * @covers \ImageConverterWebP\Admin\Options::init
  */
-class AdminTest extends TestCase {
+class AdminTest extends WPMockTestCase {
 	public Admin $admin;
 
 	public function setUp(): void {
-		\WP_Mock::setUp();
+		parent::setUp();
 
 		$this->admin = new Admin();
 	}
 
 	public function tearDown(): void {
-		\WP_Mock::tearDown();
+		parent::tearDown();
 	}
 
 	public function test_register() {
-		\WP_Mock::expectActionAdded( 'admin_init', [ $this->admin, 'register_options_init' ] );
-		\WP_Mock::expectActionAdded( 'admin_menu', [ $this->admin, 'register_options_menu' ] );
-		\WP_Mock::expectActionAdded( 'admin_enqueue_scripts', [ $this->admin, 'register_options_styles' ] );
+		WP_Mock::expectActionAdded( 'admin_init', [ $this->admin, 'register_options_init' ] );
+		WP_Mock::expectActionAdded( 'admin_menu', [ $this->admin, 'register_options_menu' ] );
+		WP_Mock::expectActionAdded( 'admin_enqueue_scripts', [ $this->admin, 'register_options_styles' ] );
 
 		$this->admin->register();
 
@@ -44,34 +46,7 @@ class AdminTest extends TestCase {
 	}
 
 	public function test_register_options_menu() {
-		\WP_Mock::userFunction(
-			'esc_html__',
-			[
-				'return' => function ( $text, $domain = 'image-converter-webp' ) {
-					return $text;
-				},
-			]
-		);
-
-		\WP_Mock::userFunction(
-			'esc_attr__',
-			[
-				'return' => function ( $text, $domain = 'image-converter-webp' ) {
-					return $text;
-				},
-			]
-		);
-
-		\WP_Mock::userFunction(
-			'esc_attr',
-			[
-				'return' => function ( $text ) {
-					return $text;
-				},
-			]
-		);
-
-		\WP_Mock::userFunction( 'add_submenu_page' )
+		WP_Mock::userFunction( 'add_submenu_page' )
 			->once()
 			->with(
 				'upload.php',
@@ -90,33 +65,6 @@ class AdminTest extends TestCase {
 	}
 
 	public function test_register_options_init_bails_out_if_any_nonce_settings_is_missing() {
-		\WP_Mock::userFunction(
-			'esc_html__',
-			[
-				'return' => function ( $text, $domain = 'image-converter-webp' ) {
-					return $text;
-				},
-			]
-		);
-
-		\WP_Mock::userFunction(
-			'esc_attr__',
-			[
-				'return' => function ( $text, $domain = 'image-converter-webp' ) {
-					return $text;
-				},
-			]
-		);
-
-		\WP_Mock::userFunction(
-			'esc_attr',
-			[
-				'return' => function ( $text ) {
-					return $text;
-				},
-			]
-		);
-
 		$_POST = [
 			'icfw_save_settings' => true,
 		];
@@ -133,44 +81,17 @@ class AdminTest extends TestCase {
 			'icfw_settings_nonce' => 'a8vbq3cg3sa',
 		];
 
-		\WP_Mock::userFunction(
-			'esc_html__',
-			[
-				'return' => function ( $text, $domain = 'image-converter-webp' ) {
-					return $text;
-				},
-			]
-		);
-
-		\WP_Mock::userFunction(
-			'esc_attr__',
-			[
-				'return' => function ( $text, $domain = 'image-converter-webp' ) {
-					return $text;
-				},
-			]
-		);
-
-		\WP_Mock::userFunction(
-			'esc_attr',
-			[
-				'return' => function ( $text ) {
-					return $text;
-				},
-			]
-		);
-
-		\WP_Mock::userFunction( 'wp_unslash' )
+		WP_Mock::userFunction( 'wp_unslash' )
 			->times( 1 )
 			->with( 'a8vbq3cg3sa' )
 			->andReturn( 'a8vbq3cg3sa' );
 
-		\WP_Mock::userFunction( 'sanitize_text_field' )
+		WP_Mock::userFunction( 'sanitize_text_field' )
 			->times( 1 )
 			->with( 'a8vbq3cg3sa' )
 			->andReturn( 'a8vbq3cg3sa' );
 
-		\WP_Mock::userFunction( 'wp_verify_nonce' )
+		WP_Mock::userFunction( 'wp_verify_nonce' )
 			->once()
 			->with( 'a8vbq3cg3sa', 'icfw_settings_action' )
 			->andReturn( false );
@@ -182,33 +103,6 @@ class AdminTest extends TestCase {
 	}
 
 	public function test_register_options_init_passes() {
-		\WP_Mock::userFunction(
-			'esc_html__',
-			[
-				'return' => function ( $text, $domain = 'image-converter-webp' ) {
-					return $text;
-				},
-			]
-		);
-
-		\WP_Mock::userFunction(
-			'esc_attr__',
-			[
-				'return' => function ( $text, $domain = 'image-converter-webp' ) {
-					return $text;
-				},
-			]
-		);
-
-		\WP_Mock::userFunction(
-			'esc_attr',
-			[
-				'return' => function ( $text ) {
-					return $text;
-				},
-			]
-		);
-
 		$_POST = [
 			'icfw_save_settings'  => true,
 			'icfw_settings_nonce' => 'a8vbq3cg3sa',
@@ -219,7 +113,7 @@ class AdminTest extends TestCase {
 			'logs'                => 1,
 		];
 
-		\WP_Mock::userFunction(
+		WP_Mock::userFunction(
 			'wp_unslash',
 			[
 				'return' => function ( $text ) {
@@ -228,17 +122,17 @@ class AdminTest extends TestCase {
 			]
 		);
 
-		\WP_Mock::userFunction( 'sanitize_text_field' )
+		WP_Mock::userFunction( 'sanitize_text_field' )
 			->times( 1 )
 			->with( 'a8vbq3cg3sa' )
 			->andReturn( 'a8vbq3cg3sa' );
 
-		\WP_Mock::userFunction( 'wp_verify_nonce' )
+		WP_Mock::userFunction( 'wp_verify_nonce' )
 			->times( 1 )
 			->with( 'a8vbq3cg3sa', 'icfw_settings_action' )
 			->andReturn( true );
 
-		\WP_Mock::userFunction( 'update_option' )
+		WP_Mock::userFunction( 'update_option' )
 			->once()
 			->with(
 				'icfw',
@@ -252,7 +146,7 @@ class AdminTest extends TestCase {
 			)
 			->andReturn( null );
 
-		\WP_Mock::userFunction(
+		WP_Mock::userFunction(
 			'sanitize_text_field',
 			[
 				'times'  => 5,
@@ -269,45 +163,18 @@ class AdminTest extends TestCase {
 	}
 
 	public function test_register_options_styles_passes() {
-		$screen = Mockery::mock( \WP_Screen::class )->makePartial();
+		$screen = Mockery::mock( WP_Screen::class )->makePartial();
 		$screen->shouldAllowMockingProtectedMethods();
 		$screen->id = 'media_page_image-converter-webp';
 
-		\WP_Mock::userFunction( 'get_current_screen' )
+		WP_Mock::userFunction( 'get_current_screen' )
 			->andReturn( $screen );
 
-		\WP_Mock::userFunction(
-			'esc_html__',
-			[
-				'return' => function ( $text, $domain = 'image-converter-webp' ) {
-					return $text;
-				},
-			]
-		);
-
-		\WP_Mock::userFunction(
-			'esc_attr__',
-			[
-				'return' => function ( $text, $domain = 'image-converter-webp' ) {
-					return $text;
-				},
-			]
-		);
-
-		\WP_Mock::userFunction(
-			'esc_attr',
-			[
-				'return' => function ( $text ) {
-					return $text;
-				},
-			]
-		);
-
-		\WP_Mock::userFunction( 'plugins_url' )
+		WP_Mock::userFunction( 'plugins_url' )
 			->with( 'image-converter-webp/styles.css' )
 			->andReturn( 'https://example.com/wp-content/plugins/image-converter-webp/styles.css' );
 
-		\WP_Mock::userFunction( 'wp_enqueue_style' )
+		WP_Mock::userFunction( 'wp_enqueue_style' )
 			->with(
 				'image-converter-webp',
 				'https://example.com/wp-content/plugins/image-converter-webp/styles.css',
@@ -323,7 +190,7 @@ class AdminTest extends TestCase {
 	}
 
 	public function test_register_options_styles_bails_out_if_screen_is_not_an_object() {
-		\WP_Mock::userFunction( 'get_current_screen' )
+		WP_Mock::userFunction( 'get_current_screen' )
 			->andReturn( '' );
 
 		$this->admin->register_options_styles();
@@ -332,11 +199,11 @@ class AdminTest extends TestCase {
 	}
 
 	public function test_register_options_styles_bails_out_if_screen_is_not_media_page() {
-		$screen = Mockery::mock( \WP_Screen::class )->makePartial();
+		$screen = Mockery::mock( WP_Screen::class )->makePartial();
 		$screen->shouldAllowMockingProtectedMethods();
 		$screen->id = 'toplevel_page_image-converter-webp';
 
-		\WP_Mock::userFunction( 'get_current_screen' )
+		WP_Mock::userFunction( 'get_current_screen' )
 			->andReturn( $screen );
 
 		$this->admin->register_options_styles();

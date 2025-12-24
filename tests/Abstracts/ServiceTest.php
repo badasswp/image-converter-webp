@@ -2,6 +2,7 @@
 
 namespace ImageConverterWebP\Tests\Abstracts;
 
+use WP_Mock;
 use Mockery;
 use WP_Mock\Tools\TestCase;
 use ImageConverterWebP\Abstracts\Service;
@@ -13,11 +14,11 @@ use ImageConverterWebP\Abstracts\Service;
  */
 class ServiceTest extends TestCase {
 	public function setUp(): void {
-		\WP_Mock::setUp();
+		WP_Mock::setUp();
 	}
 
 	public function tearDown(): void {
-		\WP_Mock::tearDown();
+		WP_Mock::tearDown();
 	}
 
 	public function test_get_instance_returns_same_instance() {
