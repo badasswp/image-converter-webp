@@ -46,15 +46,16 @@ class AdminTest extends WPMockTestCase {
 	}
 
 	public function test_register_options_menu() {
-		WP_Mock::userFunction( 'add_submenu_page' )
+		WP_Mock::userFunction( 'add_menu_page' )
 			->once()
 			->with(
-				'upload.php',
 				'Image Converter for WebP',
 				'Image Converter for WebP',
 				'manage_options',
 				'image-converter-webp',
-				[ $this->admin, 'register_options_page' ]
+				[ $this->admin, 'register_options_page' ],
+				'dashicons-format-image',
+				100
 			)
 			->andReturn( null );
 
@@ -198,10 +199,10 @@ class AdminTest extends WPMockTestCase {
 		$this->assertConditionsMet();
 	}
 
-	public function test_register_options_styles_bails_out_if_screen_is_not_media_page() {
+	public function test_register_options_styles_bails_out_if_screen_is_not_plugin_page() {
 		$screen = Mockery::mock( WP_Screen::class )->makePartial();
 		$screen->shouldAllowMockingProtectedMethods();
-		$screen->id = 'toplevel_page_image-converter-webp';
+		$screen->id = 'media_page_image-converter-webp';
 
 		WP_Mock::userFunction( 'get_current_screen' )
 			->andReturn( $screen );
