@@ -242,7 +242,7 @@ class Main extends Service implements Kernel {
 		$types = [ 'thumbnail', 'medium', 'large' ];
 
 		foreach ( $types as $type ) {
-			$url = $metadata['sizes'][ $type ]['url'] ?? '';
+			$url                               = $metadata['sizes'][ $type ]['url'] ?? '';
 			$metadata['sizes'][ $type ]['url'] = icfw_get_equivalent( $url );
 		}
 
