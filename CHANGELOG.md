@@ -1,5 +1,12 @@
 # Changelog
 
+## 1.4.0
+* Fix: Missing thumbnail images in Media Library.
+* Chore: Improve menu visibility on WP admin dashboard.
+* Tests: Refactor & Improve PHP unit tests.
+* Docs: Update README notes.
+* Update to WP 6.9.
+
 ## 1.3.2
 * Translate Options label correctly.
 * Tested up to WP 6.8.
