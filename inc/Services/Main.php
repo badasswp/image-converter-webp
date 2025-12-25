@@ -222,26 +222,11 @@ class Main extends Service implements Kernel {
 			return $metadata;
 		}
 
+		// Get WebP image for full variation.
 		$metadata['sizes']['full']['url'] = $webp_image;
 
-		return $this->get_webp_metadata( $metadata );
-	}
-
-	/**
-	 * Get WebP Metadata.
-	 *
-	 * Mutate Meta data array and get the WebP Images
-	 * for all Image meta data.
-	 *
-	 * @since 1.2.0
-	 *
-	 * @param mixed[] $metadata Meta data array.
-	 * @return mixed[]
-	 */
-	protected function get_webp_metadata( $metadata ): array {
-		$types = [ 'thumbnail', 'medium', 'large' ];
-
-		foreach ( $types as $type ) {
+		// Get WebP image for thumbnail variation only.
+		foreach ( [ 'thumbnail' ] as $type ) {
 			$url                               = $metadata['sizes'][ $type ]['url'] ?? '';
 			$metadata['sizes'][ $type ]['url'] = icfw_get_equivalent( $url );
 		}
