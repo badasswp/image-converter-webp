@@ -80,7 +80,7 @@ class Main extends Service implements Kernel {
 		foreach ( ( $metadata['sizes'] ?? [] ) as $img ) {
 			$this->source = [
 				'id'  => (int) $attachment_id,
-				'url' => trailingslashit( $img_url_prefix ) . $img['file'],
+				'url' => trailingslashit( $img_url_prefix ) . ( $img['file'] ?? '' ),
 			];
 
 			// Ensure this is allowed.
@@ -242,7 +242,8 @@ class Main extends Service implements Kernel {
 		$types = [ 'thumbnail', 'medium', 'large' ];
 
 		foreach ( $types as $type ) {
-			$metadata['sizes'][ $type ]['url'] = icfw_get_equivalent( $metadata['sizes'][ $type ]['url'] ?? '' );
+			$url                               = $metadata['sizes'][ $type ]['url'] ?? '';
+			$metadata['sizes'][ $type ]['url'] = icfw_get_equivalent( $url );
 		}
 
 		return $metadata;
