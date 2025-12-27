@@ -217,7 +217,7 @@ class PageLoad extends Service implements Kernel {
 	 * @since 1.4.0
 	 *
 	 * @param string $srcset Source set string containing image URLs with size variations.
-	 * @return array
+	 * @return string[]
 	 */
 	protected function get_all_srcset_images( $srcset ): array {
 		preg_match_all( '/https?:\/\/[^\s,]+\.(?:png|jpe?g|webp|gif|svg|avif)/i', $srcset, $matches );
