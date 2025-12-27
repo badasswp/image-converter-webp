@@ -203,7 +203,7 @@ class PageLoadTest extends WPMockTestCase {
 
 		$page_load->shouldReceive( 'get_webp' )
 			->andReturnUsing(
-				function( $arg1, $arg2 ) {
+				function ( $arg1, $arg2 ) {
 					$ext = pathinfo( $arg1, PATHINFO_EXTENSION );
 					return str_replace( $ext, 'webp', $arg1 );
 				}
