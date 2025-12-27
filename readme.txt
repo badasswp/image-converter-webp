@@ -2,8 +2,8 @@
 Contributors: badasswp
 Tags: webp, image, convert, jpeg, png.
 Requires at least: 4.0
-Tested up to: 6.8
-Stable tag: 1.3.2
+Tested up to: 6.9
+Stable tag: 1.4.0
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -15,8 +15,8 @@ Convert your WordPress JPG and PNG images to efficient WebP format, improving pe
 1. Go to <strong>Plugins</strong> > <strong>Add New</strong> on your WordPress admin dashboard.
 2. Search for <strong>Image Converter for WebP</strong> plugin from the official WordPress plugin repository.
 3. Click <strong>Install Now</strong> and then <strong>Activate</strong>.
-4. Locate the <strong>Media</strong> menu option on the left side of the WP admin dashboard.
-5. You should see the <strong>Image Converter for WebP</strong> menu listed as one of the options, click on it.
+4. Locate the <strong>Image Converter for WebP</strong> menu option on the WP admin dashboard.
+5. Click on it.
 6. You can now set your plugin options here. Ensure you enable the <strong>Convert Images on Upload</strong> option.
 7. Now upload any image into your WP website, it would convert it to a WebP format that will be served on your pages when users visit your website.
 8. You're all set!
@@ -69,6 +69,14 @@ Want to add your personal touch? All of our documentation can be found [here](ht
 3. Attachment Modal - See Converted WebP image path here.
 
 == Changelog ==
+
+= 1.4.0 =
+* Fix: Resolve issue for Image with no `srcset` attribute.
+* Fix: Missing thumbnail images in Media Library.
+* Chore: Improve menu visibility on WP admin dashboard.
+* Tests: Refactor & Improve PHP unit tests.
+* Docs: Update README notes.
+* Update to WP 6.9.
 
 = 1.3.2 =
 * Translate Options label correctly.

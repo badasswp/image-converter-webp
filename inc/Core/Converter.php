@@ -10,6 +10,7 @@
 
 namespace ImageConverterWebP\Core;
 
+use WP_Error;
 use Exception;
 use WebPConvert\WebPConvert;
 use ImageConverterWebP\Abstracts\Service;
@@ -89,7 +90,7 @@ class Converter {
 
 		// Bail out, if source is empty.
 		if ( ! file_exists( $this->abs_source ) ) {
-			return new \WP_Error(
+			return new WP_Error(
 				'webp-img-error',
 				sprintf(
 					/* translators: Absolute path to Source Image. */
@@ -102,7 +103,7 @@ class Converter {
 		// Bail out, if it is not an image.
 		$filetype = wp_check_filetype( $this->abs_source );
 		if ( false === strpos( (string) $filetype['type'], 'image/' ) ) {
-			return new \WP_Error(
+			return new WP_Error(
 				'webp-img-error',
 				sprintf(
 					/* translators: Absolute path to Source Image. */
@@ -121,13 +122,14 @@ class Converter {
 		try {
 			WebPConvert::convert( $this->abs_source, $this->abs_dest, $this->get_options() );
 		} catch ( Exception $e ) {
-			$error_msg = sprintf(
-				/* translators: Exception error msg. */
-				__( 'Fatal Error: %s', 'image-converter-webp' ),
-				$e->getMessage()
+			$webp = new WP_Error(
+				'webp-img-error',
+				sprintf(
+					/* translators: Exception error msg. */
+					__( 'Fatal Error: %s', 'image-converter-webp' ),
+					$e->getMessage()
+				)
 			);
-			error_log( $error_msg );
-			$webp = new \WP_Error( 'webp-img-error', $error_msg );
 		}
 
 		/**

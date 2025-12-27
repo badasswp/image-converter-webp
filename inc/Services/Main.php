@@ -80,7 +80,7 @@ class Main extends Service implements Kernel {
 		foreach ( ( $metadata['sizes'] ?? [] ) as $img ) {
 			$this->source = [
 				'id'  => (int) $attachment_id,
-				'url' => trailingslashit( $img_url_prefix ) . $img['file'],
+				'url' => trailingslashit( $img_url_prefix ) . ( $img['file'] ?? '' ),
 			];
 
 			// Ensure this is allowed.
@@ -142,30 +142,27 @@ class Main extends Service implements Kernel {
 		foreach ( $metadata['sizes'] ?? [] as $img ) {
 			// Get absolute path of metadata image.
 			$img_url_prefix = substr( $main_image, 0, (int) strrpos( $main_image, '/' ) );
-			$metadata_image = trailingslashit( $img_url_prefix ) . $img['file'];
+			$metadata_image = trailingslashit( $img_url_prefix ) . ( $img['file'] ?? '' );
 
-			// Ensure image exists before proceeding.
-			if ( $metadata_image ) {
-				// Get WebP version of metadata image.
-				$metadata_extension  = '.' . pathinfo( $metadata_image, PATHINFO_EXTENSION );
-				$webp_metadata_image = str_replace( $metadata_extension, '.webp', $metadata_image );
+			// Get WebP version of metadata image.
+			$metadata_extension  = '.' . pathinfo( $metadata_image, PATHINFO_EXTENSION );
+			$webp_metadata_image = str_replace( $metadata_extension, '.webp', $metadata_image );
 
-				if ( file_exists( $webp_metadata_image ) ) {
-					unlink( $webp_metadata_image );
+			if ( file_exists( $webp_metadata_image ) ) {
+				unlink( $webp_metadata_image );
 
-					/**
-					 * Fires after WebP Metadata Image has been deleted.
-					 *
-					 * @since 1.0.2
-					 * @since 1.1.1 Rename hook to use `icfw` prefix.
-					 *
-					 * @param string $webp_metadata_image Absolute path to WebP image.
-					 * @param int    $attachment_id       Image ID.
-					 *
-					 * @return void
-					 */
-					do_action( 'icfw_metadata_delete', $webp_metadata_image, $attachment_id );
-				}
+				/**
+				 * Fires after WebP Metadata Image has been deleted.
+				 *
+				 * @since 1.0.2
+				 * @since 1.1.1 Rename hook to use `icfw` prefix.
+				 *
+				 * @param string $webp_metadata_image Absolute path to WebP image.
+				 * @param int    $attachment_id       Image ID.
+				 *
+				 * @return void
+				 */
+				do_action( 'icfw_metadata_delete', $webp_metadata_image, $attachment_id );
 			}
 		}
 	}
@@ -225,27 +222,13 @@ class Main extends Service implements Kernel {
 			return $metadata;
 		}
 
+		// Get WebP image for full variation.
 		$metadata['sizes']['full']['url'] = $webp_image;
 
-		return $this->get_webp_metadata( $metadata );
-	}
-
-	/**
-	 * Get WebP Metadata.
-	 *
-	 * Mutate Meta data array and get the WebP Images
-	 * for all Image meta data.
-	 *
-	 * @since 1.2.0
-	 *
-	 * @param mixed[] $metadata Meta data array.
-	 * @return mixed[]
-	 */
-	protected function get_webp_metadata( $metadata ): array {
-		$types = [ 'thumbnail', 'medium', 'large' ];
-
-		foreach ( $types as $type ) {
-			$metadata['sizes'][ $type ]['url'] = icfw_get_equivalent( $metadata['sizes'][ $type ]['url'] ?? '' );
+		// Get WebP image for thumbnail variation only.
+		foreach ( [ 'thumbnail' ] as $type ) {
+			$url                               = $metadata['sizes'][ $type ]['url'] ?? '';
+			$metadata['sizes'][ $type ]['url'] = icfw_get_equivalent( $url );
 		}
 
 		return $metadata;

@@ -2,6 +2,7 @@
 
 namespace ImageConverterWebP\Tests\Helpers;
 
+use WP_Mock;
 use WP_Mock\Tools\TestCase;
 
 require_once __DIR__ . '/../../inc/Helpers/functions.php';
@@ -13,7 +14,7 @@ require_once __DIR__ . '/../../inc/Helpers/functions.php';
  */
 class FunctionsTest extends TestCase {
 	public function test_icfw_get_settings() {
-		\WP_Mock::userFunction( 'get_option' )
+		WP_Mock::userFunction( 'get_option' )
 			->once()
 			->with( 'icfw', [] )
 			->andReturn(
@@ -34,7 +35,7 @@ class FunctionsTest extends TestCase {
 	}
 
 	public function test_icfw_get_abs_image_returns_empty_string_if_not_image() {
-		\WP_Mock::userFunction( 'wp_attachment_is_image' )
+		WP_Mock::userFunction( 'wp_attachment_is_image' )
 			->once()
 			->with( 1 )
 			->andReturn( false );
@@ -45,11 +46,11 @@ class FunctionsTest extends TestCase {
 	}
 
 	public function test_icfw_get_abs_image_returns_empty_string_if_file_does_not_exist() {
-		\WP_Mock::userFunction( 'wp_attachment_is_image' )
+		WP_Mock::userFunction( 'wp_attachment_is_image' )
 			->with( 1 )
 			->andReturn( true );
 
-		\WP_Mock::userFunction( 'get_attached_file' )
+		WP_Mock::userFunction( 'get_attached_file' )
 			->with( 1 )
 			->andReturn( '/var/www/html/wp-content/uploads/sample.pdf' );
 
@@ -59,11 +60,11 @@ class FunctionsTest extends TestCase {
 	}
 
 	public function test_icfw_get_abs_image_passes() {
-		\WP_Mock::userFunction( 'wp_attachment_is_image' )
+		WP_Mock::userFunction( 'wp_attachment_is_image' )
 			->with( 1 )
 			->andReturn( true );
 
-		\WP_Mock::userFunction( 'get_attached_file' )
+		WP_Mock::userFunction( 'get_attached_file' )
 			->with( 1 )
 			->andReturn( __DIR__ . '/sample.jpg' );
 

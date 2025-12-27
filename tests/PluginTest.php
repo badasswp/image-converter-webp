@@ -2,6 +2,7 @@
 
 namespace ImageConverterWebP\Tests;
 
+use WP_Mock;
 use Mockery;
 use WP_Mock\Tools\TestCase;
 
@@ -35,13 +36,13 @@ class PluginTest extends TestCase {
 	public Plugin $instance;
 
 	public function setUp(): void {
-		\WP_Mock::setUp();
+		WP_Mock::setUp();
 
 		$this->instance = Plugin::get_instance();
 	}
 
 	public function tearDown(): void {
-		\WP_Mock::tearDown();
+		WP_Mock::tearDown();
 	}
 
 	public function test_run() {
@@ -54,7 +55,7 @@ class PluginTest extends TestCase {
 			'PageLoad' => PageLoad::get_instance(),
 		];
 
-		\WP_Mock::expectActionAdded(
+		WP_Mock::expectActionAdded(
 			'init',
 			[
 				Service::$services['ImageConverterWebP\Services\Boot'],
@@ -62,7 +63,7 @@ class PluginTest extends TestCase {
 			]
 		);
 
-		\WP_Mock::expectActionAdded(
+		WP_Mock::expectActionAdded(
 			'admin_init',
 			[
 				Service::$services['ImageConverterWebP\Services\Admin'],
@@ -70,7 +71,7 @@ class PluginTest extends TestCase {
 			]
 		);
 
-		\WP_Mock::expectActionAdded(
+		WP_Mock::expectActionAdded(
 			'admin_menu',
 			[
 				Service::$services['ImageConverterWebP\Services\Admin'],
@@ -78,7 +79,7 @@ class PluginTest extends TestCase {
 			]
 		);
 
-		\WP_Mock::expectActionAdded(
+		WP_Mock::expectActionAdded(
 			'admin_enqueue_scripts',
 			[
 				Service::$services['ImageConverterWebP\Services\Admin'],
@@ -86,7 +87,7 @@ class PluginTest extends TestCase {
 			]
 		);
 
-		\WP_Mock::expectActionAdded(
+		WP_Mock::expectActionAdded(
 			'icfw_convert',
 			[
 				Service::$services['ImageConverterWebP\Services\MetaData'],
@@ -96,7 +97,7 @@ class PluginTest extends TestCase {
 			2
 		);
 
-		\WP_Mock::expectActionAdded(
+		WP_Mock::expectActionAdded(
 			'icfw_convert',
 			[
 				Service::$services['ImageConverterWebP\Services\MetaData'],
@@ -106,7 +107,7 @@ class PluginTest extends TestCase {
 			2
 		);
 
-		\WP_Mock::expectActionAdded(
+		WP_Mock::expectActionAdded(
 			'icfw_convert',
 			[
 				Service::$services['ImageConverterWebP\Services\Logger'],
@@ -116,7 +117,7 @@ class PluginTest extends TestCase {
 			2
 		);
 
-		\WP_Mock::expectActionAdded(
+		WP_Mock::expectActionAdded(
 			'add_attachment',
 			[
 				Service::$services['ImageConverterWebP\Services\Main'],
@@ -126,7 +127,7 @@ class PluginTest extends TestCase {
 			1
 		);
 
-		\WP_Mock::expectFilterAdded(
+		WP_Mock::expectFilterAdded(
 			'wp_generate_attachment_metadata',
 			[
 				Service::$services['ImageConverterWebP\Services\Main'],
@@ -136,7 +137,7 @@ class PluginTest extends TestCase {
 			3
 		);
 
-		\WP_Mock::expectActionAdded(
+		WP_Mock::expectActionAdded(
 			'delete_attachment',
 			[
 				Service::$services['ImageConverterWebP\Services\Main'],
@@ -146,7 +147,7 @@ class PluginTest extends TestCase {
 			1
 		);
 
-		\WP_Mock::expectFilterAdded(
+		WP_Mock::expectFilterAdded(
 			'attachment_fields_to_edit',
 			[
 				Service::$services['ImageConverterWebP\Services\Main'],
@@ -156,7 +157,7 @@ class PluginTest extends TestCase {
 			2
 		);
 
-		\WP_Mock::expectFilterAdded(
+		WP_Mock::expectFilterAdded(
 			'wp_prepare_attachment_for_js',
 			[
 				Service::$services['ImageConverterWebP\Services\Main'],
@@ -166,7 +167,7 @@ class PluginTest extends TestCase {
 			3
 		);
 
-		\WP_Mock::expectFilterAdded(
+		WP_Mock::expectFilterAdded(
 			'render_block',
 			[
 				Service::$services['ImageConverterWebP\Services\PageLoad'],
@@ -176,7 +177,7 @@ class PluginTest extends TestCase {
 			2
 		);
 
-		\WP_Mock::expectFilterAdded(
+		WP_Mock::expectFilterAdded(
 			'wp_get_attachment_image',
 			[
 				Service::$services['ImageConverterWebP\Services\PageLoad'],
@@ -186,7 +187,7 @@ class PluginTest extends TestCase {
 			5
 		);
 
-		\WP_Mock::expectFilterAdded(
+		WP_Mock::expectFilterAdded(
 			'post_thumbnail_html',
 			[
 				Service::$services['ImageConverterWebP\Services\PageLoad'],

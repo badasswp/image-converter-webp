@@ -2,7 +2,9 @@
 
 namespace ImageConverterWebP\Tests\Core;
 
+use WP_Mock;
 use Mockery;
+use WP_Error;
 use WP_Mock\Tools\TestCase;
 use ImageConverterWebP\Core\Converter;
 use ImageConverterWebP\Services\Main;
@@ -19,20 +21,20 @@ class ConverterTest extends TestCase {
 	public $converter;
 
 	public function setUp(): void {
-		\WP_Mock::setUp();
+		WP_Mock::setUp();
 
 		$this->converter = new Converter( new Main() );
 	}
 
 	public function tearDown(): void {
-		\WP_Mock::tearDown();
+		WP_Mock::tearDown();
 	}
 
 	public function test_get_options_returns_default_settings() {
 		$converter = Mockery::mock( Converter::class )->makePartial();
 		$converter->shouldAllowMockingProtectedMethods();
 
-		\WP_Mock::expectFilter(
+		WP_Mock::expectFilter(
 			'icfw_options',
 			[
 				'quality'     => 20,
@@ -41,7 +43,7 @@ class ConverterTest extends TestCase {
 			]
 		);
 
-		\WP_Mock::userFunction( 'wp_parse_args' )
+		WP_Mock::userFunction( 'wp_parse_args' )
 			->once()
 			->with(
 				[ 'quality' => 0 ],
@@ -59,7 +61,7 @@ class ConverterTest extends TestCase {
 				]
 			);
 
-		\WP_Mock::userFunction( 'get_option' )
+		WP_Mock::userFunction( 'get_option' )
 			->once()
 			->with( 'icfw', [] )
 			->andReturn( [ 'quality' => 0 ] );
@@ -81,7 +83,7 @@ class ConverterTest extends TestCase {
 		$converter = Mockery::mock( Converter::class )->makePartial();
 		$converter->shouldAllowMockingProtectedMethods();
 
-		\WP_Mock::onFilter( 'icfw_options' )
+		WP_Mock::onFilter( 'icfw_options' )
 			->with(
 				[
 					'quality'     => 75,
@@ -96,7 +98,7 @@ class ConverterTest extends TestCase {
 				]
 			);
 
-		\WP_Mock::userFunction( 'wp_parse_args' )
+		WP_Mock::userFunction( 'wp_parse_args' )
 			->once()
 			->with(
 				[
@@ -117,7 +119,7 @@ class ConverterTest extends TestCase {
 				]
 			);
 
-		\WP_Mock::userFunction( 'get_option' )
+		WP_Mock::userFunction( 'get_option' )
 			->once()
 			->with( 'icfw', [] )
 			->andReturn(
@@ -143,7 +145,7 @@ class ConverterTest extends TestCase {
 		$converter = Mockery::mock( Converter::class )->makePartial();
 		$converter->shouldAllowMockingProtectedMethods();
 
-		\WP_Mock::expectFilter(
+		WP_Mock::expectFilter(
 			'icfw_options',
 			[
 				'quality'     => 66,
@@ -152,7 +154,7 @@ class ConverterTest extends TestCase {
 			]
 		);
 
-		\WP_Mock::userFunction( 'wp_parse_args' )
+		WP_Mock::userFunction( 'wp_parse_args' )
 			->once()
 			->with(
 				[
@@ -173,7 +175,7 @@ class ConverterTest extends TestCase {
 				]
 			);
 
-		\WP_Mock::userFunction( 'get_option' )
+		WP_Mock::userFunction( 'get_option' )
 			->once()
 			->with( 'icfw', [] )
 			->andReturn(
@@ -209,7 +211,7 @@ class ConverterTest extends TestCase {
 			'url' => 'https://example.com/wp-content/uploads/2024/01/sample.jpeg',
 		];
 
-		\WP_Mock::userFunction( 'wp_upload_dir' )
+		WP_Mock::userFunction( 'wp_upload_dir' )
 			->once()
 			->andReturn(
 				[
@@ -268,16 +270,16 @@ class ConverterTest extends TestCase {
 		$converter->shouldReceive( 'set_image_destination' )
 			->once()->with();
 
-		\WP_Mock::userFunction( '__' )
+		WP_Mock::userFunction( '__' )
 			->once()
 			->with( 'Error: %s does not exist.', 'image-converter-webp' )
 			->andReturn( 'Error: does not exist.' );
 
-		$mock = Mockery::mock( \WP_Error::class );
+		$mock = Mockery::mock( WP_Error::class );
 
 		$webp = $converter->convert();
 
-		$this->assertInstanceOf( '\WP_Error', $webp );
+		$this->assertInstanceOf( 'WP_Error', $webp );
 		$this->assertConditionsMet();
 	}
 
@@ -298,7 +300,7 @@ class ConverterTest extends TestCase {
 		$converter->shouldReceive( 'set_image_destination' )
 			->once()->with();
 
-		\WP_Mock::userFunction( 'wp_check_filetype' )
+		WP_Mock::userFunction( 'wp_check_filetype' )
 			->once()
 			->with( __DIR__ . '/sample.txt' )
 			->andReturn(
@@ -307,16 +309,16 @@ class ConverterTest extends TestCase {
 				]
 			);
 
-		\WP_Mock::userFunction( '__' )
+		WP_Mock::userFunction( '__' )
 			->once()
 			->with( 'Error: %s is not an image.', 'image-converter-webp' )
 			->andReturn( 'Error: is not an image.' );
 
-		$mock = Mockery::mock( \WP_Error::class );
+		$mock = Mockery::mock( WP_Error::class );
 
 		$webp = $converter->convert();
 
-		$this->assertInstanceOf( '\WP_Error', $webp );
+		$this->assertInstanceOf( 'WP_Error', $webp );
 		$this->assertConditionsMet();
 
 		// Destroy Mock Files.
@@ -341,7 +343,7 @@ class ConverterTest extends TestCase {
 		$converter->shouldReceive( 'set_image_destination' )
 			->once()->with();
 
-		\WP_Mock::userFunction( 'wp_check_filetype' )
+		WP_Mock::userFunction( 'wp_check_filetype' )
 			->once()
 			->with( __DIR__ . '/sample.jpeg' )
 			->andReturn(
@@ -386,7 +388,7 @@ class ConverterTest extends TestCase {
 		$converter->shouldReceive( 'set_image_destination' )
 			->once()->with();
 
-		\WP_Mock::userFunction( 'wp_check_filetype' )
+		WP_Mock::userFunction( 'wp_check_filetype' )
 			->once()
 			->with( __DIR__ . '/sample.jpeg' )
 			->andReturn(
@@ -406,7 +408,7 @@ class ConverterTest extends TestCase {
 				]
 			);
 
-		\WP_Mock::expectAction(
+		WP_Mock::expectAction(
 			'icfw_convert',
 			'https://example.com/wp-content/uploads/2024/01/sample.webp',
 			1
@@ -422,72 +424,6 @@ class ConverterTest extends TestCase {
 		$this->destroy_mock_image( $converter->abs_source );
 		$this->destroy_mock_image( $converter->abs_dest );
 	}
-
-	/*public function test_convert_fails_on_empty_options_and_returns_WP_error() {
-		$service = Mockery::mock( Main::class )->makePartial();
-		$service->shouldAllowMockingProtectedMethods();
-		$service->source = [
-			'id'  => 1,
-			'url' => 'https://example.com/wp-content/uploads/2024/01/sample.jpeg',
-		];
-
-		$converter = Mockery::mock( Converter::class )->makePartial();
-		$converter->shouldAllowMockingProtectedMethods();
-		$converter->service = $service;
-
-		$converter->abs_source = __DIR__ . '/sample.jpeg';
-		$converter->abs_dest   = __DIR__ . '/sample.webp';
-		$this->create_mock_image( $converter->abs_source );
-
-		$converter->shouldReceive( 'set_image_source' )
-			->once()->with();
-
-		$converter->shouldReceive( 'set_image_destination' )
-			->once()->with();
-
-		$converter->shouldReceive( 'get_options' )
-			->once()->with()
-			->andReturn(
-				[
-					'converter' => 'icfw',
-				]
-			);
-
-		\WP_Mock::userFunction( 'wp_check_filetype' )
-			->once()
-			->with( __DIR__ . '/sample.jpeg' )
-			->andReturn(
-				[
-					'type' => 'image/jpeg',
-				]
-			);
-
-		\WP_Mock::userFunction( '__' )
-			->once()
-			->with( 'Fatal Error: %s', 'image-converter-webp' )
-			->andReturn( 'Fatal Error: %s' );
-
-		$e = Mockery::mock( \Exception::class );
-		$e->shouldReceive( 'getMessage' )
-			->once()
-			->with()
-			->andReturn( 'Missing Options!' );
-
-		$webp = Mockery::mock( \WP_Error::class );
-		$webp->shouldReceive( '__construct' )
-			->once()
-			->with( 'webp-img-error', 'Fatal Error: Missing Options!' );
-
-		\WP_Mock::expectAction( 'icfw_convert', $webp, 1 );
-
-		$webp = $converter->convert();
-
-		$this->assertInstanceOf( '\WP_Error', $webp );
-		$this->assertConditionsMet();
-
-		// Destroy Mock Images.
-		$this->destroy_mock_image( $converter->abs_source );
-	}*/
 
 	public function create_mock_image( $image_file_name ) {
 		// Create a blank image.

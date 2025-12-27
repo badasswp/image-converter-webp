@@ -41,13 +41,14 @@ class Admin extends Service implements Kernel {
 	 * @return void
 	 */
 	public function register_options_menu(): void {
-		add_submenu_page(
-			'upload.php',
+		add_menu_page(
 			Options::get_page_title(),
 			Options::get_page_title(),
 			'manage_options',
 			Options::get_page_slug(),
 			[ $this, 'register_options_page' ],
+			'dashicons-format-image',
+			100
 		);
 	}
 
@@ -136,7 +137,7 @@ class Admin extends Service implements Kernel {
 		$screen = get_current_screen();
 
 		// Bail out, if not plugin Admin page.
-		if ( ! is_object( $screen ) || 'media_page_image-converter-webp' !== $screen->id ) {
+		if ( ! is_object( $screen ) || 'toplevel_page_image-converter-webp' !== $screen->id ) {
 			return;
 		}
 
