@@ -188,15 +188,15 @@ class PageLoad extends Service implements Kernel {
 	 * @since 1.0.0
 	 * @since 1.1.0 Moved to PageLoad class.
 	 *
-	 * @param string $img_url  Relative path to Image - 'https://example.com/wp-content/uploads/2024/01/sample.png'.
+	 * @param string $img_url  Relative path - 'https://example.com/wp-content/uploads/2024/01/sample.png'.
 	 * @param int    $img_id   Image Attachment ID.
 	 *
 	 * @return string
 	 */
-	protected function get_webp( $img_url, $id ): string {
+	protected function get_webp( $img_url, $img_id ): string {
 		// Set Source.
 		$this->source = [
-			'id'  => $id,
+			'id'  => $img_id,
 			'url' => $img_url,
 		];
 
