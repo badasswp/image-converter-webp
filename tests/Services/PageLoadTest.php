@@ -18,6 +18,7 @@ use ImageConverterWebP\Services\PageLoad;
  * @covers \ImageConverterWebP\Services\PageLoad::register_post_thumbnail_html
  * @covers \ImageConverterWebP\Services\PageLoad::get_webp_image_html
  * @covers \ImageConverterWebP\Services\PageLoad::get_webp
+ * @covers \ImageConverterWebP\Services\PageLoad::get_all_srcset_images
  * @covers icfw_get_settings
  */
 class PageLoadTest extends WPMockTestCase {
