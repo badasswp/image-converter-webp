@@ -194,6 +194,11 @@ class PageLoad extends Service implements Kernel {
 	 * @return string
 	 */
 	protected function get_webp( $img_url, $img_id ): string {
+		// Get image ID.
+		if ( ! $img_id ) {
+			$img_id = attachment_url_to_postid( $img_url );
+		}
+
 		// Set Source.
 		$this->source = [
 			'id'  => $img_id,
