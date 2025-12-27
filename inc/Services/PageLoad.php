@@ -201,7 +201,14 @@ class PageLoad extends Service implements Kernel {
 		];
 
 		// Convert image to WebP.
-		return $this->converter->convert();
+		$webp = $this->converter->convert();
+
+		// Fail gracefully, return default image.
+		if ( is_wp_error( $webp ) ) {
+			return $img_url;
+		}
+
+		return $webp;
 	}
 
 	/**
