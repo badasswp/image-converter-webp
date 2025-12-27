@@ -149,30 +149,33 @@ class PageLoad extends Service implements Kernel {
 			return $html;
 		}
 
-		// Get DOM object.
+		// Ensure this is allowed.
+		if ( ! icfw_get_settings( 'page_load' ) ) {
+			return $html;
+		}
+
+		$html = wp_filter_content_tags( $html );
+
 		$dom = new DOMDocument();
 		$dom->loadHTML( $html, LIBXML_NOERROR );
 
 		// Generate WebP images.
 		foreach ( $dom->getElementsByTagName( 'img' ) as $image ) {
 			// For the src image.
-			$src = $image->getAttribute( 'src' );
-
-			if ( empty( $src ) ) {
-				return $html;
-			}
-
-			// For the srcset images.
+			$src    = $image->getAttribute( 'src' );
 			$srcset = $image->getAttribute( 'srcset' );
 
-			if ( empty( $srcset ) ) {
-				return $html;
+			// Generate the main WebP image for non-webp images.
+			if ( $src && ( pathinfo( $src, PATHINFO_EXTENSION ) !== 'webp' ) ) {
+				$html = str_replace( $src, $this->get_webp( $src, $id ), $html );
 			}
 
-			preg_match_all( '/http\S+\b/', $srcset, $image_urls );
+			// Generate WebP images for srcset variations.
+			if ( $srcset ) {
+				$srcset_images = $this->get_all_srcset_images( $srcset );
+				$srcset_webps  = array_map( fn( $srcset ) => $this->get_webp( $srcset, $id ), $srcset_images );
 
-			foreach ( $image_urls[0] as $img_url ) {
-				$html = $this->_get_webp_html( $img_url, $html, $id );
+				$html = str_replace( $srcset_images, $srcset_webps, $html );
 			}
 		}
 
@@ -186,31 +189,32 @@ class PageLoad extends Service implements Kernel {
 	 * @since 1.1.0 Moved to PageLoad class.
 	 *
 	 * @param string $img_url  Relative path to Image - 'https://example.com/wp-content/uploads/2024/01/sample.png'.
-	 * @param string $img_html The Image HTML - '<img src="sample.png"/>'.
 	 * @param int    $img_id   Image Attachment ID.
 	 *
 	 * @return string
 	 */
-	protected function _get_webp_html( $img_url, $img_html, $img_id ): string {
+	protected function get_webp( $img_url, $id ): string {
 		// Set Source.
 		$this->source = [
-			'id'  => $img_id,
+			'id'  => $id,
 			'url' => $img_url,
 		];
 
-		// Ensure this is allowed.
-		if ( ! icfw_get_settings( 'page_load' ) ) {
-			return $img_html;
-		}
-
 		// Convert image to WebP.
-		$webp = $this->converter->convert();
+		return $this->converter->convert();
+	}
 
-		// Replace image with WebP.
-		if ( ! is_wp_error( $webp ) && file_exists( $this->converter->abs_dest ) ) {
-			return str_replace( $this->source['url'], $webp, $img_html );
-		}
+	/**
+	 * Get all srcset images.
+	 *
+	 * @since 1.4.0
+	 *
+	 * @param string $srcset Source set string containing image URLs with size variations.
+	 * @return array
+	 */
+	public function get_all_srcset_images( $srcset ): array {
+		preg_match_all( '/https?:\/\/[^\s,]+\.(?:png|jpe?g|webp|gif|svg|avif)/i', $srcset, $matches );
 
-		return $img_html;
+		return $matches[0];
 	}
 }
