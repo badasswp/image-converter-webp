@@ -1,6 +1,7 @@
 # Changelog
 
 ## 1.4.0
+* Fix: Resolve issue for Image with no `srcset` attribute.
 * Fix: Missing thumbnail images in Media Library.
 * Chore: Improve menu visibility on WP admin dashboard.
 * Tests: Refactor & Improve PHP unit tests.
