@@ -1,7 +1,7 @@
 {
   "name": "badasswp/image-converter-webp",
   "description": "Convert your WordPress JPG/PNG images to WebP formats during runtime.",
-  "type": "package",
+  "type": "wordpress-plugin",
   "license": "GPL-2.0-or-later",
   "autoload": {
     "psr-4": {
