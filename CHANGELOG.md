@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.4.1
+* Specify `wordpress-plugin` as Composer package type.
+* Tested up to WP 6.9.
+
 ## 1.4.0
 * Fix: Resolve issue for Image with no `srcset` attribute.
 * Fix: Missing thumbnail images in Media Library.
