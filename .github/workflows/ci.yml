@@ -1,7 +1,9 @@
-name: WebPImageConverter CI
+name: ImageConverterForWebP CI
 
 on:
   push:
+    branches-ignore:
+      - release-*
 
 permissions:
   contents: write
@@ -17,7 +19,7 @@ jobs:
       - name: Set up PHP v7.4
         uses: shivammathur/setup-php@v2
         with:
-          php-version: '7.4'
+          php-version: "7.4"
           extensions: gd, imagick, mbstring, zip, intl
 
       - name: Install Composer
@@ -44,7 +46,7 @@ jobs:
       - name: Set up PHP v8.0
         uses: shivammathur/setup-php@v2
         with:
-          php-version: '8.0'
+          php-version: "8.0"
           extensions: gd, imagick, mbstring, zip, intl
 
       - name: Install Composer
@@ -71,7 +73,7 @@ jobs:
       - name: Set up PHP v8.2
         uses: shivammathur/setup-php@v2
         with:
-          php-version: '8.2'
+          php-version: "8.2"
           extensions: gd, imagick, mbstring, zip, intl
 
       - name: Install Composer
