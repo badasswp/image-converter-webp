@@ -1,5 +1,8 @@
 # Changelog
 
+## 1.5.0
+* Feat: Added translation languages for `Japanese`,`Indonesian`,`Danish`, `Turkish`, `Polish`, `Dutch`, `Brazil` and `Portuguese`.
+
 ## 1.4.1
 * Specify `wordpress-plugin` as Composer package type.
 * Tested up to WP 6.9.
