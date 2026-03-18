@@ -194,6 +194,18 @@ class Converter {
 		 * @return string
 		 */
 		$this->abs_dest = apply_filters( 'icfw_image_abs_destination', $image_abs_dest, $this->abs_source, $image_extension );
+
+		/**
+		 * Filter Image relative destination.
+		 *
+		 * This filter provides a way for users to rename
+		 * the image to a preferred file naming convention
+		 * of their choice.
+		 *
+		 * @since 1.5.0
+		 *
+		 * @return string
+		 */
 		$this->rel_dest = apply_filters( 'icfw_image_rel_destination', $image_rel_dest, $this->service->source['url'], $image_extension );
 	}
 
