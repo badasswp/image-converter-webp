@@ -179,8 +179,11 @@ class Converter {
 	protected function set_image_destination(): void {
 		$image_extension = '.' . pathinfo( $this->service->source['url'], PATHINFO_EXTENSION );
 
+		// Get relative source url.
+		$rel_source_url = $this->service->source['url'] ?? '';
+
 		$image_abs_dest = str_replace( $image_extension, '.webp', $this->abs_source );
-		$image_rel_dest = str_replace( $image_extension, '.webp', $this->service->source['url'] );
+		$image_rel_dest = str_replace( $image_extension, '.webp', $rel_source_url );
 
 		/**
 		 * Filter Image absolute destination.
@@ -206,7 +209,7 @@ class Converter {
 		 *
 		 * @return string
 		 */
-		$this->rel_dest = apply_filters( 'icfw_image_rel_destination', $image_rel_dest, $this->service->source['url'], $image_extension );
+		$this->rel_dest = apply_filters( 'icfw_image_rel_destination', $image_rel_dest, $rel_source_url, $image_extension );
 	}
 
 
