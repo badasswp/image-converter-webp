@@ -189,8 +189,8 @@ class Converter {
 		 * Filter Image absolute destination.
 		 *
 		 * This filter provides a way for users to rename
-		 * the image to a preferred file naming convention
-		 * of their choice.
+		 * the absolute source image of the webp to a preferred
+		 * file naming convention of their choice.
 		 *
 		 * @since 1.5.0
 		 *
@@ -202,8 +202,8 @@ class Converter {
 		 * Filter Image relative destination.
 		 *
 		 * This filter provides a way for users to rename
-		 * the image to a preferred file naming convention
-		 * of their choice.
+		 * the destination image of the webp to a preferred
+		 * file naming convention of their choice.
 		 *
 		 * @since 1.5.0
 		 *
