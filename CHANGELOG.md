@@ -1,7 +1,7 @@
 # Changelog
 
 ## 1.5.0
-* Feat: Added translation languages for `Japanese`,`Indonesian`,`Danish`, `Turkish`, `Polish`, `Dutch`, `Brazil` and `Portuguese`.
+* Feat: Add translation languages for `Japanese`,`Indonesian`,`Danish`, `Turkish`, `Polish`, `Dutch`, `Brazil` and `Portuguese`.
 * Feat: Add new custom filter `icfw_image_abs_destination` and `icfw_image_rel_destination`.
 
 ## 1.4.1
