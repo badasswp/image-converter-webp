@@ -20,6 +20,27 @@ You may not realize it, but __imagery is a large part of it__. This plugin helps
 
 ### Hooks
 
+### `icfw_image_abs_destination` && `icfw_image_rel_destination`
+
+This custom hook (filter) provides the ability for users to rename the image to a preferred file naming convention of their choice. For e.g you could append the timestamp to the name of the file like so:
+
+```php
+add_filter( 'icfw_image_abs_destination', 'custom_abs_destination', 10, 3 );
+add_filter( 'icfw_image_rel_destination', 'custom_rel_destination', 10, 3 );
+
+public function custom_abs_destination( $abs_dest, $abs_source, $ext ): void {
+  $icfw_timestamp = time();
+  return str_replace( '.webp', sprintf( '-%d.webp', $icfw_timestamp ), $abs_dest );
+}
+
+public function custom_rel_destination( $rel_dest, $rel_source, $ext ): void {
+  $icfw_timestamp = time();
+  return str_replace( '.webp', sprintf( '-%d.webp', $icfw_timestamp ), $rel_dest );
+}
+```
+
+<br/>
+
 #### `icfw_options`
 
 This custom hook (filter) provides the ability to add custom options for your image conversions to WebP. For e.g. to perform a 50% quality, image conversion using the Imagick extension, you could do:

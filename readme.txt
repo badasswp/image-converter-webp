@@ -1,9 +1,9 @@
 === Image Converter for WebP ===
-Contributors: badasswp
+Contributors: badasswp, activist507
 Tags: webp, image, convert, jpeg, png.
 Requires at least: 4.0
 Tested up to: 6.9
-Stable tag: 1.4.1
+Stable tag: 1.5.0
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -69,6 +69,12 @@ Want to add your personal touch? All of our documentation can be found [here](ht
 3. Attachment Modal - See Converted WebP image path here.
 
 == Changelog ==
+
+= 1.5.0 =
+* Feat: Add translation languages for `Japanese`,`Indonesian`,`Danish`, `Turkish`, `Polish`, `Dutch`, `Brazil` and `Portuguese`.
+* Feat: Add new custom filter `icfw_image_abs_destination` and `icfw_image_rel_destination`.
+* Docs: Update README notes.
+* Tested up to WP 6.9.
 
 = 1.4.1 =
 * Specify `wordpress-plugin` as Composer package type.

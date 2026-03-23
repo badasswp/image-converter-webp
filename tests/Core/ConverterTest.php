@@ -237,6 +237,20 @@ class ConverterTest extends TestCase {
 		$converter->shouldAllowMockingProtectedMethods();
 		$converter->service = $service;
 
+		WP_Mock::expectFilter(
+			'icfw_image_abs_destination',
+			'/var/www/html/wp-content/uploads/2024/01/sample.webp',
+			'/var/www/html/wp-content/uploads/2024/01/sample.jpeg',
+			'.jpeg'
+		);
+
+		WP_Mock::expectFilter(
+			'icfw_image_rel_destination',
+			'https://example.com/wp-content/uploads/2024/01/sample.webp',
+			'https://example.com/wp-content/uploads/2024/01/sample.jpeg',
+			'.jpeg'
+		);
+
 		$converter->service->source = [
 			'id'  => 1,
 			'url' => 'https://example.com/wp-content/uploads/2024/01/sample.jpeg',
