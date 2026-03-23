@@ -1,5 +1,5 @@
 === Image Converter for WebP ===
-Contributors: badasswp
+Contributors: badasswp, activist507
 Tags: webp, image, convert, jpeg, png.
 Requires at least: 4.0
 Tested up to: 6.9
