@@ -73,6 +73,8 @@ Want to add your personal touch? All of our documentation can be found [here](ht
 = 1.5.0 =
 * Feat: Add translation languages for `Japanese`,`Indonesian`,`Danish`, `Turkish`, `Polish`, `Dutch`, `Brazil` and `Portuguese`.
 * Feat: Add new custom filter `icfw_image_abs_destination` and `icfw_image_rel_destination`.
+* Docs: Update README notes.
+* Tested up to WP 6.9.
 
 = 1.4.1 =
 * Specify `wordpress-plugin` as Composer package type.
