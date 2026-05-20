@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.5.2
+* Tested up to WP 7.0.
+
+## 1.5.1
+* Chore: Update CI/CD pipeline.
+
 ## 1.5.0
 * Feat: Add translation languages for `Japanese`,`Indonesian`,`Danish`, `Turkish`, `Polish`, `Dutch`, `Brazil` and `Portuguese`.
 * Feat: Add new custom filter `icfw_image_abs_destination` and `icfw_image_rel_destination`.
