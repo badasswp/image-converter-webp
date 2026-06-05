@@ -30,6 +30,7 @@ use ImageConverterWebP\Services\PageLoad;
  * @covers \ImageConverterWebP\Services\Main::register
  * @covers \ImageConverterWebP\Services\MetaData::register
  * @covers \ImageConverterWebP\Services\PageLoad::register
+ * @covers \ImageConverterWebP\Services\Admin::__construct
  */
 class PluginTest extends TestCase {
 	public array $services;
@@ -84,6 +85,16 @@ class PluginTest extends TestCase {
 			[
 				Service::$services['ImageConverterWebP\Services\Admin'],
 				'register_options_styles',
+			]
+		);
+
+		$admin = Service::$services['ImageConverterWebP\Services\Admin'];
+
+		WP_Mock::expectActionAdded(
+			'admin_init',
+			[
+				$admin->pluginate,
+				'init',
 			]
 		);
 
