@@ -19,6 +19,10 @@ use Pluginate\Admin as Pluginate;
 
 class Admin extends Service implements Kernel {
 	/**
+	 * Pluginate instance.
+	 *
+	 * @since 1.6.0
+	 *
 	 * @var Pluginate
 	 */
 	public Pluginate $pluginate;
