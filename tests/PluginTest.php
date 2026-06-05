@@ -87,6 +87,16 @@ class PluginTest extends TestCase {
 			]
 		);
 
+		$admin = Service::$services['ImageConverterWebP\Services\Admin'];
+
+		WP_Mock::expectActionAdded(
+			'admin_init',
+			[
+				$admin->pluginate,
+				'init',
+			]
+		);
+
 		WP_Mock::expectActionAdded(
 			'icfw_convert',
 			[
