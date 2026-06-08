@@ -70,6 +70,9 @@ Want to add your personal touch? All of our documentation can be found [here](ht
 
 == Changelog ==
 
+= 1.6.0
+* Feat: Add `More Plugins` options page.
+
 = 1.5.2 =
 * Tested up to WP 7.0.
 
