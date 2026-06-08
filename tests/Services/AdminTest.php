@@ -64,10 +64,10 @@ class AdminTest extends WPMockTestCase {
 			->once()
 			->with(
 				'image-converter-webp',
-				__( 'More Plugins', 'image-converter-webp' ),
-				__( 'More Plugins', 'image-converter-webp' ),
+				'More Plugins',
+				'More Plugins',
 				'manage_options',
-				sprintf( '%s-more-plugins', 'image-converter-webp' ),
+				'image-converter-webp-more-plugins',
 				[ $this->admin, 'register_more_plugins' ]
 			)
 			->andReturn( null );
