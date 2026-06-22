@@ -3,7 +3,7 @@ Contributors: badasswp, activist507
 Tags: webp, image, convert, jpeg, png.
 Requires at least: 4.0
 Tested up to: 7.0
-Stable tag: 1.5.2
+Stable tag: 1.6.0
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -69,6 +69,9 @@ Want to add your personal touch? All of our documentation can be found [here](ht
 3. Attachment Modal - See Converted WebP image path here.
 
 == Changelog ==
+
+= 1.6.0 =
+* Feat: Add `More Plugins` options page.
 
 = 1.5.2 =
 * Tested up to WP 7.0.
